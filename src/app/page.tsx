@@ -45,13 +45,13 @@ export default function Home() {
         />
 
         {/* Demo Cards */}
-        <Row gutter={[24, 24]}>
+        <Row gutter={[24, 24]} className='mt-4'>
           <Col xs={24} md={8}>
             <Card
               title="Dashboard"
               extra={<SettingOutlined />}
               hoverable
-              className="h-full"
+              className="h-full mt-4"
             >
               <Paragraph>
                 Real-time pallet tracking and monitoring dashboard with AI-powered insights.
