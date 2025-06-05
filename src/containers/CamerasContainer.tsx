@@ -18,10 +18,14 @@ const CamerasContainer: React.FC = () => {
     getCameraById,
     getCamerasByStatus,
     getCamerasByZone,
+    getCamerasByCategory,
+    getCamerasBySubcategory,
     getOnlineCameras,
     getRecordingCameras,
     getStatusColor,
     getUniqueZones,
+    getUniqueCategories,
+    getSubcategoriesForCategory,
     filterCameras,
   } = useCameras();
 
@@ -38,7 +42,8 @@ const CamerasContainer: React.FC = () => {
       // Utility props
       filterCameras={filterCameras}
       getStatusColor={getStatusColor}
-      getUniqueZones={getUniqueZones}
+      getUniqueCategories={getUniqueCategories}
+      getSubcategoriesForCategory={getSubcategoriesForCategory}
     />
   );
 };

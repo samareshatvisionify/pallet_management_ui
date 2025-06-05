@@ -1,0 +1,10 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#fffacd"/>
+  <rect x="30" y="45" width="45" height="75" fill="#8b4513" rx="4"/>
+  <rect x="90" y="35" width="50" height="85" fill="#a0522d" rx="4"/>
+  <rect x="155" y="40" width="45" height="80" fill="#cd853f" rx="4"/>
+  <rect x="215" y="50" width="50" height="70" fill="#daa520" rx="4"/>
+  <path d="M20 130 Q150 120 280 130" stroke="#654321" stroke-width="3" fill="none"/>
+  <rect x="0" y="140" width="300" height="60" fill="#8b4513"/>
+  <text x="150" y="175" text-anchor="middle" font-family="Arial" font-size="14" fill="white">Packaging Zone</text>
+</svg> 

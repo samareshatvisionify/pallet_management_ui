@@ -1,0 +1,9 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#ffe4e1"/>
+  <rect x="25" y="50" width="50" height="80" fill="#8b4513" rx="4"/>
+  <rect x="90" y="40" width="45" height="90" fill="#a0522d" rx="4"/>
+  <rect x="150" y="45" width="50" height="85" fill="#cd853f" rx="4"/>
+  <rect x="215" y="35" width="45" height="95" fill="#daa520" rx="4"/>
+  <rect x="0" y="140" width="300" height="60" fill="#696969"/>
+  <text x="150" y="175" text-anchor="middle" font-family="Arial" font-size="14" fill="white">Storage Area 2</text>
+</svg> 

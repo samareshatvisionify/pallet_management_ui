@@ -8,17 +8,81 @@ interface Camera {
   status: 'online' | 'offline' | 'maintenance';
   zone: string;
   recording: boolean;
+  category: 'Pallets' | 'Boards';
+  subcategory: 'Making' | 'Dismantling' | 'Repair' | 'Board' | 'Trimsaw';
+  rtspUrl: string;
+  imagePath: string;
 }
 
 export const useCameras = () => {
   // Demo camera data - this would typically come from Redux or API
   const [cameras] = useState<Camera[]>([
-    { id: 1, name: 'Entrance Camera 1', status: 'online', zone: 'Loading Dock A', recording: true },
-    { id: 2, name: 'Warehouse Zone 1', status: 'online', zone: 'Storage Area 1', recording: true },
-    { id: 3, name: 'Warehouse Zone 2', status: 'offline', zone: 'Storage Area 2', recording: false },
-    { id: 4, name: 'Exit Camera 1', status: 'online', zone: 'Loading Dock B', recording: true },
-    { id: 5, name: 'Quality Control', status: 'online', zone: 'QC Station', recording: true },
-    { id: 6, name: 'Packaging Area', status: 'maintenance', zone: 'Packaging Zone', recording: false },
+    { 
+      id: 1, 
+      name: 'Entrance Camera 1', 
+      status: 'online', 
+      zone: 'Loading Dock A', 
+      recording: true, 
+      category: 'Pallets', 
+      subcategory: 'Making',
+      rtspUrl: 'rtsp://192.168.1.1:554/stream1',
+      imagePath: '/demoData/cameraImages/camera1.svg'
+    },
+    { 
+      id: 2, 
+      name: 'Warehouse Zone 1', 
+      status: 'online', 
+      zone: 'Storage Area 1', 
+      recording: true, 
+      category: 'Pallets', 
+      subcategory: 'Dismantling',
+      rtspUrl: 'rtsp://192.168.1.2:554/stream1',
+      imagePath: '/demoData/cameraImages/camera2.svg'
+    },
+    { 
+      id: 3, 
+      name: 'Warehouse Zone 2', 
+      status: 'offline', 
+      zone: 'Storage Area 2', 
+      recording: false, 
+      category: 'Boards', 
+      subcategory: 'Board',
+      rtspUrl: 'rtsp://192.168.1.3:554/stream1',
+      imagePath: '/demoData/cameraImages/camera3.svg'
+    },
+    { 
+      id: 4, 
+      name: 'Exit Camera 1', 
+      status: 'online', 
+      zone: 'Loading Dock B', 
+      recording: true, 
+      category: 'Pallets', 
+      subcategory: 'Repair',
+      rtspUrl: 'rtsp://192.168.1.4:554/stream1',
+      imagePath: '/demoData/cameraImages/camera4.svg'
+    },
+    { 
+      id: 5, 
+      name: 'Quality Control', 
+      status: 'online', 
+      zone: 'QC Station', 
+      recording: true, 
+      category: 'Boards', 
+      subcategory: 'Trimsaw',
+      rtspUrl: 'rtsp://192.168.1.5:554/stream1',
+      imagePath: '/demoData/cameraImages/camera5.svg'
+    },
+    { 
+      id: 6, 
+      name: 'Packaging Area', 
+      status: 'maintenance', 
+      zone: 'Packaging Zone', 
+      recording: false, 
+      category: 'Pallets', 
+      subcategory: 'Making',
+      rtspUrl: 'rtsp://192.168.1.6:554/stream1',
+      imagePath: '/demoData/cameraImages/camera6.svg'
+    },
   ]);
 
   const [loading] = useState(false);
@@ -40,6 +104,14 @@ export const useCameras = () => {
 
   const getCamerasByZone = (zone: string) => {
     return cameras.filter(camera => camera.zone === zone);
+  };
+
+  const getCamerasByCategory = (category: Camera['category']) => {
+    return cameras.filter(camera => camera.category === category);
+  };
+
+  const getCamerasBySubcategory = (subcategory: Camera['subcategory']) => {
+    return cameras.filter(camera => camera.subcategory === subcategory);
   };
 
   const getOnlineCameras = () => {
@@ -67,23 +139,37 @@ export const useCameras = () => {
     return [...new Set(cameras.map(camera => camera.zone))];
   };
 
-  // Camera filtering
-  const filterCameras = (searchTerm: string, statusFilter?: Camera['status'], zoneFilter?: string) => {
-    let filtered = cameras;
+  const getUniqueCategories = (): Camera['category'][] => {
+    return [...new Set(cameras.map(camera => camera.category))];
+  };
 
-    if (searchTerm) {
-      filtered = filtered.filter(camera =>
-        camera.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        camera.zone.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  const getSubcategoriesForCategory = (category: Camera['category']): Camera['subcategory'][] => {
+    if (category === 'Pallets') {
+      return ['Making', 'Dismantling', 'Repair'];
+    } else if (category === 'Boards') {
+      return ['Board', 'Trimsaw'];
     }
+    return [];
+  };
+
+  // Camera filtering with category support
+  const filterCameras = (
+    statusFilter?: Camera['status'], 
+    categoryFilters?: Camera['category'][], 
+    subcategoryFilters?: Camera['subcategory'][]
+  ) => {
+    let filtered = cameras;
 
     if (statusFilter) {
       filtered = filtered.filter(camera => camera.status === statusFilter);
     }
 
-    if (zoneFilter) {
-      filtered = filtered.filter(camera => camera.zone === zoneFilter);
+    if (categoryFilters && categoryFilters.length > 0) {
+      filtered = filtered.filter(camera => categoryFilters.includes(camera.category));
+    }
+
+    if (subcategoryFilters && subcategoryFilters.length > 0) {
+      filtered = filtered.filter(camera => subcategoryFilters.includes(camera.subcategory));
     }
 
     return filtered;
@@ -102,10 +188,14 @@ export const useCameras = () => {
     getCameraById,
     getCamerasByStatus,
     getCamerasByZone,
+    getCamerasByCategory,
+    getCamerasBySubcategory,
     getOnlineCameras,
     getRecordingCameras,
     getStatusColor,
     getUniqueZones,
+    getUniqueCategories,
+    getSubcategoriesForCategory,
     filterCameras,
   };
 }; 
