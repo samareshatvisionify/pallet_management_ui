@@ -17,7 +17,7 @@ import {
   type DashboardStats,
   type SystemStatus
 } from '@/store/slices/dashboardSlice';
-import { performanceOverviewData, type PerformanceData } from '@/demoData';
+import { performanceOverviewData, productionCalendarData, type PerformanceData, type CalendarData } from '@/demoData';
 
 export const useDashboard = () => {
   const dispatch = useAppDispatch();
@@ -175,6 +175,7 @@ export const useDashboard = () => {
     error,
     lastUpdated,
     performanceData: performanceOverviewData,
+    calendarData: productionCalendarData,
     
     // Actions
     handleRefresh,

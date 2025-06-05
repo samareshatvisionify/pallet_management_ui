@@ -307,4 +307,110 @@ export const performanceOverviewData: PerformanceData = {
       }
     }
   }
+};
+
+export interface CalendarDayData {
+  date: string; // YYYY-MM-DD format
+  production: number;
+  target: number;
+  efficiency: number;
+  status: 'above-target' | 'meeting-target' | 'below-target' | 'poor-performance';
+  breakdown: {
+    dismantle: number;
+    boards: number;
+    trimSaw: number;
+    newPallet: number;
+  };
+}
+
+export interface CalendarData {
+  month: string; // YYYY-MM format
+  days: CalendarDayData[];
+}
+
+export const productionCalendarData: CalendarData = {
+  month: '2025-06',
+  days: [
+    {
+      date: '2025-06-01',
+      production: 1033,
+      target: 1000,
+      efficiency: 103.3,
+      status: 'above-target',
+      breakdown: { dismantle: 278, boards: 355, trimSaw: 200, newPallet: 200 }
+    },
+    {
+      date: '2025-06-02',
+      production: 963,
+      target: 1000,
+      efficiency: 96.3,
+      status: 'meeting-target',
+      breakdown: { dismantle: 241, boards: 326, trimSaw: 198, newPallet: 198 }
+    },
+    {
+      date: '2025-06-03',
+      production: 887,
+      target: 1000,
+      efficiency: 88.7,
+      status: 'meeting-target',
+      breakdown: { dismantle: 222, boards: 300, trimSaw: 183, newPallet: 182 }
+    },
+    {
+      date: '2025-06-04',
+      production: 990,
+      target: 1000,
+      efficiency: 99.0,
+      status: 'meeting-target',
+      breakdown: { dismantle: 247, boards: 346, trimSaw: 198, newPallet: 199 }
+    },
+    {
+      date: '2025-06-05',
+      production: 1167,
+      target: 1000,
+      efficiency: 116.7,
+      status: 'above-target',
+      breakdown: { dismantle: 292, boards: 408, trimSaw: 233, newPallet: 234 }
+    },
+    {
+      date: '2025-06-06',
+      production: 1068,
+      target: 1000,
+      efficiency: 106.8,
+      status: 'above-target',
+      breakdown: { dismantle: 267, boards: 373, trimSaw: 214, newPallet: 214 }
+    },
+    {
+      date: '2025-06-07',
+      production: 0,
+      target: 0,
+      efficiency: 0,
+      status: 'meeting-target',
+      breakdown: { dismantle: 0, boards: 0, trimSaw: 0, newPallet: 0 }
+    },
+    {
+      date: '2025-06-08',
+      production: 0,
+      target: 0,
+      efficiency: 0,
+      status: 'meeting-target',
+      breakdown: { dismantle: 0, boards: 0, trimSaw: 0, newPallet: 0 }
+    },
+    // Adding more days to fill the month
+    {
+      date: '2025-06-09',
+      production: 1145,
+      target: 1000,
+      efficiency: 114.5,
+      status: 'above-target',
+      breakdown: { dismantle: 287, boards: 400, trimSaw: 229, newPallet: 229 }
+    },
+    {
+      date: '2025-06-10',
+      production: 945,
+      target: 1000,
+      efficiency: 94.5,
+      status: 'meeting-target',
+      breakdown: { dismantle: 236, boards: 330, trimSaw: 189, newPallet: 190 }
+    }
+  ]
 }; 

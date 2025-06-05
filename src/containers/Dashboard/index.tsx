@@ -13,6 +13,7 @@ const DashboardContainer: React.FC = () => {
     error,
     lastUpdated,
     performanceData,
+    calendarData,
     
     // Actions
     handleRefresh,
@@ -37,6 +38,7 @@ const DashboardContainer: React.FC = () => {
       error={error}
       lastUpdated={lastUpdated}
       performanceData={performanceData}
+      calendarData={calendarData}
       
       // Action props
       onRefresh={handleRefresh}

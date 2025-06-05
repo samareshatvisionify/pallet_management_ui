@@ -3,8 +3,9 @@
 import React from 'react';
 import { Alert } from 'antd';
 import { DashboardStats, SystemStatus } from '@/store/slices/dashboardSlice';
-import { PerformanceData } from '@/demoData';
+import { PerformanceData, CalendarData } from '@/demoData';
 import PerformanceOverview from './PerformanceOverview';
+import ProductionCalendar from './ProductionCalendar';
 
 // Dashboard sub-components will be imported here as we create them
 // import DashboardHeader from './DashboardHeader';
@@ -20,6 +21,7 @@ interface DashboardProps {
   error: string | null;
   lastUpdated: string | null;
   performanceData: PerformanceData;
+  calendarData: CalendarData;
   
   // Action props
   onRefresh: () => void;
@@ -54,6 +56,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   error,
   lastUpdated,
   performanceData,
+  calendarData,
   onRefresh,
   onClearError,
   onUpdateStat,
@@ -83,6 +86,14 @@ const Dashboard: React.FC<DashboardProps> = ({
         data={performanceData}
         loading={loading}
       />
+
+      {/* Production Calendar Section */}
+      <div className="mt-8">
+        <ProductionCalendar 
+          data={calendarData}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 };
