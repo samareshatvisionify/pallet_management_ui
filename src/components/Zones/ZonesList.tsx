@@ -26,6 +26,7 @@ interface ZonesListProps {
   };
   getStatusColor: (status: Zone['status']) => string;
   onUpdateZoneStatus: (zoneId: string, status: Zone['status']) => void;
+  onZoneClick?: (zoneId: string) => void;
 }
 
 const ZonesList: React.FC<ZonesListProps> = ({
@@ -36,7 +37,8 @@ const ZonesList: React.FC<ZonesListProps> = ({
   calculateZoneProgress,
   getPerformanceIndicator,
   getStatusColor,
-  onUpdateZoneStatus
+  onUpdateZoneStatus,
+  onZoneClick
 }) => {
   // Color scheme
   const colors = {
@@ -54,6 +56,7 @@ const ZonesList: React.FC<ZonesListProps> = ({
               getPerformanceIndicator={getPerformanceIndicator}
               getStatusColor={getStatusColor}
               onUpdateZoneStatus={onUpdateZoneStatus}
+              onZoneClick={onZoneClick}
             />
           </Col>
         ))}

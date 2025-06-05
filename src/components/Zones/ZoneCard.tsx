@@ -21,6 +21,7 @@ interface ZoneCardProps {
   };
   getStatusColor: (status: Zone['status']) => string;
   onUpdateZoneStatus?: (zoneId: string, status: Zone['status']) => void;
+  onZoneClick?: (zoneId: string) => void;
 }
 
 const ZoneCard: React.FC<ZoneCardProps> = ({
@@ -28,7 +29,8 @@ const ZoneCard: React.FC<ZoneCardProps> = ({
   calculateZoneProgress,
   getPerformanceIndicator,
   getStatusColor,
-  onUpdateZoneStatus
+  onUpdateZoneStatus,
+  onZoneClick
 }) => {
   const progress = calculateZoneProgress(zone);
   const performance = getPerformanceIndicator(zone.performanceChange);
@@ -59,9 +61,16 @@ const ZoneCard: React.FC<ZoneCardProps> = ({
 
   const statusStyle = getStatusBadgeStyle(zone.status);
 
+  const handleCardClick = () => {
+    if (onZoneClick) {
+      onZoneClick(zone.id);
+    }
+  };
+
   return (
     <Card
-      className="h-full !p-0 border-0 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-gradient-to-br from-white to-gray-50 overflow-hidden"
+      className="h-full !p-0 border-0 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl bg-gradient-to-br from-white to-gray-50 overflow-hidden cursor-pointer"
+      onClick={handleCardClick}
     >
       {/* Header Section */}
       <div className="pb-3">

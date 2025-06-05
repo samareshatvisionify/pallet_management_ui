@@ -1,5 +1,5 @@
-import ZonesContainer from '@/containers/ZonesContainer';
+import { ZoneContainer } from '@/containers';
 
 export default function ZonesPage() {
-  return <ZonesContainer />;
+  return <ZoneContainer />;
 } 
