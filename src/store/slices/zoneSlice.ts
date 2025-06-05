@@ -17,6 +17,7 @@ export interface Zone {
   description: string;
   currentCount: number;
   targetCount: number;
+  previousCount: number; // Previous period count for comparison
   efficiency: number;
   stations: Station[];
   performanceChange: number; // Percentage change from last period

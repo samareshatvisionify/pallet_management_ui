@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ZonesComponent } from '@/components';
+import { Zones } from '@/components';
 import { useZones } from '@/hooks/useZones';
 
 const ZonesContainer: React.FC = () => {
@@ -30,7 +30,7 @@ const ZonesContainer: React.FC = () => {
   } = useZones();
 
   return (
-    <ZonesComponent
+    <Zones
       // Data props
       zones={zones}
       stats={stats}
