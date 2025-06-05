@@ -145,7 +145,7 @@ const PalletManagementContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="mb-6 flex justify-between items-center">
         <div>
           <Title level={2}>Pallet Management</Title>
           <Paragraph>
@@ -162,7 +162,7 @@ const PalletManagementContainer: React.FC = () => {
       </div>
 
       {/* Controls Section */}
-      <Card style={{ marginBottom: '24px' }}>
+      <Card className="mb-6">
         <Row gutter={[16, 16]} align="middle">
           <Col xs={24} sm={12} lg={8}>
             <Search

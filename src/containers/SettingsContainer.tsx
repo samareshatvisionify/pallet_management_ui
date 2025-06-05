@@ -27,7 +27,7 @@ const SettingsContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px' }}>
+      <div className="mb-6">
         <Title level={2}>Settings</Title>
         <Paragraph>
           Configure system settings, AI parameters, and notification preferences.
@@ -55,7 +55,7 @@ const SettingsContainer: React.FC = () => {
           <Col xs={24} lg={12}>
             <Card 
               title={
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="flex items-center gap-2">
                   <SecurityScanOutlined />
                   AI Configuration
                 </div>
@@ -66,7 +66,7 @@ const SettingsContainer: React.FC = () => {
                 name="aiConfidenceThreshold"
                 tooltip="Minimum confidence level required for AI detections"
               >
-                <Row gutter={16} style={{ alignItems: 'center' }}>
+                <Row gutter={16} className="items-center">
                   <Col span={16}>
                     <Slider min={50} max={100} />
                   </Col>
@@ -74,7 +74,7 @@ const SettingsContainer: React.FC = () => {
                     <InputNumber
                       min={50}
                       max={100}
-                      style={{ width: '100%' }}
+                      className="w-full"
                       formatter={value => `${value}%`}
                       parser={(value: any) => value.replace('%', '')}
                     />
@@ -87,7 +87,7 @@ const SettingsContainer: React.FC = () => {
                 name="detectionSensitivity"
                 tooltip="Higher values detect more objects but may increase false positives"
               >
-                <Row gutter={16} style={{ alignItems: 'center' }}>
+                <Row gutter={16} className="items-center">
                   <Col span={16}>
                     <Slider min={25} max={100} />
                   </Col>
@@ -95,7 +95,7 @@ const SettingsContainer: React.FC = () => {
                     <InputNumber
                       min={25}
                       max={100}
-                      style={{ width: '100%' }}
+                      className="w-full"
                       formatter={value => `${value}%`}
                       parser={(value: any) => value.replace('%', '')}
                     />
@@ -111,7 +111,7 @@ const SettingsContainer: React.FC = () => {
                 <InputNumber
                   min={70}
                   max={100}
-                  style={{ width: '100%' }}
+                  className="w-full"
                   formatter={value => `${value}%`}
                   parser={(value: any) => value.replace('%', '')}
                 />
@@ -123,7 +123,7 @@ const SettingsContainer: React.FC = () => {
           <Col xs={24} lg={12}>
             <Card 
               title={
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="flex items-center gap-2">
                   <CameraOutlined />
                   Camera Settings
                 </div>
@@ -142,7 +142,7 @@ const SettingsContainer: React.FC = () => {
                 name="camerafps"
                 tooltip="Frames per second for camera recording"
               >
-                <Select style={{ width: '100%' }}>
+                <Select className="w-full">
                   <Select.Option value={15}>15 FPS</Select.Option>
                   <Select.Option value={24}>24 FPS</Select.Option>
                   <Select.Option value={30}>30 FPS</Select.Option>
@@ -158,7 +158,7 @@ const SettingsContainer: React.FC = () => {
                 <InputNumber
                   min={7}
                   max={365}
-                  style={{ width: '100%' }}
+                  className="w-full"
                 />
               </Form.Item>
 
@@ -177,7 +177,7 @@ const SettingsContainer: React.FC = () => {
           <Col xs={24} lg={12}>
             <Card 
               title={
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="flex items-center gap-2">
                   <BellOutlined />
                   Notifications
                 </div>
@@ -210,7 +210,7 @@ const SettingsContainer: React.FC = () => {
                 <Select
                   mode="multiple"
                   placeholder="Select alert types"
-                  style={{ width: '100%' }}
+                  className="w-full"
                   defaultValue={['errors', 'lowConfidence', 'systemStatus']}
                 >
                   <Select.Option value="errors">Detection Errors</Select.Option>
@@ -227,7 +227,7 @@ const SettingsContainer: React.FC = () => {
           <Col xs={24} lg={12}>
             <Card 
               title={
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="flex items-center gap-2">
                   <SettingOutlined />
                   System Settings
                 </div>
@@ -245,7 +245,7 @@ const SettingsContainer: React.FC = () => {
                 label="Timezone"
                 name="timezone"
               >
-                <Select style={{ width: '100%' }} defaultValue="UTC-5">
+                <Select className="w-full" defaultValue="UTC-5">
                   <Select.Option value="UTC-8">Pacific Time (UTC-8)</Select.Option>
                   <Select.Option value="UTC-7">Mountain Time (UTC-7)</Select.Option>
                   <Select.Option value="UTC-6">Central Time (UTC-6)</Select.Option>
@@ -258,7 +258,7 @@ const SettingsContainer: React.FC = () => {
                 label="Language"
                 name="language"
               >
-                <Select style={{ width: '100%' }} defaultValue="en">
+                <Select className="w-full" defaultValue="en">
                   <Select.Option value="en">English</Select.Option>
                   <Select.Option value="es">Spanish</Select.Option>
                   <Select.Option value="fr">French</Select.Option>

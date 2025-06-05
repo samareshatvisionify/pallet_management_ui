@@ -194,7 +194,7 @@ const HistoricalContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="mb-6 flex justify-between items-center">
         <div>
           <Title level={2}>Historical Data</Title>
           <Paragraph>
@@ -212,17 +212,17 @@ const HistoricalContainer: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <Card style={{ marginBottom: '24px' }}>
+      <Card className="mb-6">
         <Row gutter={[16, 16]} align="middle">
           <Col xs={24} sm={8} lg={6}>
-            <div style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500' }}>Date Range</div>
-            <RangePicker style={{ width: '100%' }} />
+            <div className="mb-2 text-sm font-medium">Date Range</div>
+            <RangePicker className="w-full" />
           </Col>
           <Col xs={24} sm={8} lg={4}>
-            <div style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500' }}>Action Type</div>
+            <div className="mb-2 text-sm font-medium">Action Type</div>
             <Select
               placeholder="All actions"
-              style={{ width: '100%' }}
+              className="w-full"
               allowClear
               value={selectedAction}
               onChange={setSelectedAction}
@@ -235,7 +235,7 @@ const HistoricalContainer: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} sm={8} lg={6}>
-            <div style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500' }}>Search</div>
+            <div className="mb-2 text-sm font-medium">Search</div>
             <Search
               placeholder="Search pallet ID, zone, camera..."
               value={searchTerm}
@@ -244,7 +244,7 @@ const HistoricalContainer: React.FC = () => {
             />
           </Col>
           <Col xs={24} lg={8}>
-            <div style={{ marginBottom: '8px', fontSize: '14px', fontWeight: '500' }}>&nbsp;</div>
+            <div className="mb-2 text-sm font-medium">&nbsp;</div>
             <Space>
               <Button icon={<FilterOutlined />}>
                 Advanced Filters

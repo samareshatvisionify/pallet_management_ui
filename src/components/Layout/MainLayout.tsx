@@ -107,66 +107,34 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className="min-h-screen">
       <Sider 
         trigger={null} 
         collapsible 
         collapsed={collapsed}
-        style={{
-          background: colorBgContainer,
-          boxShadow: '2px 0 8px 0 rgba(29, 35, 41, 0.05)',
-          position: 'relative',
-          height: '100vh',
-        }}
+        className="relative h-screen shadow-lg"
+        style={{ background: colorBgContainer }}
         width={280}
         collapsedWidth={80}
       >
         {/* Logo/Brand Section */}
-        <div style={{ 
-          padding: collapsed ? '16px 8px' : '16px 24px', 
-          textAlign: collapsed ? 'center' : 'left',
-          borderBottom: '1px solid #f0f0f0',
-          marginBottom: '16px'
-        }}>
+        <div className={`${collapsed ? 'px-2 py-4 text-center' : 'px-6 py-4 text-left'} border-b border-gray-200 mb-4`}>
           {!collapsed ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(135deg, #1890ff, #722ed1)',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontSize: '20px',
-                fontWeight: 'bold'
-              }}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xl font-bold">
                 VP
               </div>
               <div>
-                <Title level={4} style={{ margin: 0, color: '#1890ff', lineHeight: 1.2 }}>
+                <Title level={4} className="!m-0 !text-blue-500 !leading-tight">
                   VisionAI
                 </Title>
-                <div style={{ fontSize: '12px', color: '#8c8c8c', lineHeight: 1 }}>
+                <div className="text-xs text-gray-500 leading-none">
                   Pallet Management
                 </div>
               </div>
             </div>
           ) : (
-            <div style={{
-              width: '40px',
-              height: '40px',
-              background: 'linear-gradient(135deg, #1890ff, #722ed1)',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              fontSize: '20px',
-              fontWeight: 'bold',
-              margin: '0 auto'
-            }}>
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xl font-bold mx-auto">
               VP
             </div>
           )}
@@ -178,54 +146,30 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           mode="inline"
           selectedKeys={[getSelectedKey()]}
           items={mainMenuItems}
-          style={{ 
-            border: 'none',
-            background: 'transparent',
-            paddingBottom: '140px', // Add space for bottom section
-          }}
+          className="border-none bg-transparent pb-36"
         />
 
         {/* Bottom Section - Absolute positioned at bottom */}
-        <div style={{ 
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          borderTop: '1px solid #f0f0f0',
-          background: colorBgContainer,
-        }}>
+        <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200" style={{ background: colorBgContainer }}>
           {/* Settings Menu */}
           <Menu
             theme="light"
             mode="inline"
             selectedKeys={pathname === '/settings' ? ['/settings'] : []}
             items={getBottomMenuItems()}
-            style={{ 
-              border: 'none',
-              background: 'transparent',
-              marginBottom: collapsed ? 0 : '16px',
-            }}
+            className={`border-none bg-transparent ${collapsed ? 'mb-0' : 'mb-4'}`}
           />
 
           {/* Site Selector - Only show when expanded */}
           {!collapsed && (
-            <div style={{ 
-              padding: '8px 24px',
-              paddingBottom: '24px',
-            }}>
-              <div style={{ 
-                marginBottom: '8px', 
-                fontSize: '12px', 
-                color: '#8c8c8c', 
-                textTransform: 'uppercase', 
-                letterSpacing: '0.5px' 
-              }}>
+            <div className="px-6 pb-6">
+              <div className="mb-2 text-xs text-gray-500 uppercase tracking-wider">
                 Current Site
               </div>
               <Select
                 value={selectedSite}
                 onChange={handleSiteChange}
-                style={{ width: '100%' }}
+                className="w-full"
                 showSearch
                 placeholder="Select a site"
                 optionFilterProp="label"
@@ -238,30 +182,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       <Layout>
         {/* Header */}
-        <Header style={{ 
-          padding: '0 24px', 
-          background: colorBgContainer,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          boxShadow: '0 2px 8px 0 rgba(29, 35, 41, 0.05)',
-          zIndex: 1,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Header 
+          className="px-6 flex items-center justify-between shadow-sm z-10"
+          style={{ background: colorBgContainer }}
+        >
+          <div className="flex items-center">
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={handleSidebarToggle}
-              style={{
-                fontSize: '16px',
-                width: 64,
-                height: 64,
-              }}
+              className="text-base w-16 h-16"
             />
           </div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{ fontSize: '14px', color: '#8c8c8c' }}>
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-gray-500">
               {sites.find(site => site.value === selectedSite)?.label}
             </div>
             <Button type="text" icon={<UserOutlined />}>
@@ -272,13 +207,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
         {/* Main Content */}
         <Content
+          className="m-6 p-6 !max-h-[calc(100vh-7rem)] !overflow-auto"
           style={{
-            margin: '24px',
-            padding: '24px',
-            minHeight: 280,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
-            overflow: 'auto',
           }}
         >
           {children}

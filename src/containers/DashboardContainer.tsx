@@ -40,7 +40,7 @@ const DashboardContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="mb-6 flex justify-between items-center">
         <div>
           <Title level={2}>Dashboard</Title>
           <Paragraph>
@@ -58,7 +58,7 @@ const DashboardContainer: React.FC = () => {
 
       {/* Statistics Cards */}
       <Spin spinning={loading}>
-        <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+        <Row gutter={[24, 24]} className="mb-6">
           <Col xs={24} sm={12} lg={6}>
             <Card>
               <Statistic
@@ -105,8 +105,8 @@ const DashboardContainer: React.FC = () => {
         {/* Dashboard Content */}
         <Row gutter={[24, 24]}>
           <Col xs={24} lg={16}>
-            <Card title="Recent Activity" style={{ height: '400px' }}>
-              <div style={{ padding: '20px', textAlign: 'center' }}>
+            <Card title="Recent Activity" className="h-96">
+              <div className="p-5 text-center">
                 <Title level={4}>Pallet Activity Chart</Title>
                 <Paragraph>Chart component will be implemented here</Paragraph>
                 <Progress percent={75} status="active" />
@@ -114,8 +114,8 @@ const DashboardContainer: React.FC = () => {
             </Card>
           </Col>
           <Col xs={24} lg={8}>
-            <Card title="System Status" style={{ height: '400px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <Card title="System Status" className="h-96">
+              <div className="flex flex-col gap-4">
                 <div>
                   <Paragraph strong>Vision AI Status</Paragraph>
                   <Progress 

@@ -35,7 +35,7 @@ const CamerasContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="mb-6 flex justify-between items-center">
         <div>
           <Title level={2}>Camera Management</Title>
           <Paragraph>
@@ -53,7 +53,7 @@ const CamerasContainer: React.FC = () => {
           <Col xs={24} sm={12} lg={8} key={camera.id}>
             <Card
               title={
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="flex items-center gap-2">
                   <CameraOutlined />
                   {camera.name}
                 </div>
@@ -67,8 +67,8 @@ const CamerasContainer: React.FC = () => {
                 </Button>,
               ]}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="flex flex-col gap-3">
+                <div className="flex justify-between items-center">
                   <span>Status:</span>
                   <Badge 
                     status={camera.status === 'online' ? 'success' : camera.status === 'offline' ? 'error' : 'warning'} 
@@ -76,12 +76,12 @@ const CamerasContainer: React.FC = () => {
                   />
                 </div>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="flex justify-between items-center">
                   <span>Zone:</span>
                   <Tag>{camera.zone}</Tag>
                 </div>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="flex justify-between items-center">
                   <span>Recording:</span>
                   <Badge 
                     status={camera.recording ? 'processing' : 'default'} 
@@ -95,9 +95,9 @@ const CamerasContainer: React.FC = () => {
       </Row>
 
       {/* Add Camera Button */}
-      <Card style={{ marginTop: '24px', textAlign: 'center' }}>
-        <div style={{ padding: '40px' }}>
-          <CameraOutlined style={{ fontSize: '48px', color: '#d9d9d9', marginBottom: '16px' }} />
+      <Card className="mt-6 text-center">
+        <div className="py-10">
+          <CameraOutlined className="text-5xl text-gray-300 mb-4" />
           <Title level={4}>Add New Camera</Title>
           <Paragraph>Configure additional cameras to monitor your facility.</Paragraph>
           <Button type="primary" size="large">

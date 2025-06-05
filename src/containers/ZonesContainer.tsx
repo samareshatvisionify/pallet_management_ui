@@ -89,7 +89,7 @@ const ZonesContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="mb-6 flex justify-between items-center">
         <div>
           <Title level={2}>Zone Management</Title>
           <Paragraph>
@@ -102,7 +102,7 @@ const ZonesContainer: React.FC = () => {
       </div>
 
       {/* Zone Summary */}
-      <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+      <Row gutter={[24, 24]} className="mb-6">
         <Col xs={24} sm={6}>
           <Card>
             <Statistic
@@ -148,7 +148,7 @@ const ZonesContainer: React.FC = () => {
           <Col xs={24} sm={12} lg={8} key={zone.id}>
             <Card
               title={
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className="flex items-center gap-2">
                   <EnvironmentOutlined />
                   {zone.name}
                 </div>
@@ -167,8 +167,8 @@ const ZonesContainer: React.FC = () => {
                 </Button>,
               ]}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-between items-center">
                   <span>Type:</span>
                   <Tag color={getZoneTypeColor(zone.type)}>
                     {zone.type.toUpperCase()}
@@ -176,7 +176,7 @@ const ZonesContainer: React.FC = () => {
                 </div>
                 
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                  <div className="flex justify-between mb-2">
                     <span>Utilization:</span>
                     <span>{zone.currentPallets}/{zone.capacity}</span>
                   </div>
@@ -186,7 +186,7 @@ const ZonesContainer: React.FC = () => {
                   />
                 </div>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="flex justify-between items-center">
                   <span>Cameras:</span>
                   <Tag icon={<AppstoreOutlined />}>{zone.cameras}</Tag>
                 </div>
@@ -197,9 +197,9 @@ const ZonesContainer: React.FC = () => {
       </Row>
 
       {/* Add Zone Button */}
-      <Card style={{ marginTop: '24px', textAlign: 'center' }}>
-        <div style={{ padding: '40px' }}>
-          <EnvironmentOutlined style={{ fontSize: '48px', color: '#d9d9d9', marginBottom: '16px' }} />
+      <Card className="mt-6 text-center">
+        <div className="py-10">
+          <EnvironmentOutlined className="text-5xl text-gray-300 mb-4" />
           <Title level={4}>Create New Zone</Title>
           <Paragraph>Define a new monitoring zone in your warehouse layout.</Paragraph>
           <Button type="primary" size="large" icon={<PlusOutlined />}>
