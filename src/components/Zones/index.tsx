@@ -20,6 +20,7 @@ interface ZonesProps {
   // Action props
   onClearError: () => void;
   onUpdateZoneStatus: (zoneId: string, status: Zone['status']) => void;
+  onZoneClick?: (zoneId: string) => void;
   
   // Utility props
   getZoneById: (id: string) => Zone | undefined;
@@ -50,6 +51,7 @@ const Zones: React.FC<ZonesProps> = ({
   error,
   onClearError,
   onUpdateZoneStatus,
+  onZoneClick,
   calculateZoneProgress,
   getPerformanceIndicator,
   getStatusColor,
@@ -104,6 +106,7 @@ const Zones: React.FC<ZonesProps> = ({
         getPerformanceIndicator={getPerformanceIndicator}
         getStatusColor={getStatusColor}
         onUpdateZoneStatus={onUpdateZoneStatus}
+        onZoneClick={onZoneClick}
       />
 
       {/* Zone Comparison Chart Section */}

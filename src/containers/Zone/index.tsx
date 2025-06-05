@@ -3,8 +3,10 @@
 import React from 'react';
 import { Zones } from '@/components';
 import { useZones } from '@/hooks/useZones';
+import { useRouter } from 'next/navigation';
 
-const ZonesContainer: React.FC = () => {
+const ZoneContainer: React.FC = () => {
+  const router = useRouter();
   const {
     // Data
     zones,
@@ -29,6 +31,10 @@ const ZonesContainer: React.FC = () => {
     sortZones,
   } = useZones();
 
+  const handleZoneClick = (zoneId: string) => {
+    router.push(`/zones/${zoneId}`);
+  };
+
   return (
     <Zones
       // Data props
@@ -40,6 +46,7 @@ const ZonesContainer: React.FC = () => {
       // Action props
       onClearError={handleClearError}
       onUpdateZoneStatus={handleUpdateZoneStatus}
+      onZoneClick={handleZoneClick}
       
       // Utility props
       getZoneById={getZoneById}
@@ -56,4 +63,4 @@ const ZonesContainer: React.FC = () => {
   );
 };
 
-export default ZonesContainer; 
+export default ZoneContainer; 

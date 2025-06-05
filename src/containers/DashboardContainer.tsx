@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Card, Row, Col, Typography, Statistic, Progress, Button, Spin } from 'antd';
+import { Card, Row, Col, Typography, Progress, Button, Spin } from 'antd';
 import { 
   AppstoreOutlined, 
   BarChartOutlined, 
@@ -9,6 +9,7 @@ import {
   CheckCircleOutlined,
   ReloadOutlined
 } from '@ant-design/icons';
+import { StatCard } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { 
   fetchDashboardStats, 
@@ -64,49 +65,41 @@ const DashboardContainer: React.FC = () => {
       <Spin spinning={loading}>
         <Row gutter={[12, 12]} className="mb-4 md:mb-6 md:gutter-24">
           <Col xs={12} sm={12} md={6}>
-            <Card className="h-full">
-              <Statistic
-                title="Total Pallets"
-                value={stats.totalPallets}
-                prefix={<AppstoreOutlined />}
-                valueStyle={{ color: '#3f8600', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
-                className="text-center sm:text-left"
-              />
-            </Card>
+            <StatCard
+              title="Total Pallets"
+              value={stats.totalPallets}
+              icon={<AppstoreOutlined />}
+              iconColor="#3f8600"
+              loading={loading}
+            />
           </Col>
           <Col xs={12} sm={12} md={6}>
-            <Card className="h-full">
-              <Statistic
-                title="Active Scans"
-                value={stats.activeScans}
-                prefix={<EyeOutlined />}
-                valueStyle={{ color: '#1890ff', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
-                className="text-center sm:text-left"
-              />
-            </Card>
+            <StatCard
+              title="Active Scans"
+              value={stats.activeScans}
+              icon={<EyeOutlined />}
+              iconColor="#1890ff"
+              loading={loading}
+            />
           </Col>
           <Col xs={12} sm={12} md={6}>
-            <Card className="h-full">
-              <Statistic
-                title="Processed Today"
-                value={stats.processedToday}
-                prefix={<CheckCircleOutlined />}
-                valueStyle={{ color: '#cf1322', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
-                className="text-center sm:text-left"
-              />
-            </Card>
+            <StatCard
+              title="Processed Today"
+              value={stats.processedToday}
+              icon={<CheckCircleOutlined />}
+              iconColor="#cf1322"
+              loading={loading}
+            />
           </Col>
           <Col xs={12} sm={12} md={6}>
-            <Card className="h-full">
-              <Statistic
-                title="AI Accuracy"
-                value={stats.aiAccuracy}
-                suffix="%"
-                prefix={<BarChartOutlined />}
-                valueStyle={{ color: '#722ed1', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
-                className="text-center sm:text-left"
-              />
-            </Card>
+            <StatCard
+              title="AI Accuracy"
+              value={stats.aiAccuracy}
+              suffix="%"
+              icon={<BarChartOutlined />}
+              iconColor="#722ed1"
+              loading={loading}
+            />
           </Col>
         </Row>
 
