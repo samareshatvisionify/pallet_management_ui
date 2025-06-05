@@ -13,6 +13,7 @@ import {
   UserOutlined,
   GlobalOutlined,
   LogoutOutlined,
+  ReloadOutlined,
 } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -21,11 +22,40 @@ import { toggleSidebar, selectSidebarCollapsed } from '@/store/slices/uiSlice';
 import { useAuth } from '@/hooks/useAuth';
 
 const { Header, Sider, Content } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
+
+// Page titles and subtitles configuration
+const pageConfig = {
+  '/': {
+    title: 'Dashboard',
+    subtitle: 'Welcome to VisionAI Pallet Management System. Monitor your pallet operations and AI analytics in real-time.',
+    showRefresh: true,
+  },
+  '/cameras': {
+    title: 'Camera Management',
+    subtitle: 'Monitor and configure AI-powered cameras for pallet detection and tracking across your warehouse.',
+    showRefresh: true,
+  },
+  '/zones': {
+    title: 'Zones Management',
+    subtitle: 'Monitor and manage warehouse zones with real-time performance tracking and efficiency metrics.',
+    showRefresh: true,
+  },
+  '/historical': {
+    title: 'Historical Data',
+    subtitle: 'Analyze historical pallet data, trends, and performance metrics for insights and reporting.',
+    showRefresh: true,
+  },
+  '/settings': {
+    title: 'Settings',
+    subtitle: 'Configure system preferences, user settings, and application parameters.',
+    showRefresh: false,
+  },
+} as const;
 
 // Demo site data - this could be moved to Redux or fetched from API
 const sites = [
@@ -50,6 +80,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  // Get current page configuration
+  const currentPageConfig = pageConfig[pathname as keyof typeof pageConfig] || {
+    title: 'VisionAI',
+    subtitle: 'Pallet Management System',
+    showRefresh: false,
+  };
+
   // Check if device is mobile
   useEffect(() => {
     const checkMobile = () => {
@@ -60,6 +97,35 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Handle page refresh
+  const handlePageRefresh = () => {
+    // This can be customized per page or trigger specific refresh actions
+    window.location.reload();
+  };
+
+  // Page Header Component
+  const PageHeader = () => (
+    <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 bg-white p-4 md:p-6 rounded-lg shadow-sm">
+      <div className="min-w-0 flex-1">
+        <Title level={2} className="!mb-0 !text-xl md:!text-2xl">
+          {currentPageConfig.title} | {currentPageConfig.subtitle}
+        </Title>
+      </div>
+      {currentPageConfig.showRefresh && (
+        <div className="flex-shrink-0">
+          <Button 
+            icon={<ReloadOutlined />} 
+            onClick={handlePageRefresh}
+            size="small"
+            className="md:size-default"
+          >
+            <span className="hidden sm:inline">Refresh</span>
+          </Button>
+        </div>
+      )}
+    </div>
+  );
 
   // Main navigation items
   const mainMenuItems = [
@@ -209,6 +275,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             background: colorBgContainer,
           }}
         >
+          <PageHeader />
           {children}
         </Content>
 
@@ -225,7 +292,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         trigger={null} 
         collapsible 
         collapsed={collapsed}
-        className="relative h-screen shadow-lg hidden md:block"
+        className="relative h-screen shadow-xs hidden md:block"
         style={{ background: colorBgContainer }}
         width={280}
         collapsedWidth={80}
@@ -296,7 +363,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Layout>
         {/* Desktop Header */}
         <Header 
-          className="px-6 flex items-center justify-between shadow-sm z-10 hidden md:flex"
+          className="!px-4 !h-18 flex items-center justify-between shadow-xs z-10 hidden md:flex"
           style={{ background: colorBgContainer }}
         >
           <div className="flex items-center">
@@ -304,8 +371,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={handleSidebarToggle}
-              className="text-base w-16 h-16"
+              className="!text-xl"
             />
+            <div className="min-w-0 flex items-center justify-start ml-4">
+                <Title level={5} className="!mb-0 pr-4 border-r border-gray-200 !text-lg md:!text-lg">
+                    {currentPageConfig.title}
+                </Title>
+                <Text className="!mb-0 ml-4 font-light !text-md md:!text-md">
+                  {currentPageConfig.subtitle}
+                </Text>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">
@@ -326,11 +401,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
         {/* Desktop Content */}
         <Content
-          className="m-6 p-6 !max-h-[calc(100vh-7rem)] !overflow-auto hidden md:block"
-          style={{
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
+          className="p-6 !max-h-[calc(100vh-5rem)] !overflow-auto hidden md:block"
         >
           {children}
         </Content>

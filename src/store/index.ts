@@ -6,6 +6,7 @@ import palletSlice from './slices/palletSlice';
 import dashboardSlice from './slices/dashboardSlice';
 import uiSlice from './slices/uiSlice';
 import authSlice from './slices/authSlice';
+import zoneSlice from './slices/zoneSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     dashboard: dashboardSlice,
     ui: uiSlice,
     auth: authSlice,
+    zones: zoneSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

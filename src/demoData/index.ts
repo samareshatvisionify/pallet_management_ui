@@ -1,1 +1,2 @@
-export * from './palletData'; 
+export * from './palletData';
+export * from './zoneData'; 
