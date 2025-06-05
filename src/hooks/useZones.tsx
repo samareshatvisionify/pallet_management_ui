@@ -46,11 +46,11 @@ export const useZones = () => {
   };
 
   const getZoneById = (id: string) => {
-    return zones.find(zone => zone.id === id);
+    return zones.find((zone: Zone) => zone.id === id);
   };
 
   const getZonesByStatus = (status: Zone['status']) => {
-    return zones.filter(zone => zone.status === status);
+    return zones.filter((zone: Zone) => zone.status === status);
   };
 
   const getTopPerformingZones = (limit: number = 3) => {
@@ -60,7 +60,7 @@ export const useZones = () => {
   };
 
   const getZonesNeedingAttention = () => {
-    return zones.filter(zone => 
+    return zones.filter((zone: Zone) => 
       zone.status === 'warning' || 
       zone.efficiency < 80 || 
       zone.performanceChange < 0
@@ -125,14 +125,14 @@ export const useZones = () => {
     let filtered = zones;
 
     if (searchTerm) {
-      filtered = filtered.filter(zone =>
+      filtered = filtered.filter((zone: Zone) =>
         zone.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         zone.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (statusFilter) {
-      filtered = filtered.filter(zone => zone.status === statusFilter);
+      filtered = filtered.filter((zone: Zone) => zone.status === statusFilter);
     }
 
     return filtered;

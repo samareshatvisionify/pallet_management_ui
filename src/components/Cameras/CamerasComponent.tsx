@@ -200,7 +200,7 @@ const CamerasComponent: React.FC<CamerasComponentProps> = ({
                     src={camera.imagePath}
                     alt={`${camera.name} feed`}
                     className="w-full h-32 object-cover rounded-md"
-                    fallback="/demoData/cameraImages/camera1.svg"
+                    fallback="../../demoData/cameraImages/camera1.svg"
                     preview={{
                       mask: <div className="text-white">View Feed</div>,
                     }}
@@ -208,18 +208,6 @@ const CamerasComponent: React.FC<CamerasComponentProps> = ({
                 </div>
 
                 <div className="flex flex-col gap-2 md:gap-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs md:text-sm font-medium">Status:</span>
-                    <Badge 
-                      status={camera.status === 'online' ? 'success' : camera.status === 'offline' ? 'error' : 'warning'} 
-                      text={
-                        <span className="text-xs md:text-sm">
-                          {camera.status.toUpperCase()}
-                        </span>
-                      }
-                    />
-                  </div>
-                  
                   <div className="flex justify-between items-center">
                     <span className="text-xs md:text-sm font-medium">Zone:</span>
                     <Tag className="text-xs md:text-sm max-w-32 truncate" title={camera.zone}>
