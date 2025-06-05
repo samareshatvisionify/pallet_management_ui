@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Zones } from '@/components';
-import { useZones } from '@/hooks/useZones';
+import { useZones } from '@/hooks';
 import { useRouter } from 'next/navigation';
 
 const ZoneContainer: React.FC = () => {

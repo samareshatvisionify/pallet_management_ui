@@ -151,4 +151,160 @@ export const dashboardStats = {
   activeScans: 45,
   processedToday: 892,
   aiAccuracy: 98.5
+};
+
+export interface TrackingLocation {
+  id: string;
+  name: string;
+  status: 'active' | 'inactive' | 'maintenance';
+  count: number;
+  efficiency?: number;
+}
+
+export interface PerformanceMetric {
+  title: string;
+  current: number;
+  target: number;
+  isTargetMet: boolean;
+  percentage: number;
+  trend: 'up' | 'down' | 'stable';
+  change: number; // percentage change from previous period
+  tracking: {
+    stations: TrackingLocation[];
+    zones: TrackingLocation[];
+    cameras: TrackingLocation[];
+  };
+}
+
+export interface PerformanceData {
+  pallets: {
+    manufactured: PerformanceMetric;
+    repaired: PerformanceMetric;
+    dismantled: PerformanceMetric;
+  };
+  boards: {
+    boards: PerformanceMetric;
+    trimSaw: PerformanceMetric;
+  };
+}
+
+export const performanceOverviewData: PerformanceData = {
+  pallets: {
+    manufactured: {
+      title: 'Manufactured',
+      current: 856,
+      target: 900,
+      isTargetMet: false,
+      percentage: 95.1,
+      trend: 'up',
+      change: 8.2,
+      tracking: {
+        stations: [
+          { id: 'st1', name: 'Assembly Station A1', status: 'active', count: 245, efficiency: 92 },
+          { id: 'st2', name: 'Assembly Station A2', status: 'active', count: 198, efficiency: 88 },
+          { id: 'st3', name: 'Assembly Station B1', status: 'maintenance', count: 156, efficiency: 85 },
+          { id: 'st4', name: 'Assembly Station B2', status: 'active', count: 257, efficiency: 94 }
+        ],
+        zones: [
+          { id: 'z1', name: 'Manufacturing Zone A', status: 'active', count: 443, efficiency: 90 },
+          { id: 'z2', name: 'Manufacturing Zone B', status: 'active', count: 413, efficiency: 89 }
+        ],
+        cameras: [
+          { id: 'c1', name: 'Camera MFG-001', status: 'active', count: 285 },
+          { id: 'c2', name: 'Camera MFG-002', status: 'active', count: 298 },
+          { id: 'c3', name: 'Camera MFG-003', status: 'inactive', count: 273 }
+        ]
+      }
+    },
+    repaired: {
+      title: 'Repaired',
+      current: 142,
+      target: 120,
+      isTargetMet: true,
+      percentage: 118.3,
+      trend: 'up',
+      change: 15.6,
+      tracking: {
+        stations: [
+          { id: 'st5', name: 'Repair Station R1', status: 'active', count: 67, efficiency: 95 },
+          { id: 'st6', name: 'Repair Station R2', status: 'active', count: 75, efficiency: 91 }
+        ],
+        zones: [
+          { id: 'z3', name: 'Repair Zone A', status: 'active', count: 142, efficiency: 93 }
+        ],
+        cameras: [
+          { id: 'c4', name: 'Camera REP-001', status: 'active', count: 142 }
+        ]
+      }
+    },
+    dismantled: {
+      title: 'Dismantled',
+      current: 89,
+      target: 100,
+      isTargetMet: false,
+      percentage: 89.0,
+      trend: 'down',
+      change: -5.4,
+      tracking: {
+        stations: [
+          { id: 'st7', name: 'Dismantling Station D1', status: 'active', count: 45, efficiency: 82 },
+          { id: 'st8', name: 'Dismantling Station D2', status: 'maintenance', count: 44, efficiency: 78 }
+        ],
+        zones: [
+          { id: 'z4', name: 'Dismantling Zone A', status: 'active', count: 89, efficiency: 80 }
+        ],
+        cameras: [
+          { id: 'c5', name: 'Camera DIS-001', status: 'active', count: 89 }
+        ]
+      }
+    }
+  },
+  boards: {
+    boards: {
+      title: 'Boards',
+      current: 2340,
+      target: 2500,
+      isTargetMet: false,
+      percentage: 93.6,
+      trend: 'up',
+      change: 12.8,
+      tracking: {
+        stations: [
+          { id: 'st9', name: 'Board Station B1', status: 'active', count: 890, efficiency: 94 },
+          { id: 'st10', name: 'Board Station B2', status: 'active', count: 785, efficiency: 91 },
+          { id: 'st11', name: 'Board Station B3', status: 'active', count: 665, efficiency: 88 }
+        ],
+        zones: [
+          { id: 'z5', name: 'Board Production Zone A', status: 'active', count: 1340, efficiency: 92 },
+          { id: 'z6', name: 'Board Production Zone B', status: 'active', count: 1000, efficiency: 89 }
+        ],
+        cameras: [
+          { id: 'c6', name: 'Camera BRD-001', status: 'active', count: 1240 },
+          { id: 'c7', name: 'Camera BRD-002', status: 'active', count: 1100 }
+        ]
+      }
+    },
+    trimSaw: {
+      title: 'Trim Saw',
+      current: 1890,
+      target: 1800,
+      isTargetMet: true,
+      percentage: 105.0,
+      trend: 'up',
+      change: 7.3,
+      tracking: {
+        stations: [
+          { id: 'st12', name: 'Trim Saw Station T1', status: 'active', count: 945, efficiency: 97 },
+          { id: 'st13', name: 'Trim Saw Station T2', status: 'active', count: 945, efficiency: 95 }
+        ],
+        zones: [
+          { id: 'z7', name: 'Trim Saw Zone A', status: 'active', count: 1890, efficiency: 96 }
+        ],
+        cameras: [
+          { id: 'c8', name: 'Camera TRM-001', status: 'active', count: 945 },
+          { id: 'c9', name: 'Camera TRM-002', status: 'active', count: 945 }
+        ]
+      }
+    }
+  }
 }; 

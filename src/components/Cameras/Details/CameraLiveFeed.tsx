@@ -61,7 +61,7 @@ const CameraLiveFeed: React.FC<CameraLiveFeedProps> = ({
           </div>
         </div>
       }
-      className="h-full"
+      className="h-full shadow-sm"
       loading={loading}
     >
       <div className="relative">
