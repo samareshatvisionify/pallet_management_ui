@@ -23,7 +23,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Making',
     rtspUrl: 'rtsp://192.168.1.1:554/stream1',
-    imagePath: '/src/demoData/cameraImages/camera1.svg',
+    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
     efficiency: 96,
     todaysTotal: 158,
     appliedScenarios: ['Pallet Build', 'Conveyor Board']
@@ -37,7 +37,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Dismantling',
     rtspUrl: 'rtsp://192.168.1.2:554/stream1',
-    imagePath: '/src/demoData/cameraImages/camera2.svg',
+    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
     efficiency: 87,
     todaysTotal: 142,
     appliedScenarios: ['Pallet Dismantling', 'Quality Check']
@@ -51,7 +51,7 @@ export const democameras: Camera[] = [
     category: 'Boards', 
     subcategory: 'Board',
     rtspUrl: 'rtsp://192.168.1.3:554/stream1',
-    imagePath: '/src/demoData/cameraImages/camera3.svg',
+    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
     efficiency: 0,
     todaysTotal: 0,
     appliedScenarios: ['Board Processing']
@@ -65,7 +65,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Repair',
     rtspUrl: 'rtsp://192.168.1.4:554/stream1',
-    imagePath: '/src/demoData/cameraImages/camera4.svg',
+    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
     efficiency: 92,
     todaysTotal: 134,
     appliedScenarios: ['Pallet Repair', 'Damage Assessment']
@@ -79,7 +79,7 @@ export const democameras: Camera[] = [
     category: 'Boards', 
     subcategory: 'Trimsaw',
     rtspUrl: 'rtsp://192.168.1.5:554/stream1',
-    imagePath: '/src/demoData/cameraImages/camera5.svg',
+    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
     efficiency: 94,
     todaysTotal: 167,
     appliedScenarios: ['Board Quality', 'Trimsaw Operation']
@@ -93,7 +93,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Making',
     rtspUrl: 'rtsp://192.168.1.6:554/stream1',
-    imagePath: '/src/demoData/cameraImages/camera6.svg',
+    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
     efficiency: 78,
     todaysTotal: 89,
     appliedScenarios: ['Package Monitoring']

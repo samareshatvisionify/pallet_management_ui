@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Card, Row, Col, Typography, Tag, Button, Image, Switch, Tooltip, List } from 'antd';
+import { Card, Row, Col, Typography, Tag, Button, Image, Switch, Tooltip, Progress } from 'antd';
 import { ArrowLeftOutlined, CheckCircleOutlined, BarChartOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { Camera } from '@/demoData/cameraData';
 import StatCard from '@/components/common/StatCard';
@@ -36,7 +36,7 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({ camera, onBack }) => {
     }
   };
 
-  // Generate static station data based on camera ID - this won't change on re-renders
+  // Generate static station data based on camera ID with targets and current values
   const cameraStations = useMemo(() => {
     const stationTypes = ['Dismantling-Station', 'Assembly-Station', 'Quality-Station', 'Repair-Station'];
     const stationNumbers = ['2-3', '1-4', '5-6', '3-7', '8-9'];
@@ -51,7 +51,17 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({ camera, onBack }) => {
       const stationNumberIndex = (seed + i * 3) % stationNumbers.length;
       const stationType = stationTypes[stationTypeIndex];
       const stationNumber = stationNumbers[stationNumberIndex];
-      stations.push(`${stationType}-${stationNumber}`);
+      
+      // Generate target and current values
+      const target = 50 + ((seed + i * 5) % 50); // 50-100 range
+      const current = Math.floor(target * (0.6 + ((seed + i * 7) % 40) / 100)); // 60-100% of target
+      
+      stations.push({
+        name: `${stationType}-${stationNumber}`,
+        current,
+        target,
+        percentage: Math.round((current / target) * 100)
+      });
     }
     
     return stations;
@@ -124,7 +134,6 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({ camera, onBack }) => {
               {/* Placeholder for RTSP video player */}
               <div className="bg-black rounded-lg relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
                 <Image
-                  src={camera.imagePath}
                   alt={`${camera.name} live feed`}
                   className="w-full h-full object-cover"
                   preview={false}
@@ -178,29 +187,73 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({ camera, onBack }) => {
 
             {/* Stations Section */}
             <Card 
-              className="flex-1 border border-gray-200 shadow-sm"
-              style={{ backgroundColor: '#F8FAFC' }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <EnvironmentOutlined className="text-xl" style={{ color: '#3B82F6' }} />
-                <h3 className="text-lg font-bold text-gray-800 mb-0">Stations</h3>
-              </div>
+              className="flex-1 border border-gray-200 shadow-sm !bg-gray-50 !p-0 !h-[100px]"
+              title={
+                <div className="flex items-center gap-2 !mb-3">
+                  <EnvironmentOutlined className="!text-base" style={{ color: '#3B82F6' }} />
+                  <h3 className="!text-sm font-semibold text-gray-800 !mb-0">Stations ({cameraStations.length})</h3>
+                  </div>
+              }
+              >
               
-              <List
-                dataSource={cameraStations}
-                renderItem={(station, index) => (
-                  <List.Item className="py-2 px-0 border-0">
-                    <div className="flex items-center gap-3 w-full">
-                      <div 
-                        className="w-2 h-2 rounded-full flex-shrink-0"
-                        style={{ backgroundColor: '#3B82F6' }}
-                      />
-                      <span className="text-gray-700 text-sm font-medium">{station}</span>
+              {/* Split Layout: Left - Stations List, Right - Progress */}
+              <div className="flex gap-4 !h-full">
+                {/* Left Half - Stations List */}
+                <div className="flex-1">
+                  <div className="space-y-1">
+                    {cameraStations.map((station, index) => (
+                      <div
+                        key={index}
+                        className="!bg-white !border !border-gray-200 hover:!bg-gray-50 !transition-all !duration-200 !p-2 !rounded-md"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="!text-xs font-medium text-gray-800">{station.name}</div>
+                            <div className="flex items-baseline gap-1 !mt-1">
+                              <span className="!text-[10px] text-gray-600">Target:</span>
+                              <span className="!text-xs font-bold text-gray-900">
+                                {station.current}/{station.target}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex-shrink-0 ml-2">
+                            <div className="!text-xs font-semibold text-gray-700">
+                              {station.percentage}%
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Right Half - Progress Bar */}
+                <div className="flex-1 flex flex-col items-center justify-center !p-2">
+                  <Progress
+                    type="circle"
+                    percent={Math.round(cameraStations.reduce((acc, station) => acc + station.percentage, 0) / cameraStations.length)}
+                    size={80}
+                    strokeColor={{
+                      '0%': '#10B981',
+                      '100%': '#3B82F6',
+                    }}
+                    trailColor="#f3f4f6"
+                    strokeWidth={6}
+                    format={(percent) => (
+                      <div className="text-center">
+                        <div className="!text-sm font-bold text-gray-900">{percent}%</div>
+                        <div className="!text-[10px] text-gray-500">avg</div>
+                      </div>
+                    )}
+                  />
+                  <div className="!mt-3 text-center">
+                    <div className="!text-xs font-medium text-gray-700">Overall Performance</div>
+                    <div className="!text-[10px] text-gray-500 !mt-1">
+                      Average across all stations
                     </div>
-                  </List.Item>
-                )}
-                split={false}
-              />
+                  </div>
+                </div>
+              </div>
             </Card>
           </div>
         </Col>

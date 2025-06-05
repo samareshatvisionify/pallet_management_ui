@@ -37,31 +37,14 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onViewClick }) => {
           />
         </div>
       }
-      actions={[
-        <Button 
-          key="view" 
-          type="default"
-          icon={<PlayCircleOutlined />} 
-          size="large"
-          className="w-full h-12 bg-gray-200 text-gray-800 hover:bg-gray-600 hover:text-white border-0 hover:border-0 focus:border-0 active:border-0 rounded-md mx-0"
-          onClick={() => onViewClick(camera.id)}
-          style={{
-            margin: 0,
-            borderRadius: '6px',
-            boxShadow: 'none'
-          }}
-        >
-          View Camera
-        </Button>
-      ]}
-      className="h-full"
+      className="h-full border-0 shadow-none"
     >
       {/* Image Viewer */}
-      <div className="mb-4">
+      <div className="mb-4 px-4">
         <Image
           src={camera.imagePath}
           alt={`${camera.name} feed`}
-          className="w-full h-32 object-cover rounded-md"
+          className="w-full object-cover rounded-md !p-0 !block"
           fallback="https://via.placeholder.com/400x300/gray/white?text=No+Image"
           preview={{
             mask: <div className="text-white">View Feed</div>,
@@ -69,7 +52,7 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onViewClick }) => {
         />
       </div>
 
-      <div className="flex flex-col gap-2 md:gap-3">
+      <div className="flex flex-col gap-2 md:gap-3 px-4 mb-4">
         
         <div className="flex justify-between items-center">
           <span className="text-xs md:text-sm font-medium">Zone:</span>
@@ -92,6 +75,24 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onViewClick }) => {
             }
           </Tag>
         </div>
+      </div>
+
+      {/* View Camera Button - Full Width at Bottom */}
+      <div className="border-t border-gray-200">
+        <Button 
+          type="default"
+          icon={<PlayCircleOutlined />} 
+          size="large"
+          className="w-full h-12 bg-gray-200 text-gray-800 hover:bg-gray-600 hover:text-white border-0 hover:border-0 focus:border-0 active:border-0 rounded-none"
+          onClick={() => onViewClick(camera.id)}
+          style={{
+            margin: 0,
+            borderRadius: 0,
+            boxShadow: 'none'
+          }}
+        >
+          View Camera
+        </Button>
       </div>
     </Card>
   );
