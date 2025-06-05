@@ -35,12 +35,19 @@ export {
   calculatePercentageChange,
   getStatusColor,
   generateChartLabels,
+  // New station utilities
+  convertStationsToChartData,
+  generateTargetComparisonDatasets,
+  generateStationChartLabels,
 } from './utils';
 
 // Zone Chart Components
 export { default as ZoneComparisonChart } from './ZoneComparisonChart';
 export { default as ZoneEfficiencyChart } from './ZoneEfficiencyChart';
 export { default as ZoneStatusChart } from './ZoneStatusChart';
+
+// Generic Chart Components
+export { default as ComparisonChart } from './ComparisonChart';
 
 // Camera Chart Components
 export { default as CameraActivityTimelineChart } from './CameraActivityTimelineChart';

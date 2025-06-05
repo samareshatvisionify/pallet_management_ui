@@ -90,4 +90,38 @@ export const getStatusColor = (status: 'active' | 'warning' | 'inactive'): strin
 // Generate chart labels from zone names
 export const generateChartLabels = (zones: Zone[]): string[] => {
   return zones.map(zone => zone.name.replace(' - ', '\n'));
+};
+
+// New utility functions for stations
+export const convertStationsToChartData = (stations: Zone['stations']) => {
+  return stations.map(station => ({
+    name: station.name,
+    currentCount: station.currentCount,
+    targetCount: station.targetCount,
+    efficiency: station.efficiency,
+    status: station.status,
+  }));
+};
+
+// Generate target vs current comparison dataset for stations
+export const generateTargetComparisonDatasets = (data: { name: string; currentCount: number; targetCount: number; }[]) => {
+  return [
+    {
+      label: 'Target Count',
+      data: data.map(item => item.targetCount),
+      backgroundColor: chartPalettes.comparison.previous,
+      borderRadius: 8,
+    },
+    {
+      label: 'Current Count',
+      data: data.map(item => item.currentCount),
+      backgroundColor: chartPalettes.comparison.current,
+      borderRadius: 8,
+    },
+  ];
+};
+
+// Generate chart labels from station names
+export const generateStationChartLabels = (stations: Zone['stations']): string[] => {
+  return stations.map(station => station.name.replace(' - ', '\n'));
 }; 
