@@ -26,7 +26,7 @@ interface CamerasComponentProps {
   getSubcategoriesForCategory: (category: Camera['category']) => Camera['subcategory'][];
 }
 
-const CamerasComponent: React.FC<CamerasComponentProps> = ({
+const Cameras: React.FC<CamerasComponentProps> = ({
   cameras,
   loading,
   error,
@@ -113,4 +113,4 @@ const CamerasComponent: React.FC<CamerasComponentProps> = ({
   );
 };
 
-export default CamerasComponent; 
+export default Cameras; 

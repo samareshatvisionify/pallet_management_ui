@@ -37,7 +37,12 @@ export {
   generateChartLabels,
 } from './utils';
 
-// Reusable Chart Components
+// Zone Chart Components
 export { default as ZoneComparisonChart } from './ZoneComparisonChart';
 export { default as ZoneEfficiencyChart } from './ZoneEfficiencyChart';
-export { default as ZoneStatusChart } from './ZoneStatusChart'; 
+export { default as ZoneStatusChart } from './ZoneStatusChart';
+
+// Camera Chart Components
+export { default as CameraActivityTimelineChart } from './CameraActivityTimelineChart';
+export { default as CameraHourlyActivityChart } from './CameraHourlyActivityChart';
+export { default as CameraWeeklyTrendChart } from './CameraWeeklyTrendChart'; 

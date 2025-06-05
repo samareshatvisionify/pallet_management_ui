@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { CamerasComponent } from '@/components';
+import Cameras from '@/components/Cameras';
 import { useCameras } from '@/hooks/useCameras';
 
 const CamerasContainer: React.FC = () => {
@@ -30,7 +30,7 @@ const CamerasContainer: React.FC = () => {
   } = useCameras();
 
   return (
-    <CamerasComponent
+    <Cameras
       // Data props
       cameras={cameras}
       loading={loading}
