@@ -43,8 +43,13 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onViewClick }) => {
           type="default"
           icon={<PlayCircleOutlined />} 
           size="large"
-          className="w-full bg-gray-200 text-gray-800 hover:bg-gray-600 hover:text-white border-gray-300 hover:border-gray-600"
+          className="w-full h-12 bg-gray-200 text-gray-800 hover:bg-gray-600 hover:text-white border-0 hover:border-0 focus:border-0 active:border-0 rounded-md mx-0"
           onClick={() => onViewClick(camera.id)}
+          style={{
+            margin: 0,
+            borderRadius: '6px',
+            boxShadow: 'none'
+          }}
         >
           View Camera
         </Button>

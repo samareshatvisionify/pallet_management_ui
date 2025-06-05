@@ -23,7 +23,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Making',
     rtspUrl: 'rtsp://192.168.1.1:554/stream1',
-    imagePath: 'https://via.placeholder.com/400x300/4285f4/ffffff?text=Camera+1+Feed',
+    imagePath: '/src/demoData/cameraImages/camera1.svg',
     efficiency: 96,
     todaysTotal: 158,
     appliedScenarios: ['Pallet Build', 'Conveyor Board']
@@ -37,7 +37,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Dismantling',
     rtspUrl: 'rtsp://192.168.1.2:554/stream1',
-    imagePath: 'https://via.placeholder.com/400x300/34a853/ffffff?text=Camera+2+Feed',
+    imagePath: '/src/demoData/cameraImages/camera2.svg',
     efficiency: 87,
     todaysTotal: 142,
     appliedScenarios: ['Pallet Dismantling', 'Quality Check']
@@ -51,7 +51,7 @@ export const democameras: Camera[] = [
     category: 'Boards', 
     subcategory: 'Board',
     rtspUrl: 'rtsp://192.168.1.3:554/stream1',
-    imagePath: 'https://via.placeholder.com/400x300/ef4444/ffffff?text=Camera+3+Offline',
+    imagePath: '/src/demoData/cameraImages/camera3.svg',
     efficiency: 0,
     todaysTotal: 0,
     appliedScenarios: ['Board Processing']
@@ -65,7 +65,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Repair',
     rtspUrl: 'rtsp://192.168.1.4:554/stream1',
-    imagePath: 'https://via.placeholder.com/400x300/8b5cf6/ffffff?text=Camera+4+Feed',
+    imagePath: '/src/demoData/cameraImages/camera4.svg',
     efficiency: 92,
     todaysTotal: 134,
     appliedScenarios: ['Pallet Repair', 'Damage Assessment']
@@ -79,7 +79,7 @@ export const democameras: Camera[] = [
     category: 'Boards', 
     subcategory: 'Trimsaw',
     rtspUrl: 'rtsp://192.168.1.5:554/stream1',
-    imagePath: 'https://via.placeholder.com/400x300/f59e0b/ffffff?text=Camera+5+QC',
+    imagePath: '/src/demoData/cameraImages/camera5.svg',
     efficiency: 94,
     todaysTotal: 167,
     appliedScenarios: ['Board Quality', 'Trimsaw Operation']
@@ -93,7 +93,7 @@ export const democameras: Camera[] = [
     category: 'Pallets', 
     subcategory: 'Making',
     rtspUrl: 'rtsp://192.168.1.6:554/stream1',
-    imagePath: 'https://via.placeholder.com/400x300/f97316/ffffff?text=Camera+6+Maintenance',
+    imagePath: '/src/demoData/cameraImages/camera6.svg',
     efficiency: 78,
     todaysTotal: 89,
     appliedScenarios: ['Package Monitoring']

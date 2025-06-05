@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from 'antd';
 
 interface CameraWeeklyTrendChartProps {
@@ -8,6 +8,9 @@ interface CameraWeeklyTrendChartProps {
 }
 
 const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraName }) => {
+  const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
+  const [tooltipData, setTooltipData] = useState<{ day: string; count: number; x: number; y: number } | null>(null);
+
   // Weekly trend data matching the image pattern
   const weeklyData = [
     { day: 'Mon', count: 140, label: 'Mon' },
@@ -29,19 +32,88 @@ const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraN
     return { x, y };
   };
 
-  // Generate path for the line
-  const linePath = weeklyData.map((point, index) => {
-    const coords = getCoordinates(index, point.count);
-    return `${index === 0 ? 'M' : 'L'} ${coords.x} ${coords.y}`;
-  }).join(' ');
+  // Generate smooth curve path using cubic bezier curves for more natural curves
+  const generateSmoothPath = () => {
+    if (weeklyData.length < 2) return '';
+    
+    const points = weeklyData.map((point, index) => getCoordinates(index, point.count));
+    
+    if (points.length === 2) {
+      return `M ${points[0].x} ${points[0].y} L ${points[1].x} ${points[1].y}`;
+    }
 
-  // Generate path for the area
-  const areaPath = [
-    linePath,
-    `L 100 90`, // Bottom right
-    `L 0 90`,   // Bottom left
-    'Z'         // Close path
-  ].join(' ');
+    let path = `M ${points[0].x} ${points[0].y}`;
+    
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const current = points[i];
+      const next = points[i + 1];
+      
+      // Calculate control points for smoother curves
+      const tension = 0.3; // Smoothness factor
+      
+      let cp1x, cp1y, cp2x, cp2y;
+      
+      if (i === 1) {
+        // First curve - use current and next point to determine direction
+        const dx = next ? (next.x - prev.x) * tension : (current.x - prev.x) * tension;
+        const dy = next ? (next.y - prev.y) * tension : (current.y - prev.y) * tension;
+        cp1x = prev.x + dx * 0.5;
+        cp1y = prev.y + dy * 0.5;
+        cp2x = current.x - dx * 0.5;
+        cp2y = current.y - dy * 0.5;
+      } else if (i === points.length - 1) {
+        // Last curve - use previous point to determine direction
+        const prevPrev = points[i - 2];
+        const dx = (current.x - prevPrev.x) * tension;
+        const dy = (current.y - prevPrev.y) * tension;
+        cp1x = prev.x + dx * 0.5;
+        cp1y = prev.y + dy * 0.5;
+        cp2x = current.x - dx * 0.5;
+        cp2y = current.y - dy * 0.5;
+      } else {
+        // Middle curves - use surrounding points for smooth transitions
+        const dx1 = (current.x - points[i - 2].x) * tension;
+        const dy1 = (current.y - points[i - 2].y) * tension;
+        const dx2 = (next.x - prev.x) * tension;
+        const dy2 = (next.y - prev.y) * tension;
+        
+        cp1x = prev.x + dx1 * 0.5;
+        cp1y = prev.y + dy1 * 0.5;
+        cp2x = current.x - dx2 * 0.5;
+        cp2y = current.y - dy2 * 0.5;
+      }
+      
+      path += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${current.x} ${current.y}`;
+    }
+    
+    return path;
+  };
+
+  // Generate area path
+  const generateAreaPath = () => {
+    const linePath = generateSmoothPath();
+    return `${linePath} L 100 90 L 0 90 Z`;
+  };
+
+  const handlePointHover = (index: number, event: React.MouseEvent) => {
+    const point = weeklyData[index];
+    const coords = getCoordinates(index, point.count);
+    const rect = event.currentTarget.getBoundingClientRect();
+    
+    setHoveredPoint(index);
+    setTooltipData({
+      day: point.day,
+      count: point.count,
+      x: rect.left + rect.width / 2,
+      y: rect.top
+    });
+  };
+
+  const handlePointLeave = () => {
+    setHoveredPoint(null);
+    setTooltipData(null);
+  };
 
   return (
     <Card>
@@ -86,16 +158,16 @@ const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraN
               
               {/* Area under curve */}
               <path
-                d={areaPath}
+                d={generateAreaPath()}
                 fill="url(#weeklyAreaGradient)"
               />
 
-              {/* Main line */}
+              {/* Main line with smooth curves */}
               <path
-                d={linePath}
+                d={generateSmoothPath()}
                 fill="none"
                 stroke="#3b82f6"
-                strokeWidth="0.5"
+                strokeWidth="0.8"
                 vectorEffect="non-scaling-stroke"
                 className="transition-all duration-300"
               />
@@ -105,16 +177,22 @@ const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraN
             <div className="absolute inset-0">
               {weeklyData.map((point, index) => {
                 const coords = getCoordinates(index, point.count);
+                const isHovered = hoveredPoint === index;
+                
                 return (
                   <div
                     key={index}
-                    className="absolute w-2 h-2 bg-blue-500 border-2 border-white rounded-full hover:w-3 hover:h-3 transition-all duration-200 cursor-pointer"
+                    className={`absolute transition-all duration-200 cursor-pointer ${
+                      isHovered ? 'w-3 h-3' : 'w-2 h-2'
+                    } bg-blue-500 border-2 border-white rounded-full`}
                     style={{
                       left: `${coords.x}%`,
                       top: `${coords.y}%`,
-                      transform: 'translate(-50%, -50%)'
+                      transform: 'translate(-50%, -50%)',
+                      zIndex: isHovered ? 10 : 1
                     }}
-                    title={`${point.day}: ${point.count}`}
+                    onMouseEnter={(e) => handlePointHover(index, e)}
+                    onMouseLeave={handlePointLeave}
                   />
                 );
               })}
@@ -131,6 +209,21 @@ const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraN
           </div>
         </div>
       </div>
+
+      {/* Custom Tooltip */}
+      {tooltipData && (
+        <div
+          className="fixed bg-white border border-gray-300 rounded-lg shadow-lg px-3 py-2 text-sm z-50 pointer-events-none"
+          style={{
+            left: tooltipData.x,
+            top: tooltipData.y - 60,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="font-medium text-gray-800">{tooltipData.day}</div>
+          <div className="text-blue-600">total: {tooltipData.count}</div>
+        </div>
+      )}
     </Card>
   );
 };
