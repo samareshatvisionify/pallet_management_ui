@@ -5,12 +5,14 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import palletSlice from './slices/palletSlice';
 import dashboardSlice from './slices/dashboardSlice';
 import uiSlice from './slices/uiSlice';
+import authSlice from './slices/authSlice';
 
 export const store = configureStore({
   reducer: {
     pallets: palletSlice,
     dashboard: dashboardSlice,
     ui: uiSlice,
+    auth: authSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

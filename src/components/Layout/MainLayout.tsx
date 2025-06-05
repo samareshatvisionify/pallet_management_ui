@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Button, Typography, theme, Select } from 'antd';
+import { Layout, Menu, Button, Typography, theme, Select, Dropdown } from 'antd';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -12,11 +12,13 @@ import {
   SettingOutlined,
   UserOutlined,
   GlobalOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { toggleSidebar, selectSidebarCollapsed } from '@/store/slices/uiSlice';
+import { useAuth } from '@/hooks/useAuth';
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -40,6 +42,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const collapsed = useAppSelector(selectSidebarCollapsed);
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuth();
   const [selectedSite, setSelectedSite] = useState('warehouse-a');
   const [isMobile, setIsMobile] = useState(false);
   const {
@@ -79,11 +83,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       icon: <HistoryOutlined />,
       label: <Link href="/historical">Historical</Link>,
     },
-    {
-      key: '/settings',
-      icon: <SettingOutlined />,
-      label: <Link href="/settings">Settings</Link>,
-    },
   ];
 
   // Bottom navigation items with site selector submenu when collapsed
@@ -122,6 +121,26 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     // TODO: Dispatch action to update selected site in Redux
     console.log('Selected site:', value);
   };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/auth');
+  };
+
+  // User menu items
+  const userMenuItems = [
+    {
+      key: 'profile',
+      icon: <UserOutlined />,
+      label: 'Profile',
+    },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: 'Logout',
+      onClick: handleLogout,
+    },
+  ];
 
   // Mobile Bottom Navigation Component
   const BottomNavigation = () => (
@@ -171,9 +190,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               optionFilterProp="label"
               options={sites}
             />
-            <Button type="text" icon={<UserOutlined />} size="small">
-              Admin
-            </Button>
+            <Dropdown
+              menu={{ items: userMenuItems }}
+              trigger={['click']}
+              placement="bottomRight"
+            >
+              <Button type="text" icon={<UserOutlined />} size="small">
+                {user?.username || 'Admin'}
+              </Button>
+            </Dropdown>
           </div>
         </Header>
 
@@ -287,9 +312,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <div className="text-sm text-gray-500">
               {sites.find(site => site.value === selectedSite)?.label}
             </div>
-            <Button type="text" icon={<UserOutlined />}>
-              Admin User
-            </Button>
+            <Dropdown
+              menu={{ items: userMenuItems }}
+              trigger={['click']}
+              placement="bottomRight"
+            >
+              <Button type="text" icon={<UserOutlined />}>
+                {user?.username || 'Admin User'}
+              </Button>
+            </Dropdown>
           </div>
         </Header>
 

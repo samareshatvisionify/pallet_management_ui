@@ -1,5 +1,5 @@
-import { DashboardContainer } from '@/containers';
+import DashboardContainer from '@/containers/DashboardContainer';
 
-export default function Home() {
+export default function HomePage() {
   return <DashboardContainer />;
 }
