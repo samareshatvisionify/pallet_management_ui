@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Alert, Typography } from 'antd';
 import { Zone, ZoneStats } from '@/store/slices/zoneSlice';
-import { ZoneComparisonChart } from '@/components/common/charts';
+import { ComparisonChart, convertZonesToChartData, generateComparisonDatasets, generateChartLabels } from '@/components/common/charts';
 import ZoneFilters from './ZoneFilters';
 import ZoneStatsComponent from './ZoneStats';
 import ZonesList from './ZonesList';
@@ -110,7 +110,23 @@ const Zones: React.FC<ZonesProps> = ({
       />
 
       {/* Zone Comparison Chart Section */}
-      <ZoneComparisonChart data={sortedZones} loading={loading} />
+      <ComparisonChart
+        data={{
+          labels: generateChartLabels(sortedZones),
+          datasets: generateComparisonDatasets(convertZonesToChartData(sortedZones))
+        }}
+        title="Zone Performance Comparison"
+        subtitle="Current period vs previous period pallet counts across all zones"
+        loading={loading}
+        yAxisLabel="pallets"
+        tooltipUnit="pallets"
+        originalData={convertZonesToChartData(sortedZones).map(zone => ({
+          name: zone.zoneName,
+          currentCount: zone.currentCount,
+          previousCount: zone.previousCount
+        }))}
+        className="!mt-8 mb-8 shadow-sm border border-gray-200"
+      />
     </div>
   );
 };

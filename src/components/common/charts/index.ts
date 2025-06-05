@@ -42,14 +42,13 @@ export {
 } from './utils';
 
 // Zone Chart Components
-export { default as ZoneComparisonChart } from './ZoneComparisonChart';
 export { default as ZoneEfficiencyChart } from './ZoneEfficiencyChart';
 export { default as ZoneStatusChart } from './ZoneStatusChart';
 
 // Generic Chart Components
 export { default as ComparisonChart } from './ComparisonChart';
+export { default as ActivityTimelineChart } from './ActivityTimelineChart';
 
 // Camera Chart Components
-export { default as CameraActivityTimelineChart } from './CameraActivityTimelineChart';
 export { default as CameraHourlyActivityChart } from './CameraHourlyActivityChart';
 export { default as CameraWeeklyTrendChart } from './CameraWeeklyTrendChart'; 
