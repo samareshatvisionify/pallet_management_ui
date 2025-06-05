@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { Alert, Typography } from 'antd';
 import { Zone, ZoneStats } from '@/store/slices/zoneSlice';
+import { ZoneComparisonChart } from '@/components/common/charts';
 import ZoneFilters from './ZoneFilters';
 import ZoneStatsComponent from './ZoneStats';
 import ZonesList from './ZonesList';
-import ZoneComparisonChart from './ZoneComparisonChart';
 
 const { Title } = Typography;
 
@@ -107,7 +107,7 @@ const Zones: React.FC<ZonesProps> = ({
       />
 
       {/* Zone Comparison Chart Section */}
-      <ZoneComparisonChart zones={sortedZones} loading={loading} />
+      <ZoneComparisonChart data={sortedZones} loading={loading} />
     </div>
   );
 };
