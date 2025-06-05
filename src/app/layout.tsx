@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { StyledComponentsRegistry, AntdProvider } from "../lib";
 import { MainLayout } from "@/components";
+import ReduxProvider from "@/store/ReduxProvider";
 import '@ant-design/v5-patch-for-react-19';
 import "./globals.css";
 
@@ -30,13 +31,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <StyledComponentsRegistry>
-          <AntdProvider>
-            <MainLayout>
-              {children}
-            </MainLayout>
-          </AntdProvider>
-        </StyledComponentsRegistry>
+        <ReduxProvider>
+          <StyledComponentsRegistry>
+            <AntdProvider>
+              <MainLayout>
+                {children}
+              </MainLayout>
+            </AntdProvider>
+          </StyledComponentsRegistry>
+        </ReduxProvider>
       </body>
     </html>
   );

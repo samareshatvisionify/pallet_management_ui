@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Layout, Menu, Button, Typography, theme } from 'antd';
 import {
   MenuFoldOutlined,
@@ -14,6 +14,8 @@ import {
 } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { toggleSidebar, selectSidebarCollapsed } from '@/store/slices/uiSlice';
 
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -23,7 +25,8 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useAppDispatch();
+  const collapsed = useAppSelector(selectSidebarCollapsed);
   const pathname = usePathname();
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -66,6 +69,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   // Get current selected key based on pathname
   const getSelectedKey = () => {
     return menuItems.find(item => item.key === pathname)?.key || '/';
+  };
+
+  const handleSidebarToggle = () => {
+    dispatch(toggleSidebar());
   };
 
   return (
@@ -155,7 +162,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
+              onClick={handleSidebarToggle}
               style={{
                 fontSize: '16px',
                 width: 64,

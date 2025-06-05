@@ -1,20 +1,42 @@
 'use client';
 
-import React from 'react';
-import { Card, Table, Tag, Button, Space, Typography, Input, Row, Col } from 'antd';
+import React, { useEffect } from 'react';
+import { Card, Table, Tag, Button, Space, Typography, Input, Row, Col, Spin } from 'antd';
 import { 
   SearchOutlined, 
   PlusOutlined, 
   EyeOutlined,
   EditOutlined,
-  DeleteOutlined 
+  DeleteOutlined,
+  ReloadOutlined 
 } from '@ant-design/icons';
-import { demopalletData, PalletData } from '@/demoData';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { 
+  fetchPallets,
+  setSearchTerm,
+  setStatusFilter,
+  selectFilteredPallets,
+  selectPalletsLoading,
+  selectSearchTerm,
+  selectStatusFilter
+} from '@/store/slices/palletSlice';
+import { PalletData } from '@/demoData';
 
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
 
 const PalletManagementContainer: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const pallets = useAppSelector(selectFilteredPallets);
+  const loading = useAppSelector(selectPalletsLoading);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const statusFilter = useAppSelector(selectStatusFilter);
+
+  useEffect(() => {
+    // Fetch pallets on component mount
+    dispatch(fetchPallets());
+  }, [dispatch]);
+
   const getStatusColor = (status: PalletData['status']) => {
     const colorMap = {
       'warehouse': 'blue',
@@ -24,6 +46,18 @@ const PalletManagementContainer: React.FC = () => {
       'maintenance': 'red'
     };
     return colorMap[status];
+  };
+
+  const handleSearch = (value: string) => {
+    dispatch(setSearchTerm(value));
+  };
+
+  const handleStatusFilter = (status: string | null) => {
+    dispatch(setStatusFilter(status));
+  };
+
+  const handleRefresh = () => {
+    dispatch(fetchPallets());
   };
 
   const columns = [
@@ -44,6 +78,22 @@ const PalletManagementContainer: React.FC = () => {
         </Tag>
       ),
       width: 120,
+      filters: [
+        { text: 'Warehouse', value: 'warehouse' },
+        { text: 'Loading', value: 'loading' },
+        { text: 'In Transit', value: 'in-transit' },
+        { text: 'Delivered', value: 'delivered' },
+        { text: 'Maintenance', value: 'maintenance' },
+      ],
+      onFilter: (value: any, record: PalletData) => {
+        if (value === statusFilter) {
+          handleStatusFilter(null);
+          return true;
+        }
+        handleStatusFilter(value);
+        return record.status === value;
+      },
+      filteredValue: statusFilter ? [statusFilter] : null,
     },
     {
       title: 'Location',
@@ -95,11 +145,20 @@ const PalletManagementContainer: React.FC = () => {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '24px' }}>
-        <Title level={2}>Pallet Management</Title>
-        <Paragraph>
-          Monitor and manage all pallets in your system. Track location, status, and AI analysis results.
-        </Paragraph>
+      <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <Title level={2}>Pallet Management</Title>
+          <Paragraph>
+            Monitor and manage all pallets in your system. Track location, status, and AI analysis results.
+          </Paragraph>
+        </div>
+        <Button 
+          icon={<ReloadOutlined />} 
+          onClick={handleRefresh}
+          loading={loading}
+        >
+          Refresh
+        </Button>
       </div>
 
       {/* Controls Section */}
@@ -109,7 +168,10 @@ const PalletManagementContainer: React.FC = () => {
             <Search
               placeholder="Search pallets..."
               prefix={<SearchOutlined />}
-              onSearch={(value) => console.log('Search:', value)}
+              value={searchTerm}
+              onSearch={handleSearch}
+              onChange={(e) => handleSearch(e.target.value)}
+              allowClear
             />
           </Col>
           <Col xs={24} sm={12} lg={4}>
@@ -121,21 +183,29 @@ const PalletManagementContainer: React.FC = () => {
             <Space wrap>
               <Button>Export</Button>
               <Button>Filter</Button>
-              <Button>Refresh</Button>
+              <Button 
+                onClick={() => {
+                  dispatch(setSearchTerm(''));
+                  dispatch(setStatusFilter(null));
+                }}
+              >
+                Clear Filters
+              </Button>
             </Space>
           </Col>
         </Row>
       </Card>
 
       {/* Pallets Table */}
-      <Card title="Pallets Overview">
+      <Card title={`Pallets Overview (${pallets.length} items)`}>
         <Table
           columns={columns}
-          dataSource={demopalletData}
+          dataSource={pallets}
           rowKey="id"
+          loading={loading}
           scroll={{ x: 1200 }}
           pagination={{
-            total: demopalletData.length,
+            total: pallets.length,
             pageSize: 10,
             showSizeChanger: true,
             showQuickJumper: true,
