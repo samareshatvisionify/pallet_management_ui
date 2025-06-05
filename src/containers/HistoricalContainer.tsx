@@ -113,25 +113,36 @@ const HistoricalContainer: React.FC = () => {
 
   const columns: ColumnsType<HistoricalRecord> = [
     {
-      title: 'Timestamp',
+      title: 'Time',
       dataIndex: 'timestamp',
       key: 'timestamp',
-      width: 180,
+      width: 140,
       sorter: true,
+      responsive: ['md'],
+      render: (timestamp: string) => (
+        <span className="text-xs md:text-sm">
+          {new Date(timestamp).toLocaleString()}
+        </span>
+      ),
     },
     {
-      title: 'Pallet ID',
+      title: 'Pallet',
       dataIndex: 'palletId',
       key: 'palletId',
-      width: 120,
+      width: 100,
+      render: (palletId: string) => (
+        <span className="text-xs md:text-sm font-medium">
+          {palletId}
+        </span>
+      ),
     },
     {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
-      width: 120,
+      width: 100,
       render: (action: string) => (
-        <Tag color={getActionColor(action)}>
+        <Tag color={getActionColor(action)} className="text-xs">
           {action.toUpperCase().replace('_', ' ')}
         </Tag>
       ),
@@ -147,29 +158,46 @@ const HistoricalContainer: React.FC = () => {
       title: 'Zone',
       dataIndex: 'zone',
       key: 'zone',
-      width: 150,
+      width: 120,
+      responsive: ['sm'],
+      render: (zone: string) => (
+        <span className="text-xs md:text-sm truncate" title={zone}>
+          {zone}
+        </span>
+      ),
     },
     {
       title: 'Camera',
       dataIndex: 'camera',
       key: 'camera',
-      width: 150,
+      width: 120,
+      responsive: ['lg'],
+      render: (camera: string) => (
+        <span className="text-xs md:text-sm truncate" title={camera}>
+          {camera}
+        </span>
+      ),
     },
     {
-      title: 'Confidence',
+      title: 'Conf.',
       dataIndex: 'confidence',
       key: 'confidence',
-      width: 100,
-      render: (confidence: number) => `${confidence}%`,
+      width: 80,
+      render: (confidence: number) => (
+        <span className="text-xs md:text-sm">
+          {confidence}%
+        </span>
+      ),
       sorter: true,
+      responsive: ['sm'],
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 100,
+      width: 80,
       render: (status: string) => (
-        <Tag color={getStatusColor(status)}>
+        <Tag color={getStatusColor(status)} className="text-xs">
           {status.toUpperCase()}
         </Tag>
       ),
@@ -179,6 +207,12 @@ const HistoricalContainer: React.FC = () => {
       dataIndex: 'details',
       key: 'details',
       ellipsis: true,
+      responsive: ['lg'],
+      render: (details: string) => (
+        <span className="text-xs md:text-sm" title={details}>
+          {details}
+        </span>
+      ),
     },
   ];
 
@@ -192,40 +226,53 @@ const HistoricalContainer: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* Page Header */}
-      <div className="mb-6 flex justify-between items-center">
-        <div>
-          <Title level={2}>Historical Data</Title>
-          <Paragraph>
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <div className="min-w-0 flex-1">
+          <Title level={2} className="!mb-2 !text-xl md:!text-2xl">Historical Data</Title>
+          <Paragraph className="!mb-0 text-sm md:text-base">
             View and analyze historical pallet tracking data, AI detections, and system events.
           </Paragraph>
         </div>
-        <Space>
-          <Button icon={<DownloadOutlined />} loading={loading} onClick={handleExport}>
-            Export Data
-          </Button>
-          <Button icon={<ReloadOutlined />}>
-            Refresh
-          </Button>
-        </Space>
+        <div className="flex-shrink-0">
+          <Space size="small">
+            <Button 
+              icon={<DownloadOutlined />} 
+              loading={loading} 
+              onClick={handleExport}
+              size="small"
+              className="md:size-default"
+            >
+              <span className="hidden sm:inline">Export</span>
+            </Button>
+            <Button icon={<ReloadOutlined />} size="small" className="md:size-default">
+              <span className="hidden sm:inline">Refresh</span>
+            </Button>
+          </Space>
+        </div>
       </div>
 
       {/* Filters */}
-      <Card className="mb-6">
-        <Row gutter={[16, 16]} align="middle">
-          <Col xs={24} sm={8} lg={6}>
-            <div className="mb-2 text-sm font-medium">Date Range</div>
-            <RangePicker className="w-full" />
+      <Card className="mb-4 md:mb-6">
+        <Row gutter={[12, 12]} align="middle" className="md:gutter-16">
+          <Col xs={24} sm={12} lg={6}>
+            <div className="mb-1 md:mb-2 text-xs md:text-sm font-medium">Date Range</div>
+            <RangePicker 
+              className="w-full" 
+              size="small"
+              placeholder={['Start', 'End']}
+            />
           </Col>
-          <Col xs={24} sm={8} lg={4}>
-            <div className="mb-2 text-sm font-medium">Action Type</div>
+          <Col xs={24} sm={12} lg={4}>
+            <div className="mb-1 md:mb-2 text-xs md:text-sm font-medium">Action Type</div>
             <Select
               placeholder="All actions"
               className="w-full"
               allowClear
               value={selectedAction}
               onChange={setSelectedAction}
+              size="small"
             >
               <Select.Option value="detected">Detected</Select.Option>
               <Select.Option value="moved">Moved</Select.Option>
@@ -234,28 +281,32 @@ const HistoricalContainer: React.FC = () => {
               <Select.Option value="error">Error</Select.Option>
             </Select>
           </Col>
-          <Col xs={24} sm={8} lg={6}>
-            <div className="mb-2 text-sm font-medium">Search</div>
+          <Col xs={24} sm={12} lg={6}>
+            <div className="mb-1 md:mb-2 text-xs md:text-sm font-medium">Search</div>
             <Search
-              placeholder="Search pallet ID, zone, camera..."
+              placeholder="Search pallet ID, zone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               allowClear
+              size="small"
             />
           </Col>
-          <Col xs={24} lg={8}>
-            <div className="mb-2 text-sm font-medium">&nbsp;</div>
-            <Space>
-              <Button icon={<FilterOutlined />}>
-                Advanced Filters
+          <Col xs={24} sm={12} lg={8}>
+            <div className="mb-1 md:mb-2 text-xs md:text-sm font-medium opacity-0 md:opacity-100">&nbsp;</div>
+            <Space size="small" wrap>
+              <Button icon={<FilterOutlined />} size="small" className="md:size-default">
+                <span className="hidden sm:inline">Advanced</span>
               </Button>
               <Button 
                 onClick={() => {
                   setSelectedAction(null);
                   setSearchTerm('');
                 }}
+                size="small"
+                className="md:size-default"
               >
-                Clear All
+                <span className="hidden sm:inline">Clear All</span>
+                <span className="sm:hidden">Clear</span>
               </Button>
             </Space>
           </Col>
@@ -263,20 +314,24 @@ const HistoricalContainer: React.FC = () => {
       </Card>
 
       {/* Historical Data Table */}
-      <Card title={`Historical Records (${historicalData.length} entries)`}>
+      <Card title={`Records (${historicalData.length})`} className="overflow-hidden">
         <Table
           columns={columns}
           dataSource={historicalData}
           rowKey="id"
           loading={loading}
-          scroll={{ x: 1200 }}
+          scroll={{ x: 600 }}
+          size="small"
+          className="md:size-default"
           pagination={{
             total: historicalData.length,
-            pageSize: 20,
+            pageSize: 10,
             showSizeChanger: true,
-            showQuickJumper: true,
+            showQuickJumper: false,
             showTotal: (total, range) => 
-              `${range[0]}-${range[1]} of ${total} records`,
+              `${range[0]}-${range[1]} of ${total}`,
+            simple: true,
+            responsive: true,
           }}
         />
       </Card>

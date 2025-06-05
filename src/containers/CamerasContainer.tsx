@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Card, Typography, Row, Col, Button, Badge, Tag } from 'antd';
+import { Card, Typography, Row, Col, Button, Badge, Tag, Space } from 'antd';
 import { 
   CameraOutlined, 
   PlayCircleOutlined,
@@ -33,59 +33,72 @@ const CamerasContainer: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* Page Header */}
-      <div className="mb-6 flex justify-between items-center">
-        <div>
-          <Title level={2}>Camera Management</Title>
-          <Paragraph>
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <div className="min-w-0 flex-1">
+          <Title level={2} className="!mb-2 !text-xl md:!text-2xl">Camera Management</Title>
+          <Paragraph className="!mb-0 text-sm md:text-base">
             Monitor and manage all cameras in your facility. View live feeds, recording status, and camera health.
           </Paragraph>
         </div>
-        <Button icon={<ReloadOutlined />}>
-          Refresh Status
-        </Button>
+        <div className="flex-shrink-0">
+          <Button icon={<ReloadOutlined />} size="small" className="md:size-default">
+            <span className="hidden sm:inline">Refresh Status</span>
+          </Button>
+        </div>
       </div>
 
       {/* Camera Grid */}
-      <Row gutter={[24, 24]}>
+      <Row gutter={[12, 12]} className="md:gutter-24">
         {cameras.map((camera) => (
-          <Col xs={24} sm={12} lg={8} key={camera.id}>
+          <Col xs={24} sm={12} lg={8} xl={6} key={camera.id}>
             <Card
               title={
                 <div className="flex items-center gap-2">
-                  <CameraOutlined />
-                  {camera.name}
+                  <CameraOutlined className="text-sm md:text-base" />
+                  <span className="text-sm md:text-base truncate">{camera.name}</span>
                 </div>
               }
               actions={[
-                <Button key="view" type="text" icon={<PlayCircleOutlined />}>
-                  View
+                <Button key="view" type="text" icon={<PlayCircleOutlined />} size="small" className="md:size-default">
+                  <span className="hidden sm:inline">View</span>
                 </Button>,
-                <Button key="settings" type="text" icon={<SettingOutlined />}>
-                  Settings
+                <Button key="settings" type="text" icon={<SettingOutlined />} size="small" className="md:size-default">
+                  <span className="hidden sm:inline">Settings</span>
                 </Button>,
               ]}
+              className="h-full"
             >
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2 md:gap-3">
                 <div className="flex justify-between items-center">
-                  <span>Status:</span>
+                  <span className="text-xs md:text-sm font-medium">Status:</span>
                   <Badge 
                     status={camera.status === 'online' ? 'success' : camera.status === 'offline' ? 'error' : 'warning'} 
-                    text={camera.status.toUpperCase()}
+                    text={
+                      <span className="text-xs md:text-sm">
+                        {camera.status.toUpperCase()}
+                      </span>
+                    }
                   />
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span>Zone:</span>
-                  <Tag>{camera.zone}</Tag>
+                  <span className="text-xs md:text-sm font-medium">Zone:</span>
+                  <Tag className="text-xs md:text-sm max-w-32 truncate" title={camera.zone}>
+                    {camera.zone}
+                  </Tag>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span>Recording:</span>
+                  <span className="text-xs md:text-sm font-medium">Recording:</span>
                   <Badge 
                     status={camera.recording ? 'processing' : 'default'} 
-                    text={camera.recording ? 'RECORDING' : 'STOPPED'}
+                    text={
+                      <span className="text-xs md:text-sm">
+                        {camera.recording ? 'RECORDING' : 'STOPPED'}
+                      </span>
+                    }
                   />
                 </div>
               </div>
@@ -95,12 +108,12 @@ const CamerasContainer: React.FC = () => {
       </Row>
 
       {/* Add Camera Button */}
-      <Card className="mt-6 text-center">
-        <div className="py-10">
-          <CameraOutlined className="text-5xl text-gray-300 mb-4" />
-          <Title level={4}>Add New Camera</Title>
-          <Paragraph>Configure additional cameras to monitor your facility.</Paragraph>
-          <Button type="primary" size="large">
+      <Card className="mt-4 md:mt-6 text-center">
+        <div className="py-6 md:py-10">
+          <CameraOutlined className="text-3xl md:text-5xl text-gray-300 mb-2 md:mb-4" />
+          <Title level={4} className="!text-base md:!text-xl">Add New Camera</Title>
+          <Paragraph className="!text-sm md:!text-base">Configure additional cameras to monitor your facility.</Paragraph>
+          <Button type="primary" size="middle" className="md:size-large">
             Add Camera
           </Button>
         </div>

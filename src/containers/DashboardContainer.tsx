@@ -38,113 +38,129 @@ const DashboardContainer: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* Page Header */}
-      <div className="mb-6 flex justify-between items-center">
-        <div>
-          <Title level={2}>Dashboard</Title>
-          <Paragraph>
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <div className="min-w-0 flex-1">
+          <Title level={2} className="!mb-2 !text-xl md:!text-2xl">Dashboard</Title>
+          <Paragraph className="!mb-0 text-sm md:text-base">
             Welcome to VisionAI Pallet Management System. Monitor your pallet operations and AI analytics in real-time.
           </Paragraph>
         </div>
-        <Button 
-          icon={<ReloadOutlined />} 
-          onClick={handleRefresh}
-          loading={loading}
-        >
-          Refresh
-        </Button>
+        <div className="flex-shrink-0">
+          <Button 
+            icon={<ReloadOutlined />} 
+            onClick={handleRefresh}
+            loading={loading}
+            size="small"
+            className="md:size-default"
+          >
+            <span className="hidden sm:inline">Refresh</span>
+          </Button>
+        </div>
       </div>
 
       {/* Statistics Cards */}
       <Spin spinning={loading}>
-        <Row gutter={[24, 24]} className="mb-6">
-          <Col xs={24} sm={12} lg={6}>
-            <Card>
+        <Row gutter={[12, 12]} className="mb-4 md:mb-6 md:gutter-24">
+          <Col xs={12} sm={12} md={6}>
+            <Card className="h-full">
               <Statistic
                 title="Total Pallets"
                 value={stats.totalPallets}
                 prefix={<AppstoreOutlined />}
-                valueStyle={{ color: '#3f8600' }}
+                valueStyle={{ color: '#3f8600', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+                className="text-center sm:text-left"
               />
             </Card>
           </Col>
-          <Col xs={24} sm={12} lg={6}>
-            <Card>
+          <Col xs={12} sm={12} md={6}>
+            <Card className="h-full">
               <Statistic
                 title="Active Scans"
                 value={stats.activeScans}
                 prefix={<EyeOutlined />}
-                valueStyle={{ color: '#1890ff' }}
+                valueStyle={{ color: '#1890ff', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+                className="text-center sm:text-left"
               />
             </Card>
           </Col>
-          <Col xs={24} sm={12} lg={6}>
-            <Card>
+          <Col xs={12} sm={12} md={6}>
+            <Card className="h-full">
               <Statistic
                 title="Processed Today"
                 value={stats.processedToday}
                 prefix={<CheckCircleOutlined />}
-                valueStyle={{ color: '#cf1322' }}
+                valueStyle={{ color: '#cf1322', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+                className="text-center sm:text-left"
               />
             </Card>
           </Col>
-          <Col xs={24} sm={12} lg={6}>
-            <Card>
+          <Col xs={12} sm={12} md={6}>
+            <Card className="h-full">
               <Statistic
                 title="AI Accuracy"
                 value={stats.aiAccuracy}
                 suffix="%"
                 prefix={<BarChartOutlined />}
-                valueStyle={{ color: '#722ed1' }}
+                valueStyle={{ color: '#722ed1', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+                className="text-center sm:text-left"
               />
             </Card>
           </Col>
         </Row>
 
         {/* Dashboard Content */}
-        <Row gutter={[24, 24]}>
+        <Row gutter={[12, 12]} className="md:gutter-24">
           <Col xs={24} lg={16}>
-            <Card title="Recent Activity" className="h-96">
-              <div className="p-5 text-center">
-                <Title level={4}>Pallet Activity Chart</Title>
-                <Paragraph>Chart component will be implemented here</Paragraph>
-                <Progress percent={75} status="active" />
+            <Card title="Recent Activity" className="h-64 md:h-96">
+              <div className="p-2 md:p-5 text-center h-full flex flex-col justify-center">
+                <Title level={4} className="!text-base md:!text-xl">Pallet Activity Chart</Title>
+                <Paragraph className="!text-sm md:!text-base">Chart component will be implemented here</Paragraph>
+                <Progress percent={75} status="active" className="max-w-md mx-auto" />
               </div>
             </Card>
           </Col>
           <Col xs={24} lg={8}>
-            <Card title="System Status" className="h-96">
-              <div className="flex flex-col gap-4">
+            <Card title="System Status" className="h-64 md:h-96">
+              <div className="flex flex-col gap-3 md:gap-4">
                 <div>
-                  <Paragraph strong>Vision AI Status</Paragraph>
+                  <Paragraph strong className="!text-sm md:!text-base">Vision AI Status</Paragraph>
                   <Progress 
                     percent={systemStatus.visionAI} 
                     status={systemStatus.visionAI >= 95 ? "success" : "normal"} 
-                    format={() => systemStatus.visionAI >= 95 ? 'Online' : 'Warning'} 
+                    format={() => systemStatus.visionAI >= 95 ? 'Online' : 'Warning'}
+                    size="small"
+                    className="md:size-default"
                   />
                 </div>
                 <div>
-                  <Paragraph strong>Database Connection</Paragraph>
+                  <Paragraph strong className="!text-sm md:!text-base">Database Connection</Paragraph>
                   <Progress 
                     percent={systemStatus.databaseConnection} 
                     status={systemStatus.databaseConnection >= 95 ? "success" : "normal"} 
-                    format={() => systemStatus.databaseConnection >= 95 ? 'Connected' : 'Issues'} 
+                    format={() => systemStatus.databaseConnection >= 95 ? 'Connected' : 'Issues'}
+                    size="small"
+                    className="md:size-default"
                   />
                 </div>
                 <div>
-                  <Paragraph strong>API Services</Paragraph>
+                  <Paragraph strong className="!text-sm md:!text-base">API Services</Paragraph>
                   <Progress 
                     percent={systemStatus.apiServices} 
                     status={systemStatus.apiServices >= 90 ? "active" : "exception"} 
-                    format={() => systemStatus.apiServices >= 90 ? 'Running' : 'Problems'} 
+                    format={() => systemStatus.apiServices >= 90 ? 'Running' : 'Problems'}
+                    size="small"
+                    className="md:size-default"
                   />
                 </div>
                 <div>
-                  <Paragraph strong>Storage Usage</Paragraph>
+                  <Paragraph strong className="!text-sm md:!text-base">Storage Usage</Paragraph>
                   <Progress 
                     percent={systemStatus.storageUsage} 
                     status={systemStatus.storageUsage < 80 ? "normal" : "exception"}
+                    size="small"
+                    className="md:size-default"
                   />
                 </div>
               </div>

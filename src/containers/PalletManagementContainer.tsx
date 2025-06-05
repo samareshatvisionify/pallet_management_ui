@@ -10,6 +10,8 @@ import {
   DeleteOutlined,
   ReloadOutlined 
 } from '@ant-design/icons';
+import type { ColumnsType } from 'antd/es/table';
+import type { Breakpoint } from 'antd/es/_util/responsiveObserver';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { 
   fetchPallets,
@@ -60,24 +62,29 @@ const PalletManagementContainer: React.FC = () => {
     dispatch(fetchPallets());
   };
 
-  const columns = [
+  const columns: ColumnsType<PalletData> = [
     {
-      title: 'Pallet Number',
+      title: 'Pallet',
       dataIndex: 'palletNumber',
       key: 'palletNumber',
       fixed: 'left' as const,
-      width: 150,
+      width: 120,
+      render: (palletNumber: string) => (
+        <span className="text-xs md:text-sm font-medium">
+          {palletNumber}
+        </span>
+      ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: (status: PalletData['status']) => (
-        <Tag color={getStatusColor(status)}>
+        <Tag color={getStatusColor(status)} className="text-xs">
           {status.toUpperCase().replace('-', ' ')}
         </Tag>
       ),
-      width: 120,
+      width: 100,
       filters: [
         { text: 'Warehouse', value: 'warehouse' },
         { text: 'Loading', value: 'loading' },
@@ -99,71 +106,103 @@ const PalletManagementContainer: React.FC = () => {
       title: 'Location',
       dataIndex: 'location',
       key: 'location',
-      width: 200,
+      width: 150,
+      responsive: ['sm'] as Breakpoint[],
+      render: (location: string) => (
+        <span className="text-xs md:text-sm truncate" title={location}>
+          {location}
+        </span>
+      ),
     },
     {
       title: 'Items',
       dataIndex: 'items',
       key: 'items',
-      width: 80,
+      width: 70,
+      responsive: ['lg'] as Breakpoint[],
+      render: (items: number) => (
+        <span className="text-xs md:text-sm">
+          {items}
+        </span>
+      ),
     },
     {
-      title: 'Weight (kg)',
+      title: 'Weight',
       dataIndex: 'weight',
       key: 'weight',
-      width: 100,
+      width: 80,
+      responsive: ['md'] as Breakpoint[],
+      render: (weight: number) => (
+        <span className="text-xs md:text-sm">
+          {weight}kg
+        </span>
+      ),
     },
     {
-      title: 'AI Confidence',
+      title: 'AI Conf.',
       dataIndex: 'aiConfidence',
       key: 'aiConfidence',
-      render: (confidence: number) => `${confidence}%`,
-      width: 120,
+      render: (confidence: number) => (
+        <span className="text-xs md:text-sm">
+          {confidence}%
+        </span>
+      ),
+      width: 80,
+      responsive: ['sm'] as Breakpoint[],
     },
     {
-      title: 'Last Scanned',
+      title: 'Last Scan',
       dataIndex: 'lastScanned',
       key: 'lastScanned',
-      render: (date: string) => new Date(date).toLocaleString(),
-      width: 180,
+      render: (date: string) => (
+        <span className="text-xs md:text-sm">
+          {new Date(date).toLocaleDateString()}
+        </span>
+      ),
+      width: 100,
+      responsive: ['lg'] as Breakpoint[],
     },
     {
       title: 'Actions',
       key: 'actions',
       fixed: 'right' as const,
-      width: 150,
+      width: 100,
       render: (_: any, record: PalletData) => (
         <Space size="small">
           <Button type="text" icon={<EyeOutlined />} size="small" />
-          <Button type="text" icon={<EditOutlined />} size="small" />
-          <Button type="text" icon={<DeleteOutlined />} size="small" danger />
+          <Button type="text" icon={<EditOutlined />} size="small" className="hidden sm:inline-flex" />
+          <Button type="text" icon={<DeleteOutlined />} size="small" danger className="hidden md:inline-flex" />
         </Space>
       ),
     },
   ];
 
   return (
-    <div>
+    <div className="w-full">
       {/* Page Header */}
-      <div className="mb-6 flex justify-between items-center">
-        <div>
-          <Title level={2}>Pallet Management</Title>
-          <Paragraph>
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <div className="min-w-0 flex-1">
+          <Title level={2} className="!mb-2 !text-xl md:!text-2xl">Pallet Management</Title>
+          <Paragraph className="!mb-0 text-sm md:text-base">
             Monitor and manage all pallets in your system. Track location, status, and AI analysis results.
           </Paragraph>
         </div>
-        <Button 
-          icon={<ReloadOutlined />} 
-          onClick={handleRefresh}
-          loading={loading}
-        >
-          Refresh
-        </Button>
+        <div className="flex-shrink-0">
+          <Button 
+            icon={<ReloadOutlined />} 
+            onClick={handleRefresh}
+            loading={loading}
+            size="small"
+            className="md:size-default"
+          >
+            <span className="hidden sm:inline">Refresh</span>
+          </Button>
+        </div>
       </div>
 
       {/* Controls Section */}
-      <Card className="mb-6">
-        <Row gutter={[16, 16]} align="middle">
+      <Card className="mb-4 md:mb-6">
+        <Row gutter={[12, 12]} align="middle" className="md:gutter-16">
           <Col xs={24} sm={12} lg={8}>
             <Search
               placeholder="Search pallets..."
@@ -172,24 +211,29 @@ const PalletManagementContainer: React.FC = () => {
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
               allowClear
+              size="small"
             />
           </Col>
           <Col xs={24} sm={12} lg={4}>
-            <Button type="primary" icon={<PlusOutlined />} block>
-              Add Pallet
+            <Button type="primary" icon={<PlusOutlined />} block size="small" className="md:size-default">
+              <span className="hidden sm:inline">Add Pallet</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </Col>
           <Col xs={24} lg={12}>
-            <Space wrap>
-              <Button>Export</Button>
-              <Button>Filter</Button>
+            <Space wrap size="small">
+              <Button size="small" className="md:size-default">Export</Button>
+              <Button size="small" className="md:size-default">Filter</Button>
               <Button 
                 onClick={() => {
                   dispatch(setSearchTerm(''));
                   dispatch(setStatusFilter(null));
                 }}
+                size="small"
+                className="md:size-default"
               >
-                Clear Filters
+                <span className="hidden sm:inline">Clear Filters</span>
+                <span className="sm:hidden">Clear</span>
               </Button>
             </Space>
           </Col>
@@ -197,20 +241,24 @@ const PalletManagementContainer: React.FC = () => {
       </Card>
 
       {/* Pallets Table */}
-      <Card title={`Pallets Overview (${pallets.length} items)`}>
+      <Card title={`Pallets (${pallets.length})`} className="overflow-hidden">
         <Table
           columns={columns}
           dataSource={pallets}
           rowKey="id"
           loading={loading}
-          scroll={{ x: 1200 }}
+          scroll={{ x: 600 }}
+          size="small"
+          className="md:size-default"
           pagination={{
             total: pallets.length,
             pageSize: 10,
             showSizeChanger: true,
-            showQuickJumper: true,
+            showQuickJumper: false,
             showTotal: (total, range) => 
-              `${range[0]}-${range[1]} of ${total} pallets`,
+              `${range[0]}-${range[1]} of ${total}`,
+            simple: true,
+            responsive: true,
           }}
         />
       </Card>

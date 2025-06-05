@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Button, Typography, theme, Select } from 'antd';
 import {
   MenuFoldOutlined,
@@ -40,10 +40,22 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const collapsed = useAppSelector(selectSidebarCollapsed);
   const pathname = usePathname();
-  const [selectedSite, setSelectedSite] = React.useState('warehouse-a');
+  const [selectedSite, setSelectedSite] = useState('warehouse-a');
+  const [isMobile, setIsMobile] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Main navigation items
   const mainMenuItems = [
@@ -66,6 +78,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       key: '/historical',
       icon: <HistoryOutlined />,
       label: <Link href="/historical">Historical</Link>,
+    },
+    {
+      key: '/settings',
+      icon: <SettingOutlined />,
+      label: <Link href="/settings">Settings</Link>,
     },
   ];
 
@@ -106,13 +123,84 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     console.log('Selected site:', value);
   };
 
+  // Mobile Bottom Navigation Component
+  const BottomNavigation = () => (
+    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-gray-200" style={{ background: colorBgContainer }}>
+      <div className="flex justify-around items-center py-2">
+        {mainMenuItems.map((item) => (
+          <Link key={item.key} href={item.key} className="flex flex-col items-center py-2 px-3 min-w-0 flex-1">
+            <div className={`text-lg mb-1 ${pathname === item.key ? 'text-blue-500' : 'text-gray-500'}`}>
+              {item.icon}
+            </div>
+            <span className={`text-xs truncate ${pathname === item.key ? 'text-blue-500 font-medium' : 'text-gray-500'}`}>
+              {typeof item.label === 'object' && 'props' in item.label ? item.label.props.children : 'Nav'}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <Layout className="min-h-screen">
+        {/* Mobile Header */}
+        <Header 
+          className="px-4 flex items-center justify-between shadow-sm z-10"
+          style={{ background: colorBgContainer }}
+        >
+          <div className="flex items-center flex-1 min-w-0">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-3">
+              VP
+            </div>
+            <div className="min-w-0 flex-1">
+              <Title level={4} className="!m-0 !text-blue-500 !text-base !leading-tight truncate">
+                VisionAI
+              </Title>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <Select
+              value={selectedSite}
+              onChange={handleSiteChange}
+              className="w-32"
+              size="small"
+              showSearch
+              placeholder="Site"
+              optionFilterProp="label"
+              options={sites}
+            />
+            <Button type="text" icon={<UserOutlined />} size="small">
+              Admin
+            </Button>
+          </div>
+        </Header>
+
+        {/* Mobile Content */}
+        <Content
+          className="flex-1 p-4 pb-20 overflow-auto"
+          style={{
+            background: colorBgContainer,
+          }}
+        >
+          {children}
+        </Content>
+
+        {/* Mobile Bottom Navigation */}
+        <BottomNavigation />
+      </Layout>
+    );
+  }
+
+  // Desktop Layout
   return (
     <Layout className="min-h-screen">
       <Sider 
         trigger={null} 
         collapsible 
         collapsed={collapsed}
-        className="relative h-screen shadow-lg"
+        className="relative h-screen shadow-lg hidden md:block"
         style={{ background: colorBgContainer }}
         width={280}
         collapsedWidth={80}
@@ -181,9 +269,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </Sider>
 
       <Layout>
-        {/* Header */}
+        {/* Desktop Header */}
         <Header 
-          className="px-6 flex items-center justify-between shadow-sm z-10"
+          className="px-6 flex items-center justify-between shadow-sm z-10 hidden md:flex"
           style={{ background: colorBgContainer }}
         >
           <div className="flex items-center">
@@ -205,12 +293,22 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
         </Header>
 
-        {/* Main Content */}
+        {/* Desktop Content */}
         <Content
-          className="m-6 p-6 !max-h-[calc(100vh-7rem)] !overflow-auto"
+          className="m-6 p-6 !max-h-[calc(100vh-7rem)] !overflow-auto hidden md:block"
           style={{
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
+          }}
+        >
+          {children}
+        </Content>
+
+        {/* Mobile Content for when sidebar is hidden */}
+        <Content
+          className="p-4 pb-20 overflow-auto md:hidden"
+          style={{
+            background: colorBgContainer,
           }}
         >
           {children}

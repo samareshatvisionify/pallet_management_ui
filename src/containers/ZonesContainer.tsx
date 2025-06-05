@@ -87,108 +87,119 @@ const ZonesContainer: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       {/* Page Header */}
-      <div className="mb-6 flex justify-between items-center">
-        <div>
-          <Title level={2}>Zone Management</Title>
-          <Paragraph>
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <div className="min-w-0 flex-1">
+          <Title level={2} className="!mb-2 !text-xl md:!text-2xl">Zone Management</Title>
+          <Paragraph className="!mb-0 text-sm md:text-base">
             Configure and monitor warehouse zones. Define areas for pallet tracking and camera coverage.
           </Paragraph>
         </div>
-        <Button icon={<ReloadOutlined />}>
-          Refresh Zones
-        </Button>
+        <div className="flex-shrink-0">
+          <Button icon={<ReloadOutlined />} size="small" className="md:size-default">
+            <span className="hidden sm:inline">Refresh Zones</span>
+          </Button>
+        </div>
       </div>
 
       {/* Zone Summary */}
-      <Row gutter={[24, 24]} className="mb-6">
-        <Col xs={24} sm={6}>
-          <Card>
+      <Row gutter={[12, 12]} className="mb-4 md:mb-6 md:gutter-24">
+        <Col xs={12} sm={6}>
+          <Card className="h-full">
             <Statistic
               title="Total Zones"
               value={zones.length}
               prefix={<EnvironmentOutlined />}
-              valueStyle={{ color: '#3f8600' }}
+              valueStyle={{ color: '#3f8600', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+              className="text-center sm:text-left"
             />
           </Card>
         </Col>
-        <Col xs={24} sm={6}>
-          <Card>
+        <Col xs={12} sm={6}>
+          <Card className="h-full">
             <Statistic
               title="Active Zones"
               value={zones.filter(z => z.status === 'active').length}
-              valueStyle={{ color: '#1890ff' }}
+              valueStyle={{ color: '#1890ff', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+              className="text-center sm:text-left"
             />
           </Card>
         </Col>
-        <Col xs={24} sm={6}>
-          <Card>
+        <Col xs={12} sm={6}>
+          <Card className="h-full">
             <Statistic
               title="Total Capacity"
               value={zones.reduce((sum, zone) => sum + zone.capacity, 0)}
-              valueStyle={{ color: '#722ed1' }}
+              valueStyle={{ color: '#722ed1', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+              className="text-center sm:text-left"
             />
           </Card>
         </Col>
-        <Col xs={24} sm={6}>
-          <Card>
+        <Col xs={12} sm={6}>
+          <Card className="h-full">
             <Statistic
               title="Current Pallets"
               value={zones.reduce((sum, zone) => sum + zone.currentPallets, 0)}
-              valueStyle={{ color: '#cf1322' }}
+              valueStyle={{ color: '#cf1322', fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+              className="text-center sm:text-left"
             />
           </Card>
         </Col>
       </Row>
 
       {/* Zone Grid */}
-      <Row gutter={[24, 24]}>
+      <Row gutter={[12, 12]} className="md:gutter-24">
         {zones.map((zone) => (
-          <Col xs={24} sm={12} lg={8} key={zone.id}>
+          <Col xs={24} sm={12} lg={8} xl={6} key={zone.id}>
             <Card
               title={
                 <div className="flex items-center gap-2">
-                  <EnvironmentOutlined />
-                  {zone.name}
+                  <EnvironmentOutlined className="text-sm md:text-base" />
+                  <span className="text-sm md:text-base truncate">{zone.name}</span>
                 </div>
               }
               extra={
-                <Tag color={getStatusColor(zone.status)}>
+                <Tag color={getStatusColor(zone.status)} className="text-xs">
                   {zone.status.toUpperCase()}
                 </Tag>
               }
               actions={[
-                <Button key="edit" type="text" icon={<EditOutlined />}>
-                  Edit
+                <Button key="edit" type="text" icon={<EditOutlined />} size="small" className="md:size-default">
+                  <span className="hidden sm:inline">Edit</span>
                 </Button>,
-                <Button key="delete" type="text" icon={<DeleteOutlined />} danger>
-                  Delete
+                <Button key="delete" type="text" icon={<DeleteOutlined />} danger size="small" className="md:size-default">
+                  <span className="hidden sm:inline">Delete</span>
                 </Button>,
               ]}
+              className="h-full"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3 md:gap-4">
                 <div className="flex justify-between items-center">
-                  <span>Type:</span>
-                  <Tag color={getZoneTypeColor(zone.type)}>
+                  <span className="text-xs md:text-sm font-medium">Type:</span>
+                  <Tag color={getZoneTypeColor(zone.type)} className="text-xs">
                     {zone.type.toUpperCase()}
                   </Tag>
                 </div>
                 
                 <div>
-                  <div className="flex justify-between mb-2">
-                    <span>Utilization:</span>
-                    <span>{zone.currentPallets}/{zone.capacity}</span>
+                  <div className="flex justify-between mb-1 md:mb-2">
+                    <span className="text-xs md:text-sm font-medium">Utilization:</span>
+                    <span className="text-xs md:text-sm">{zone.currentPallets}/{zone.capacity}</span>
                   </div>
                   <Progress 
                     percent={getUtilizationPercent(zone.currentPallets, zone.capacity)}
                     status={getUtilizationPercent(zone.currentPallets, zone.capacity) > 80 ? 'exception' : 'active'}
+                    size="small"
+                    className="md:size-default"
                   />
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span>Cameras:</span>
-                  <Tag icon={<AppstoreOutlined />}>{zone.cameras}</Tag>
+                  <span className="text-xs md:text-sm font-medium">Cameras:</span>
+                  <Tag icon={<AppstoreOutlined />} className="text-xs">
+                    {zone.cameras}
+                  </Tag>
                 </div>
               </div>
             </Card>
@@ -197,12 +208,12 @@ const ZonesContainer: React.FC = () => {
       </Row>
 
       {/* Add Zone Button */}
-      <Card className="mt-6 text-center">
-        <div className="py-10">
-          <EnvironmentOutlined className="text-5xl text-gray-300 mb-4" />
-          <Title level={4}>Create New Zone</Title>
-          <Paragraph>Define a new monitoring zone in your warehouse layout.</Paragraph>
-          <Button type="primary" size="large" icon={<PlusOutlined />}>
+      <Card className="mt-4 md:mt-6 text-center">
+        <div className="py-6 md:py-10">
+          <EnvironmentOutlined className="text-3xl md:text-5xl text-gray-300 mb-2 md:mb-4" />
+          <Title level={4} className="!text-base md:!text-xl">Create New Zone</Title>
+          <Paragraph className="!text-sm md:!text-base">Define a new monitoring zone in your warehouse layout.</Paragraph>
+          <Button type="primary" size="middle" icon={<PlusOutlined />} className="md:size-large">
             Create Zone
           </Button>
         </div>
