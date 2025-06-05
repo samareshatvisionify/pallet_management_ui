@@ -5,7 +5,7 @@ import { Alert } from 'antd';
 import { DashboardStats, SystemStatus } from '@/store/slices/dashboardSlice';
 import { PerformanceData, CalendarData } from '@/demoData';
 import PerformanceOverview from './PerformanceOverview';
-import ProductionCalendar from './ProductionCalendar';
+import ProductionCalendar from './ProductionCalendar/index';
 
 // Dashboard sub-components will be imported here as we create them
 // import DashboardHeader from './DashboardHeader';

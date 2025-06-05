@@ -72,6 +72,7 @@ const TrackingDetails: React.FC<TrackingDetailsProps> = ({
           options={selectOptions}
           className="min-w-[80px]"
           size="small"
+          variant='borderless'
           placeholder="Select tracking type"
         />
       </div>
