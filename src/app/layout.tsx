@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { StyledComponentsRegistry, AntdProvider } from "../lib";
+import { MainLayout } from "@/components";
 import '@ant-design/v5-patch-for-react-19';
 import "./globals.css";
 
@@ -31,7 +32,9 @@ export default function RootLayout({
       >
         <StyledComponentsRegistry>
           <AntdProvider>
-            {children}
+            <MainLayout>
+              {children}
+            </MainLayout>
           </AntdProvider>
         </StyledComponentsRegistry>
       </body>
