@@ -2,18 +2,15 @@
 
 import React from 'react';
 import { ConfigProvider, App } from 'antd';
+import { antdTheme } from './antd-config';
+import { defaultLocale } from './antd-locale';
 
 const AntdProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ConfigProvider
-      theme={
-        {
-        token: {
-          colorPrimary: '#1890ff',
-          fontFamily: 'var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-          borderRadius: 6,
-        },
-      }}
+      theme={antdTheme}
+      locale={defaultLocale}
+      componentSize="middle"
     >
       <App>{children}</App>
     </ConfigProvider>

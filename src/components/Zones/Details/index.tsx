@@ -126,23 +126,19 @@ const ZoneDetails: React.FC<ZoneDetailsProps> = ({
       )}
 
       {/* Header */}
-      <div className="mb-6">
-        <Button 
-          icon={<ArrowLeftOutlined />} 
-          onClick={handleBack}
-          className="mb-4"
-        >
-          Back to Zones
-        </Button>
+      <div className="mb-6 ">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <Title level={2} className="!mb-2">
-              <EnvironmentOutlined className="mr-2" />
+          <div className="flex flex-row gap-4 items-center">
+            <Button 
+              icon={<ArrowLeftOutlined />} 
+              size="large"
+              onClick={handleBack}
+            >
+              Back
+            </Button>
+            <Title level={2} className="!mb-0">
               {zone.name}
             </Title>
-            <Text type="secondary" className="text-base">
-              {zone.description}
-            </Text>
           </div>
           <div>
             {getStatusBadge(zone.status)}

@@ -1,5 +1,5 @@
-import { CamerasContainer } from '@/containers';
+import { CameraContainer } from '@/containers';
 
 export default function CamerasPage() {
-  return <CamerasContainer />;
+  return <CameraContainer />;
 } 
