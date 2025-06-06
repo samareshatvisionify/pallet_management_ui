@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Button, Typography, theme, Select, Dropdown } from 'antd';
+import { Layout, Menu, Button, Typography, Select, Dropdown } from 'antd';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -13,13 +13,13 @@ import {
   UserOutlined,
   GlobalOutlined,
   LogoutOutlined,
-  ReloadOutlined,
 } from '@ant-design/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { toggleSidebar, selectSidebarCollapsed } from '@/store/slices/uiSlice';
 import { useAuth } from '@/hooks/useAuth';
+import { sites } from '@/demoData';
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text } = Typography;
@@ -27,8 +27,6 @@ const { Title, Text } = Typography;
 interface MainLayoutProps {
   children: React.ReactNode;
 }
-
-// Page titles and subtitles configuration
 const pageConfig = {
   '/': {
     title: 'Dashboard',
@@ -71,15 +69,11 @@ const pageConfig = {
     showRefresh: false,
   },
 } as const;
-
-// Function to get page config including dynamic routes
 const getPageConfig = (pathname: string) => {
-  // Check for exact matches first
   if (pageConfig[pathname as keyof typeof pageConfig]) {
     return pageConfig[pathname as keyof typeof pageConfig];
   }
   
-  // Handle dynamic routes
   if (pathname.startsWith('/settings/cameras/') && pathname !== '/settings/cameras') {
     return {
       title: 'Configure Camera',
@@ -88,7 +82,6 @@ const getPageConfig = (pathname: string) => {
     };
   }
   
-  // Default fallback
   return {
     title: 'VisionAI',
     subtitle: 'Pallet Management System',
@@ -96,16 +89,7 @@ const getPageConfig = (pathname: string) => {
   };
 };
 
-// Demo site data - this could be moved to Redux or fetched from API
-const sites = [
-  { value: 'warehouse-a', label: 'Warehouse A - North' },
-  { value: 'warehouse-b', label: 'Warehouse B - South' },
-  { value: 'warehouse-c', label: 'Warehouse C - East' },
-  { value: 'distribution-1', label: 'Distribution Center 1' },
-  { value: 'distribution-2', label: 'Distribution Center 2' },
-  { value: 'manufacturing-1', label: 'Manufacturing Plant 1' },
-  { value: 'manufacturing-2', label: 'Manufacturing Plant 2' },
-];
+
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -115,14 +99,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { user, logout } = useAuth();
   const [selectedSite, setSelectedSite] = useState('warehouse-a');
   const [isMobile, setIsMobile] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
-  // Get current page configuration
   const currentPageConfig = getPageConfig(pathname);
-
-  // Check if device is mobile
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -133,36 +111,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Handle page refresh
-  const handlePageRefresh = () => {
-    // This can be customized per page or trigger specific refresh actions
-    window.location.reload();
-  };
 
-  // Page Header Component - Only shown on desktop
-  const PageHeader = () => (
-    <div className="hidden md:block mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 bg-white p-4 md:p-6 rounded-lg shadow-sm">
-      <div className="min-w-0 flex-1">
-        <Title level={2} className="!mb-0 !text-xl md:!text-2xl">
-          {currentPageConfig.title} | {currentPageConfig.subtitle}
-        </Title>
-      </div>
-      {currentPageConfig.showRefresh && (
-        <div className="flex-shrink-0">
-          <Button 
-            icon={<ReloadOutlined />} 
-            onClick={handlePageRefresh}
-            size="small"
-            className="md:size-default"
-          >
-            <span className="hidden sm:inline">Refresh</span>
-          </Button>
-        </div>
-      )}
-    </div>
-  );
 
-  // Main navigation items
+
   const mainMenuItems = [
     {
       key: '/',
@@ -186,7 +137,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     },
   ];
 
-  // Bottom navigation items with site selector submenu when collapsed
   const getBottomMenuItems = () => {
     const settingsItem = {
       key: '/settings',
@@ -208,7 +158,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     return collapsed ? [settingsItem, siteMenuItem] : [settingsItem];
   };
 
-  // Get current selected key based on pathname
   const getSelectedKey = () => {
     return [...mainMenuItems].find(item => item.key === pathname)?.key || '/';
   };
@@ -219,7 +168,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const handleSiteChange = (value: string) => {
     setSelectedSite(value);
-    // TODO: Dispatch action to update selected site in Redux
     console.log('Selected site:', value);
   };
 
@@ -228,7 +176,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     router.push('/auth');
   };
 
-  // User menu items
   const userMenuItems = [
     {
       key: 'profile',
@@ -243,16 +190,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     },
   ];
 
-  // Mobile Bottom Navigation Component
   const BottomNavigation = () => (
-    <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-gray-200" style={{ background: colorBgContainer }}>
+    <div className="layout-mobile-bottom-nav bg-container-style">
       <div className="flex justify-around items-center py-2">
         {mainMenuItems.map((item) => (
-          <Link key={item.key} href={item.key} className="flex flex-col items-center py-2 px-3 min-w-0 flex-1">
-            <div className={`text-lg mb-1 ${pathname === item.key ? 'text-blue-500' : 'text-gray-500'}`}>
+          <Link key={item.key} href={item.key} className="layout-mobile-nav-link">
+            <div className={`layout-mobile-nav-icon ${pathname === item.key ? 'layout-mobile-nav-active' : 'layout-mobile-nav-inactive'}`}>
               {item.icon}
             </div>
-            <span className={`text-xs truncate ${pathname === item.key ? 'text-blue-500 font-medium' : 'text-gray-500'}`}>
+            <span className={`layout-mobile-nav-text ${pathname === item.key ? 'layout-mobile-nav-active' : 'layout-mobile-nav-inactive'}`}>
               {typeof item.label === 'object' && 'props' in item.label ? item.label.props.children : 'Nav'}
             </span>
           </Link>
@@ -263,18 +209,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   if (isMobile) {
     return (
-      <Layout className="min-h-screen">
-        {/* Mobile Header */}
+      <Layout className="layout-mobile">
         <Header 
-          className="px-4 flex items-center justify-between shadow-sm z-10"
-          style={{ background: colorBgContainer }}
+          className="layout-mobile-header bg-container-style"
         >
           <div className="flex items-center flex-1 min-w-0">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-sm font-bold mr-3">
+            <div className="layout-mobile-logo">
               VP
             </div>
             <div className="min-w-0 flex-1">
-              <Title level={4} className="!m-0 !text-blue-500 !text-base !leading-tight truncate">
+              <Title level={4} className="layout-mobile-title truncate">
                 VisionAI
               </Title>
             </div>
@@ -303,81 +247,69 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
         </Header>
 
-        {/* Mobile Content */}
         <Content
-          className="flex-1 p-4 pb-20 overflow-auto"
-          style={{
-            background: colorBgContainer,
-          }}
+          className="layout-mobile-content bg-container-style"
         >
           {children}
         </Content>
 
-        {/* Mobile Bottom Navigation */}
         <BottomNavigation />
       </Layout>
     );
   }
 
-  // Desktop Layout
   return (
-    <Layout className="min-h-screen">
+    <Layout className="layout-desktop">
       <Sider 
         trigger={null} 
         collapsible 
         collapsed={collapsed}
-        className="relative h-screen shadow-xs hidden md:block"
-        style={{ background: colorBgContainer }}
+        className="layout-sidebar hidden md:block bg-container-style"
         width={280}
         collapsedWidth={80}
       >
-        {/* Logo/Brand Section */}
-        <div className={`${collapsed ? 'px-2 py-4 text-center' : 'px-6 py-4 text-left'} border-b border-gray-200 mb-4`}>
+        <div className={`layout-sidebar-logo-section ${collapsed ? 'layout-sidebar-logo-collapsed' : 'layout-sidebar-logo-expanded'}`}>
           {!collapsed ? (
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xl font-bold">
+            <div className="layout-sidebar-logo-container">
+              <div className="layout-sidebar-logo-icon">
                 VP
               </div>
               <div>
-                <Title level={4} className="!m-0 !text-blue-500 !leading-tight">
+                <Title level={4} className="layout-sidebar-logo-title">
                   VisionAI
                 </Title>
-                <div className="text-xs text-gray-500 leading-none">
+                <div className="layout-sidebar-logo-subtitle">
                   Pallet Management
                 </div>
               </div>
             </div>
           ) : (
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white text-xl font-bold mx-auto">
+            <div className="layout-sidebar-logo-icon-collapsed">
               VP
             </div>
           )}
         </div>
 
-        {/* Main Navigation Menu */}
         <Menu
           theme="light"
           mode="inline"
           selectedKeys={[getSelectedKey()]}
           items={mainMenuItems}
-          className="border-none bg-transparent pb-36"
+          className="layout-sidebar-menu"
         />
 
-        {/* Bottom Section - Absolute positioned at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200" style={{ background: colorBgContainer }}>
-          {/* Settings Menu */}
+        <div className="layout-sidebar-bottom bg-container-style">
           <Menu
             theme="light"
             mode="inline"
             selectedKeys={pathname === '/settings' ? ['/settings'] : []}
             items={getBottomMenuItems()}
-            className={`border-none bg-transparent ${collapsed ? 'mb-0' : 'mb-4'}`}
+            className={`layout-sidebar-bottom-menu ${collapsed ? 'layout-sidebar-bottom-menu-collapsed' : 'layout-sidebar-bottom-menu-expanded'}`}
           />
 
-          {/* Site Selector - Only show when expanded */}
           {!collapsed && (
-            <div className="px-6 pb-6">
-              <div className="mb-2 text-xs text-gray-500 uppercase tracking-wider">
+            <div className="layout-sidebar-site-selector">
+              <div className="layout-sidebar-site-label">
                 Current Site
               </div>
               <Select
@@ -395,30 +327,28 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </Sider>
 
       <Layout>
-        {/* Desktop Header */}
         <Header 
-          className="!px-4 !h-18 flex items-center justify-between shadow-xs z-10 hidden md:flex"
-          style={{ background: colorBgContainer }}
+          className="layout-desktop-header hidden md:flex bg-container-style"
         >
-          <div className="flex items-center">
+          <div className="layout-desktop-header-left">
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={handleSidebarToggle}
               className="!text-xl"
             />
-            <div className="min-w-0 flex items-center justify-start ml-4">
-                <Title level={5} className="!mb-0 pr-4 border-r border-gray-200 !text-lg md:!text-lg">
+            <div className="layout-desktop-header-title-container">
+                <Title level={5} className="layout-desktop-header-title">
                     {currentPageConfig.title}
                 </Title>
-                <Text className="!mb-0 ml-4 font-light !text-md md:!text-md">
+                <Text className="layout-desktop-header-subtitle">
                   {currentPageConfig.subtitle}
                 </Text>
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-500">
+          <div className="layout-desktop-header-right">
+            <div className="layout-desktop-header-site">
               {sites.find(site => site.value === selectedSite)?.label}
             </div>
             <Dropdown
@@ -433,19 +363,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
         </Header>
 
-        {/* Desktop Content */}
         <Content
-          className="p-6 !max-h-[calc(100vh-5rem)] !overflow-auto hidden md:block"
+          className="layout-desktop-content hidden md:block"
         >
           {children}
         </Content>
 
-        {/* Mobile Content for when sidebar is hidden */}
         <Content
-          className="p-4 pb-20 overflow-auto md:hidden"
-          style={{
-            background: colorBgContainer,
-          }}
+          className="layout-mobile-content-hidden md:hidden bg-container-style"
         >
           {children}
         </Content>

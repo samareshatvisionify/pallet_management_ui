@@ -9,7 +9,6 @@ const { Text } = Typography;
 const SiteSettings: React.FC = () => {
   const handleZoneConfigClick = () => {
     console.log('Zone Config clicked');
-    // TODO: Navigate to zone config or open modal
   };
 
   return (

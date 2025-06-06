@@ -45,7 +45,6 @@ interface ZonesProps {
 }
 
 const Zones: React.FC<ZonesProps> = ({
-  zones,
   stats,
   loading,
   error,
@@ -55,7 +54,6 @@ const Zones: React.FC<ZonesProps> = ({
   calculateZoneProgress,
   getPerformanceIndicator,
   getStatusColor,
-  getEfficiencyColor,
   filterZones,
   sortZones
 }) => {

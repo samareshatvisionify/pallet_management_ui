@@ -67,7 +67,7 @@ const ProductionCalendarView: React.FC<ProductionCalendarViewProps> = ({
     );
   };
 
-  const headerRender = ({ value, onChange }: any) => {
+  const headerRender = ({ value, onChange }: { value: unknown; onChange: (date: unknown) => void }) => {
     return (
       <ProductionCalendarHeader
         value={value}

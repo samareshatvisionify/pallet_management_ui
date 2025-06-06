@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Typography, Tag } from 'antd';
+import { Typography } from 'antd';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Camera } from '@/demoData/cameraData';
 
 const { Text } = Typography;
@@ -27,19 +28,6 @@ const DashboardCameraCard: React.FC<DashboardCameraCardProps> = ({ camera }) => 
     }
   };
 
-  const getStatusTagColor = (status: Camera['status']) => {
-    switch (status) {
-      case 'online':
-        return 'green';
-      case 'offline':
-        return 'red';
-      case 'maintenance':
-        return 'orange';
-      default:
-        return 'default';
-    }
-  };
-
   const handleCameraClick = () => {
     router.push(`/cameras/${camera.id}`);
   };
@@ -50,14 +38,13 @@ const DashboardCameraCard: React.FC<DashboardCameraCardProps> = ({ camera }) => 
       onClick={handleCameraClick}
     >
       {/* Camera Image */}
-      <div className="aspect-video bg-gray-200 rounded mb-3 overflow-hidden">
-        <img
+      <div className="aspect-video bg-gray-200 rounded mb-3 overflow-hidden relative">
+        <Image
           src={camera.imagePath}
           alt={camera.name}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            e.currentTarget.src = "https://via.placeholder.com/400x300/gray/white?text=No+Image";
-          }}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       

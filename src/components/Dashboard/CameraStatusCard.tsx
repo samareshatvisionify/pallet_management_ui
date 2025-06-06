@@ -11,8 +11,7 @@ interface CameraStatusCardProps {
 }
 
 const CameraStatusCard: React.FC<CameraStatusCardProps> = ({ cameras, loading = false }) => {
-  // Calculate max height for 6 cameras (2 rows of 3 cards)
-  const maxCamerasBeforeScroll = 6; // 2 rows × 3 cards
+  const maxCamerasBeforeScroll = 6;
   const shouldShowScroll = cameras.length > maxCamerasBeforeScroll;
 
     return (

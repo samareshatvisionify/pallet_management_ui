@@ -46,7 +46,7 @@ const CameraStationsOverview: React.FC<CameraStationsOverviewProps> = ({
     }
     
     return stations;
-  }, [camera?.id]); // Only regenerate if camera ID changes
+  }, [camera]); // Only regenerate if camera changes
 
   const averagePerformance = useMemo(() => {
     if (cameraStations.length === 0) return 0;

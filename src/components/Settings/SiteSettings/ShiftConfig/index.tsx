@@ -34,10 +34,10 @@ const initialShifts: Shift[] = [
 ];
 
 interface ShiftsConfigProps {
-  onClick?: () => void;
+  [key: string]: unknown;
 }
 
-const ShiftsConfig: React.FC<ShiftsConfigProps> = ({ onClick }) => {
+const ShiftsConfig: React.FC<ShiftsConfigProps> = () => {
   const { modal } = App.useApp();
   const [shifts, setShifts] = useState<Shift[]>(initialShifts);
   const [editingShiftId, setEditingShiftId] = useState<string | null>(null);

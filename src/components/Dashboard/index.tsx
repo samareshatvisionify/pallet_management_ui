@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Alert, Row, Col } from 'antd';
-import { DashboardStats, SystemStatus } from '@/store/slices/dashboardSlice';
 import { PerformanceData, CalendarData } from '@/demoData';
 import { democameras } from '@/demoData/cameraData';
 import PerformanceOverview from './PerformanceOverview';
@@ -11,65 +10,20 @@ import CameraStatusCard from './CameraStatusCard';
 import EdgeDevicesCard from './EdgeDevicesCard';
 import ActivityByShiftCard from './ActivityByShiftCard';
 
-// Dashboard sub-components will be imported here as we create them
-// import DashboardHeader from './DashboardHeader';
-// import DashboardStats from './DashboardStats';
-// import DashboardCharts from './DashboardCharts';
-// import SystemStatus from './SystemStatus';
-
 interface DashboardProps {
-  // Data props
-  stats: DashboardStats;
-  systemStatus: SystemStatus;
-  loading: boolean;
-  error: string | null;
-  lastUpdated: string | null;
+  loading?: boolean;
+  error?: string | null;
   performanceData: PerformanceData;
   calendarData: CalendarData;
-  
-  // Action props
-  onRefresh: () => void;
-  onClearError: () => void;
-  onUpdateStat: (key: keyof DashboardStats, value: number) => void;
-  onUpdateSystemStatus: (status: Partial<SystemStatus>) => void;
-  
-  // Utility props
-  getStatColor: (statKey: keyof DashboardStats) => string;
-  getSystemStatusIndicator: (metric: keyof SystemStatus, value: number) => {
-    status: string;
-    color: string;
-  };
-  getSystemHealthSummary: () => {
-    overallStatus: string;
-    healthyCount: number;
-    totalCount: number;
-    metrics: Array<{
-      key: string;
-      value: number;
-      label: string;
-    }>;
-  };
-  formatLastUpdated: () => string;
-  getTrendData: () => any;
+  onClearError?: () => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({
-  stats,
-  systemStatus,
-  loading,
+  loading = false,
   error,
-  lastUpdated,
   performanceData,
   calendarData,
-  onRefresh,
   onClearError,
-  onUpdateStat,
-  onUpdateSystemStatus,
-  getStatColor,
-  getSystemStatusIndicator,
-  getSystemHealthSummary,
-  formatLastUpdated,
-  getTrendData,
 }) => {
   return (
     <div className="w-full">
@@ -95,7 +49,6 @@ const Dashboard: React.FC<DashboardProps> = ({
       <div className="mt-8 hidden md:block">
         <ProductionCalendar 
           data={calendarData}
-          loading={loading}
         />
       </div>
 

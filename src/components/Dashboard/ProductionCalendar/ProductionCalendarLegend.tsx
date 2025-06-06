@@ -10,19 +10,19 @@ const ProductionCalendarLegend: React.FC = () => {
     <div className="mt-4 p-4 bg-gray-50 rounded-lg">
       <div className="flex items-center gap-6 flex-wrap">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-3 rounded" style={{ backgroundColor: '#10b981' }} />
+          <div className="production-legend-dot production-legend-excellent" />
           <Text className="text-sm text-gray-600">Above Target</Text>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-3 rounded" style={{ backgroundColor: '#f59e0b' }} />
+          <div className="production-legend-dot production-legend-good" />
           <Text className="text-sm text-gray-600">Meeting Target</Text>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-3 rounded" style={{ backgroundColor: '#ef4444' }} />
+          <div className="production-legend-dot production-legend-poor" />
           <Text className="text-sm text-gray-600">Below Target</Text>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-3 rounded" style={{ backgroundColor: '#dc2626' }} />
+          <div className="production-legend-dot production-legend-critical" />
           <Text className="text-sm text-gray-600">Poor Performance</Text>
         </div>
       </div>

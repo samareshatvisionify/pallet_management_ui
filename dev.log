@@ -1,0 +1,33 @@
+
+> visionai-pallet-management-ui@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, using available port 3001 instead.
+   ▲ Next.js 15.3.3
+   - Local:        http://localhost:3001
+   - Network:      http://10.255.255.254:3001
+
+ ✓ Starting...
+ ✓ Ready in 1512ms
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.3
+   - Local:        http://localhost:3001
+   - Network:      http://10.255.255.254:3001
+
+ ✓ Starting...
+ ✓ Ready in 1466ms
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.3
+   - Local:        http://localhost:3001
+   - Network:      http://10.255.255.254:3001
+
+ ✓ Starting...
+ ✓ Ready in 1470ms
+ ⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.3
+   - Local:        http://localhost:3001
+   - Network:      http://10.255.255.254:3001
+
+ ✓ Starting...
+ ✓ Ready in 1430ms
+[?25h

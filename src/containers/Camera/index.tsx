@@ -37,8 +37,6 @@ const CameraContainer: React.FC = () => {
 
   const handleAddCamera = () => {
     console.log('Add new camera');
-    // TODO: Implement add camera functionality - could navigate to a form or open a modal
-    // For now, we could navigate to camera settings or show a placeholder
     router.push('/settings/cameras');
   };
 

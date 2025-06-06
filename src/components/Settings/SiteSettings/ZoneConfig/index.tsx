@@ -2,10 +2,14 @@
 
 import React, { useState } from 'react';
 import { Card, Typography, Button, Row, Col, App } from 'antd';
-import { EnvironmentOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import ZoneCard, { Zone } from './ZoneCard';
-import { Station } from './StationCard';
+import { Station } from '@/demoData';
 import AddZoneCard from './AddZoneCard';
+import { 
+  EnvironmentOutlined, 
+  EditOutlined, 
+  SaveOutlined 
+} from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -87,10 +91,10 @@ const initialZones: Zone[] = [
 ];
 
 interface ZoneConfigProps {
-  onClick?: () => void;
+  [key: string]: unknown;
 }
 
-const ZoneConfig: React.FC<ZoneConfigProps> = ({ onClick }) => {
+const ZoneConfig: React.FC<ZoneConfigProps> = () => {
   const { message } = App.useApp();
   const [zones, setZones] = useState<Zone[]>(initialZones);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -122,13 +126,11 @@ const ZoneConfig: React.FC<ZoneConfigProps> = ({ onClick }) => {
 
   const handleZoneEdit = (zoneId: string) => {
     console.log('Edit zone:', zoneId);
-    // TODO: Implement zone edit functionality
     message.info('Zone editing functionality will be implemented soon');
   };
 
   const handleAddStation = (zoneId: string) => {
     console.log('Add station to zone:', zoneId);
-    // TODO: Implement add station functionality
     message.info('Add station functionality will be implemented soon');
   };
 
@@ -226,7 +228,7 @@ const ZoneConfig: React.FC<ZoneConfigProps> = ({ onClick }) => {
         <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
           <Text className="text-blue-600 text-sm">
             <strong>Edit Mode Active:</strong> Drag stations between zones to reorganize your layout. 
-            Use the "Add Station" buttons to create new stations within zones.
+            Use the &quot;Add Station&quot; buttons to create new stations within zones.
           </Text>
         </div>
       )}

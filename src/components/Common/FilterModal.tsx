@@ -17,7 +17,6 @@ interface FilterModalProps {
   title: string;
   sections: FilterSection[];
   onClearAll: () => void;
-  hasActiveFilters?: boolean;
 }
 
 const FilterModal: React.FC<FilterModalProps> = ({
@@ -25,8 +24,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
   onClose,
   title,
   sections,
-  onClearAll,
-  hasActiveFilters = false
+  onClearAll
+  
 }) => {
   return (
     <Modal

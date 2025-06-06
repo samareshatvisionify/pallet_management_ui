@@ -19,18 +19,17 @@ interface ZoneCardProps {
     color: string;
     text: string;
   };
-  getStatusColor: (status: Zone['status']) => string;
-  onUpdateZoneStatus?: (zoneId: string, status: Zone['status']) => void;
+
   onZoneClick?: (zoneId: string) => void;
+  loading?: boolean;
 }
 
 const ZoneCard: React.FC<ZoneCardProps> = ({
   zone,
   calculateZoneProgress,
   getPerformanceIndicator,
-  getStatusColor,
-  onUpdateZoneStatus,
-  onZoneClick
+  onZoneClick,
+  loading = false
 }) => {
   const progress = calculateZoneProgress(zone);
   const performance = getPerformanceIndicator(zone.performanceChange);

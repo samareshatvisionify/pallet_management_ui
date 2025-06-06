@@ -10,12 +10,10 @@ const { Text } = Typography;
 const CameraSettings: React.FC = () => {
   const handleCameraConfigClick = () => {
     console.log('Camera Config clicked');
-    // TODO: Navigate to camera config or open modal
   };
 
   const handleShiftsConfigClick = () => {
     console.log('Shifts Config clicked');
-    // TODO: Navigate to shifts config or open modal
   };
 
   return (

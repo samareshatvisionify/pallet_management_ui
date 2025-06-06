@@ -2,89 +2,20 @@
 
 import React from 'react';
 import { Card, Typography, Progress } from 'antd';
+import { edgeDevicesData } from '@/demoData';
 
 const { Text } = Typography;
-
-interface EdgeDevice {
-  id: string;
-  name: string;
-  ipAddress: string;
-  status: 'online' | 'offline';
-  cpu: number;
-  memory: number;
-  network: number;
-}
 
 interface EdgeDevicesCardProps {
   loading?: boolean;
 }
 
 const EdgeDevicesCard: React.FC<EdgeDevicesCardProps> = ({ loading = false }) => {
-  // Static demo data for edge devices
-  const edgeDevices: EdgeDevice[] = [
-    {
-      id: 'edge-01',
-      name: 'Edge-Device-01',
-      ipAddress: '192.168.1.50',
-      status: 'online',
-      cpu: 45.2,
-      memory: 67.8,
-      network: 23.1
-    },
-    {
-      id: 'edge-02',
-      name: 'Edge-Device-02',
-      ipAddress: '192.168.1.51',
-      status: 'online',
-      cpu: 78.9,
-      memory: 45.3,
-      network: 67.2
-    },
-    {
-      id: 'edge-03',
-      name: 'Edge-Device-03',
-      ipAddress: '192.168.1.52',
-      status: 'offline',
-      cpu: 0,
-      memory: 0,
-      network: 0
-    },
-    {
-      id: 'edge-04',
-      name: 'Edge-Device-04',
-      ipAddress: '192.168.1.53',
-      status: 'online',
-      cpu: 62.5,
-      memory: 84.1,
-      network: 41.7
-    },
-    {
-      id: 'edge-05',
-      name: 'Edge-Device-05',
-      ipAddress: '192.168.1.54',
-      status: 'online',
-      cpu: 39.8,
-      memory: 71.3,
-      network: 58.9
-    }
-  ];
-
   const getStatusColor = (status: string) => {
     return status === 'online' ? '#52c41a' : '#ff4d4f';
   };
 
-  const getStatusTag = (status: string) => {
-    return status === 'online' ? 'green' : 'red';
-  };
-
-  const getPerformanceColor = (value: number) => {
-    if (value < 50) return '#52c41a';
-    if (value < 80) return '#faad14';
-    return '#ff4d4f';
-  };
-
-  const deviceCount = edgeDevices.length;
-  const onlineCount = edgeDevices.filter(device => device.status === 'online').length;
+  const deviceCount = edgeDevicesData.length;
 
   return (
     <Card 
@@ -120,7 +51,7 @@ const EdgeDevicesCard: React.FC<EdgeDevicesCardProps> = ({ loading = false }) =>
             background: #9ca3af;
           }
         `}</style>
-        {edgeDevices.map((device) => (
+        {edgeDevicesData.map((device) => (
           <div key={device.id} className="rounded-lg p-5 bg-white shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all duration-200">
             {/* Device Header */}
             <div className="flex items-center justify-between mb-4">

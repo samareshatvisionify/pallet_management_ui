@@ -29,14 +29,11 @@ interface CamerasComponentProps {
 }
 
 const Cameras: React.FC<CamerasComponentProps> = ({
-  cameras,
-  loading,
   error,
   onClearError,
   onCameraClick,
   onAddCamera,
   filterCameras,
-  getStatusColor,
   getUniqueZones,
   getUniqueCategories,
   getSubcategoriesForCategory

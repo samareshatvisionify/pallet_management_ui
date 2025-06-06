@@ -3,93 +3,25 @@
 import React, { useState } from 'react';
 import { Card, Typography, Table, DatePicker, Select, Button, Row, Col, Tag, Space, Input } from 'antd';
 import { 
-  HistoryOutlined, 
   DownloadOutlined,
-  SearchOutlined,
   ReloadOutlined,
   FilterOutlined
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
+import { historicalData, HistoricalRecord } from '@/demoData';
 
 const { Title, Paragraph } = Typography;
 const { RangePicker } = DatePicker;
 const { Search } = Input;
 
-interface HistoricalRecord {
-  id: string;
-  timestamp: string;
-  palletId: string;
-  action: string;
-  zone: string;
-  camera: string;
-  confidence: number;
-  status: 'success' | 'warning' | 'error';
-  details: string;
-}
+
 
 const HistoricalContainer: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [selectedAction, setSelectedAction] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Demo historical data
-  const historicalData: HistoricalRecord[] = [
-    {
-      id: '1',
-      timestamp: '2024-01-15 14:30:25',
-      palletId: 'PLT-001234',
-      action: 'detected',
-      zone: 'Loading Dock A',
-      camera: 'Entrance Camera 1',
-      confidence: 98.5,
-      status: 'success',
-      details: 'Pallet successfully detected entering zone'
-    },
-    {
-      id: '2',
-      timestamp: '2024-01-15 14:28:15',
-      palletId: 'PLT-001235',
-      action: 'moved',
-      zone: 'Storage Area 1',
-      camera: 'Warehouse Zone 1',
-      confidence: 95.2,
-      status: 'success',
-      details: 'Pallet movement tracked within storage area'
-    },
-    {
-      id: '3',
-      timestamp: '2024-01-15 14:25:42',
-      palletId: 'PLT-001230',
-      action: 'quality_check',
-      zone: 'Quality Control',
-      camera: 'Quality Control',
-      confidence: 92.1,
-      status: 'warning',
-      details: 'Quality inspection completed with minor anomalies'
-    },
-    {
-      id: '4',
-      timestamp: '2024-01-15 14:22:18',
-      palletId: 'PLT-001231',
-      action: 'departed',
-      zone: 'Loading Dock B',
-      camera: 'Exit Camera 1',
-      confidence: 97.8,
-      status: 'success',
-      details: 'Pallet successfully departed facility'
-    },
-    {
-      id: '5',
-      timestamp: '2024-01-15 14:18:33',
-      palletId: 'PLT-001228',
-      action: 'error',
-      zone: 'Packaging Zone',
-      camera: 'Packaging Area',
-      confidence: 45.2,
-      status: 'error',
-      details: 'Detection failed - low confidence score'
-    },
-  ];
+
 
   const getActionColor = (action: string) => {
     switch (action) {
@@ -218,7 +150,6 @@ const HistoricalContainer: React.FC = () => {
 
   const handleExport = () => {
     setLoading(true);
-    // Simulate export process
     setTimeout(() => {
       setLoading(false);
       console.log('Export completed');
@@ -226,8 +157,7 @@ const HistoricalContainer: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
-      {/* Page Header */}
+    <div className="historical-table-container">
       <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div className="min-w-0 flex-1">
           <Title level={2} className="!mb-2 !text-xl md:!text-2xl">Historical Data</Title>
@@ -253,7 +183,6 @@ const HistoricalContainer: React.FC = () => {
         </div>
       </div>
 
-      {/* Filters */}
       <Card className="mb-4 md:mb-6">
         <Row gutter={[12, 12]} align="middle" className="md:gutter-16">
           <Col xs={24} sm={12} lg={6}>
@@ -313,7 +242,6 @@ const HistoricalContainer: React.FC = () => {
         </Row>
       </Card>
 
-      {/* Historical Data Table */}
       <Card title={`Records (${historicalData.length})`} className="overflow-hidden">
         <Table
           columns={columns}

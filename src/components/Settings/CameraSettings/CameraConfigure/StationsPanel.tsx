@@ -10,14 +10,12 @@ import type { Polygon } from './CanvasDrawing';
 const { Title, Text } = Typography;
 
 interface StationsPanelProps {
-  cameraId: string;
   onDrawingModeChange: (isDrawing: boolean) => void;
   onPolygonChange: (polygon: Polygon | null) => void;
   currentPolygon: Polygon | null;
 }
 
 const StationsPanel: React.FC<StationsPanelProps> = ({ 
-  cameraId, 
   onDrawingModeChange, 
   onPolygonChange,
   currentPolygon 

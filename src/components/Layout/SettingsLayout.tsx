@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, Card } from 'antd';
+import { Menu } from 'antd';
 import { SettingOutlined, TeamOutlined, CameraOutlined } from '@ant-design/icons';
 
 interface SettingsLayoutProps {
