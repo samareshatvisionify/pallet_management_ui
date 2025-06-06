@@ -2,23 +2,23 @@
 
 import React from 'react';
 import { Card, Typography } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { CameraOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
-interface ShiftsConfigProps {
+interface CameraConfigProps {
   onClick?: () => void;
 }
 
-const ShiftsConfig: React.FC<ShiftsConfigProps> = ({ onClick }) => {
+const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
   return (
-    <Card className="shadow-sm !mb-6">
+    <Card className="shadow-sm">
       <div className="flex items-center gap-3 cursor-pointer" onClick={onClick}>
-        <ClockCircleOutlined className="text-2xl text-orange-500" />
+        <CameraOutlined className="text-2xl text-blue-500" />
         <div className="flex-1">
-          <Title level={4} className="!mb-1">Shifts Configuration</Title>
+          <Title level={4} className="!mb-1">Camera Configuration</Title>
           <Text className="text-gray-500">
-            Define work shifts, schedules, and operational hours
+            Manage camera settings, resolution, and recording parameters
           </Text>
         </div>
         <div className="text-gray-400">
@@ -29,4 +29,4 @@ const ShiftsConfig: React.FC<ShiftsConfigProps> = ({ onClick }) => {
   );
 };
 
-export default ShiftsConfig; 
+export default CameraConfig; 

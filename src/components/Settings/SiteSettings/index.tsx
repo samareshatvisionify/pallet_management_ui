@@ -3,8 +3,8 @@
 import React from 'react';
 import { Typography } from 'antd';
 import CameraConfig from './CameraConfig';
-import ZoneConfig from './ZoneConfig/ZoneConfig';
-import ShiftsConfig from './ShiftConfig/ShiftsConfig';
+import ZoneConfig from './ZoneConfig';
+import ShiftsConfig from './ShiftConfig';
 
 const { Text } = Typography;
 
