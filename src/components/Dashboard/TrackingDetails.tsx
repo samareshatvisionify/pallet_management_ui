@@ -63,7 +63,7 @@ const TrackingDetails: React.FC<TrackingDetailsProps> = ({
         <div className="flex items-center gap-2">
           <span className="w-0.5 h-4 bg-gradient-to-b from-blue-500 to-blue-700 rounded-sm"></span>
           <Text className="text-sm font-semibold text-gray-700 m-0">
-            Tracked by
+            From:
           </Text>
         </div>
         <Select
