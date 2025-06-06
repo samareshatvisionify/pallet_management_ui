@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Typography } from 'antd';
 import { democameras, Camera } from '@/demoData';
 import CameraPreview from './CameraPreview';
 import StationsPanel from './StationsPanel';
+import CanvasDrawing, { Polygon } from './CanvasDrawing';
 
 const { Title } = Typography;
 
@@ -13,6 +14,10 @@ interface CameraConfigureProps {
 }
 
 const CameraConfigure: React.FC<CameraConfigureProps> = ({ cameraId }) => {
+  // State for drawing functionality
+  const [isDrawingMode, setIsDrawingMode] = useState(false);
+  const [currentPolygon, setCurrentPolygon] = useState<Polygon | null>(null);
+
   // Find the camera by ID
   const camera = democameras.find(cam => cam.id === parseInt(cameraId));
 
@@ -45,14 +50,32 @@ const CameraConfigure: React.FC<CameraConfigureProps> = ({ cameraId }) => {
 
       {/* Two Column Layout */}
       <Row gutter={24} className="h-full">
-        {/* Camera Preview - 2/3 width */}
+        {/* Camera Preview or Canvas Drawing - 2/3 width */}
         <Col xs={24} lg={16} className="mb-6 lg:mb-0">
-          <CameraPreview camera={camera} />
+          {isDrawingMode ? (
+            /* Drawing Mode: Show Canvas with Drawing Tools */
+            <div className="relative">
+              <CanvasDrawing
+                imageUrl={camera.imagePath}
+                onPolygonChange={setCurrentPolygon}
+                isDrawingMode={isDrawingMode}
+                existingPolygon={currentPolygon}
+              />
+            </div>
+          ) : (
+            /* View Mode: Show Camera Preview */
+            <CameraPreview camera={camera} />
+          )}
         </Col>
 
         {/* Stations Panel - 1/3 width */}
         <Col xs={24} lg={8}>
-          <StationsPanel cameraId={cameraId} />
+          <StationsPanel 
+            cameraId={cameraId}
+            onDrawingModeChange={setIsDrawingMode}
+            onPolygonChange={setCurrentPolygon}
+            currentPolygon={currentPolygon}
+          />
         </Col>
       </Row>
     </div>

@@ -1,42 +1,137 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, Typography, Button, Empty, List, Tag, Space } from 'antd';
-import { PlusOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Card, Typography, Button, Empty } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import StationForm, { StationFormData } from './StationForm';
+import StationCard, { Station } from './StationCard';
+import type { Polygon } from './CanvasDrawing';
 
 const { Title, Text } = Typography;
 
-interface Station {
-  id: number;
-  name: string;
-  zone: string;
-  status: 'active' | 'inactive';
-}
-
 interface StationsPanelProps {
   cameraId: string;
+  onDrawingModeChange: (isDrawing: boolean) => void;
+  onPolygonChange: (polygon: Polygon | null) => void;
+  currentPolygon: Polygon | null;
 }
 
-const StationsPanel: React.FC<StationsPanelProps> = ({ cameraId }) => {
-  // Mock stations data - replace with actual API call based on cameraId
-  const [stations, setStations] = useState<Station[]>([
-    // Empty initially - uncomment for demo
-    // { id: 1, name: 'Station A1', zone: 'Loading Dock A', status: 'active' },
-    // { id: 2, name: 'Station A2', zone: 'Loading Dock A', status: 'inactive' }
-  ]);
+const StationsPanel: React.FC<StationsPanelProps> = ({ 
+  cameraId, 
+  onDrawingModeChange, 
+  onPolygonChange,
+  currentPolygon 
+}) => {
+  // State for stations and form management
+  const [stations, setStations] = useState<Station[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+  const [editingStation, setEditingStation] = useState<Station | null>(null);
+  const [formData, setFormData] = useState<StationFormData | null>(null);
 
+  /**
+   * Handle Add Station Click
+   * - Starts the add station flow
+   * - Activates drawing mode for polygon creation
+   */
   const handleAddStation = () => {
-    console.log('Add station for camera:', cameraId);
-    // TODO: Implement add station functionality
+    setIsAdding(true);
+    setEditingStation(null);
+    setFormData(null);
+    onDrawingModeChange(true);
+    onPolygonChange(null);
   };
 
-  const handleEditStation = (stationId: number) => {
-    console.log('Edit station:', stationId);
-    // TODO: Implement edit station functionality
+  /**
+   * Handle Station Form Save
+   * - Validates form data and polygon
+   * - Creates new station or updates existing
+   * - Exits drawing mode
+   */
+  const handleStationSave = (data: StationFormData) => {
+    if (!currentPolygon || !currentPolygon.completed) {
+      alert('Please draw and complete the station area on the camera image.');
+      return;
+    }
+
+    if (editingStation) {
+      // Update existing station
+      setStations(prev => prev.map(station => 
+        station.id === editingStation.id 
+          ? { 
+              ...station, 
+              ...data, 
+              polygon: currentPolygon 
+            }
+          : station
+      ));
+    } else {
+      // Create new station
+      const newStation: Station = {
+        id: Date.now(), // Simple ID generation
+        ...data,
+        polygon: currentPolygon,
+        status: 'active',
+        createdAt: new Date()
+      };
+      setStations(prev => [...prev, newStation]);
+    }
+
+    // Reset form state
+    setIsAdding(false);
+    setEditingStation(null);
+    setFormData(null);
+    onDrawingModeChange(false);
+    onPolygonChange(null);
   };
 
+  /**
+   * Handle Station Form Cancel
+   * - Exits form without saving
+   * - Clears drawing mode
+   */
+  const handleStationCancel = () => {
+    setIsAdding(false);
+    setEditingStation(null);
+    setFormData(null);
+    onDrawingModeChange(false);
+    onPolygonChange(null);
+  };
+
+  /**
+   * Handle Edit Station
+   * - Loads station data into form
+   * - Activates drawing mode with existing polygon
+   */
+  const handleEditStation = (station: Station) => {
+    setEditingStation(station);
+    setFormData({
+      name: station.name,
+      scenario: station.scenario,
+      targetCount: station.targetCount,
+      zoneName: station.zoneName
+    });
+    onDrawingModeChange(true);
+    onPolygonChange(station.polygon);
+  };
+
+  /**
+   * Handle Delete Station
+   * - Removes station from list
+   * - Confirms deletion with user
+   */
   const handleDeleteStation = (stationId: number) => {
-    setStations(stations.filter(station => station.id !== stationId));
+    if (confirm('Are you sure you want to delete this station?')) {
+      setStations(stations.filter(station => station.id !== stationId));
+    }
+  };
+
+  /**
+   * Handle View Station Area
+   * - Shows station polygon on camera without editing
+   */
+  const handleViewArea = (station: Station) => {
+    onPolygonChange(station.polygon);
+    // Optionally could highlight the specific station
   };
 
   return (
@@ -45,7 +140,7 @@ const StationsPanel: React.FC<StationsPanelProps> = ({ cameraId }) => {
       <div className="mb-4">
         <div className="flex items-center justify-between">
           <Title level={5} className="mb-0 text-gray-900">
-            Added Stations
+            Station Configuration
           </Title>
           <Text type="secondary" className="text-xs">
             {stations.length} station{stations.length !== 1 ? 's' : ''}
@@ -54,20 +149,43 @@ const StationsPanel: React.FC<StationsPanelProps> = ({ cameraId }) => {
       </div>
 
       {/* Stations Content */}
-      <div className="flex-1">
-        {stations.length === 0 ? (
-          /* Empty State */
+      <div className="flex-1 max-h-96 overflow-y-auto">
+        {/* Add/Edit Station Form */}
+        {(isAdding || editingStation) && (
+          <div className="mb-4">
+            <StationForm
+              onSave={handleStationSave}
+              onCancel={handleStationCancel}
+              initialData={formData || undefined}
+              loading={false}
+            />
+          </div>
+        )}
+
+        {/* Existing Stations */}
+        {stations.map(station => (
+          <StationCard
+            key={station.id}
+            station={station}
+            onEdit={handleEditStation}
+            onDelete={handleDeleteStation}
+            onViewArea={handleViewArea}
+          />
+        ))}
+
+        {/* Empty State or Add Button */}
+        {stations.length === 0 && !isAdding && !editingStation && (
           <div className="h-full flex flex-col items-center justify-center py-8">
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               description={
                 <div className="text-center">
                   <Text type="secondary" className="text-sm">
-                    No stations added yet
+                    No stations configured
                   </Text>
                   <br />
                   <Text type="secondary" className="text-xs">
-                    Add stations to configure this camera
+                    Add stations to monitor specific areas
                   </Text>
                 </div>
               }
@@ -82,71 +200,23 @@ const StationsPanel: React.FC<StationsPanelProps> = ({ cameraId }) => {
                 border: 'none',
               }}
             >
-              Add Station
+              Add First Station
             </Button>
           </div>
-        ) : (
-          /* Stations List */
-          <div>
-            <List
-              size="small"
-              dataSource={stations}
-              renderItem={(station) => (
-                <List.Item
-                  className="border-b border-gray-100 last:border-b-0 py-3"
-                  actions={[
-                    <Button
-                      key="edit"
-                      type="text"
-                      size="small"
-                      icon={<EditOutlined />}
-                      onClick={() => handleEditStation(station.id)}
-                      className="text-blue-500 hover:text-blue-600"
-                    />,
-                    <Button
-                      key="delete"
-                      type="text"
-                      size="small"
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDeleteStation(station.id)}
-                      className="text-red-500 hover:text-red-600"
-                    />
-                  ]}
-                >
-                  <div className="flex-1">
-                    <div className="flex flex-col">
-                      <Text strong className="text-sm text-gray-900">
-                        {station.name}
-                      </Text>
-                      <Text type="secondary" className="text-xs mt-1">
-                        {station.zone}
-                      </Text>
-                      <div className="mt-2">
-                        <Tag 
-                          color={station.status === 'active' ? 'green' : 'default'}
-                          className="text-xs"
-                        >
-                          {station.status.toUpperCase()}
-                        </Tag>
-                      </div>
-                    </div>
-                  </div>
-                </List.Item>
-              )}
-            />
-            
-            {/* Add More Button */}
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <Button
-                type="dashed"
-                icon={<PlusOutlined />}
-                onClick={handleAddStation}
-                block
-                className="border-blue-200 text-blue-500 hover:border-blue-400 hover:text-blue-600"
-              >
-                Add Another Station
-              </Button>
-            </div>
+        )}
+
+        {/* Add More Button (when stations exist and not in add/edit mode) */}
+        {stations.length > 0 && !isAdding && !editingStation && (
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <Button
+              type="dashed"
+              icon={<PlusOutlined />}
+              onClick={handleAddStation}
+              block
+              className="border-blue-200 text-blue-500 hover:border-blue-400 hover:text-blue-600"
+            >
+              Add Another Station
+            </Button>
           </div>
         )}
       </div>

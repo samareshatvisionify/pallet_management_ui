@@ -35,37 +35,7 @@ const CameraPreview: React.FC<CameraPreviewProps> = ({ camera }) => {
         />
       </div>
 
-      {/* Camera Info */}
-      <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-        <div className="space-y-2">
-          <div>
-            <Text type="secondary">Status:</Text>
-            <Text className={`ml-2 font-medium ${
-              camera.status === 'online' ? 'text-green-600' : 
-              camera.status === 'offline' ? 'text-red-600' : 
-              'text-yellow-600'
-            }`}>
-              {camera.status.charAt(0).toUpperCase() + camera.status.slice(1)}
-            </Text>
-          </div>
-          <div>
-            <Text type="secondary">Recording:</Text>
-            <Text className={`ml-2 font-medium ${camera.recording ? 'text-green-600' : 'text-red-600'}`}>
-              {camera.recording ? 'ON' : 'OFF'}
-            </Text>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <div>
-            <Text type="secondary">Category:</Text>
-            <Text className="ml-2 font-medium">{camera.category}</Text>
-          </div>
-          <div>
-            <Text type="secondary">Efficiency:</Text>
-            <Text className="ml-2 font-medium text-blue-600">{camera.efficiency}%</Text>
-          </div>
-        </div>
-      </div>
+
     </Card>
   );
 };
