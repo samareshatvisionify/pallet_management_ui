@@ -3,70 +3,12 @@
 import React, { useState } from 'react';
 import { Card, Typography, Button, Space, Input, Row, Col } from 'antd';
 import { CameraOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import CameraListItem, { Camera } from './CameraListItem';
+import CameraListItem from './CameraListItem';
+import { Camera, democameras } from '@/demoData';
+import { useRouter } from 'next/navigation';
 
 const { Title, Text } = Typography;
 const { Search } = Input;
-
-// Mock camera data - this would come from the existing camera data
-const mockCameras: Camera[] = [
-  { 
-    id: 1, 
-    name: 'Entrance Camera 1', 
-    status: 'online', 
-    zone: 'Loading Dock A', 
-    recording: true, 
-    category: 'Pallets', 
-    subcategory: 'Making',
-    rtspUrl: 'rtsp://192.168.1.1:554/stream1',
-    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
-    efficiency: 96,
-    todaysTotal: 158,
-    appliedScenarios: ['Pallet Build', 'Conveyor Board']
-  },
-  { 
-    id: 2, 
-    name: 'Warehouse Zone 1', 
-    status: 'online', 
-    zone: 'Storage Area 1', 
-    recording: true, 
-    category: 'Pallets', 
-    subcategory: 'Dismantling',
-    rtspUrl: 'rtsp://192.168.1.2:554/stream1',
-    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
-    efficiency: 87,
-    todaysTotal: 142,
-    appliedScenarios: ['Pallet Dismantling', 'Quality Check']
-  },
-  { 
-    id: 3, 
-    name: 'Warehouse Zone 2', 
-    status: 'offline', 
-    zone: 'Storage Area 2', 
-    recording: false, 
-    category: 'Boards', 
-    subcategory: 'Board',
-    rtspUrl: 'rtsp://192.168.1.3:554/stream1',
-    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
-    efficiency: 0,
-    todaysTotal: 0,
-    appliedScenarios: ['Board Processing']
-  },
-  { 
-    id: 4, 
-    name: 'Exit Camera 1', 
-    status: 'online', 
-    zone: 'Loading Dock B', 
-    recording: true, 
-    category: 'Pallets', 
-    subcategory: 'Repair',
-    rtspUrl: 'rtsp://192.168.1.4:554/stream1',
-    imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIrI-upRnloLyCOInfzs6pxQl1ZT2z5hnrcg&s',
-    efficiency: 92,
-    todaysTotal: 134,
-    appliedScenarios: ['Pallet Repair', 'Damage Assessment']
-  },
-];
 
 interface CameraConfigProps {
   onClick?: () => void;
@@ -74,8 +16,9 @@ interface CameraConfigProps {
 
 const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
   const [searchText, setSearchText] = useState('');
-  const [cameras] = useState<Camera[]>(mockCameras);
-
+  const [cameras] = useState<Camera[]>(democameras);
+  const router = useRouter();
+  
   const filteredCameras = cameras.filter(camera =>
     camera.name.toLowerCase().includes(searchText.toLowerCase()) ||
     camera.zone.toLowerCase().includes(searchText.toLowerCase())
@@ -88,6 +31,7 @@ const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
 
   const handleConfigure = (cameraId: number) => {
     console.log('Configure camera:', cameraId);
+    router.push(`/settings/cameras/${cameraId}`);
     // TODO: Implement configure functionality
   };
 
@@ -128,7 +72,7 @@ const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
           placeholder="Search cameras by name or zone..."
           allowClear
           value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
           style={{ maxWidth: 400 }}
           prefix={<SearchOutlined />}
         />

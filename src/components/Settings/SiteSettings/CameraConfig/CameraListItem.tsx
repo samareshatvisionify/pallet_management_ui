@@ -3,23 +3,9 @@
 import React from 'react';
 import { Button, Tag, Image, Space, Typography } from 'antd';
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
+import { Camera } from '@/demoData';
 
 const { Text } = Typography;
-
-export interface Camera {
-  id: number;
-  name: string;
-  status: 'online' | 'offline' | 'maintenance';
-  zone: string;
-  recording: boolean;
-  category: 'Pallets' | 'Boards';
-  subcategory: 'Making' | 'Dismantling' | 'Repair' | 'Board' | 'Trimsaw';
-  rtspUrl: string;
-  imagePath: string;
-  efficiency: number;
-  todaysTotal: number;
-  appliedScenarios: string[];
-}
 
 interface CameraListItemProps {
   camera: Camera;
