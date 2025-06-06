@@ -1,5 +1,4 @@
 export { default as DashboardContainer } from './Dashboard';
-export { default as PalletManagementContainer } from './PalletManagementContainer';
 export { default as CameraContainer } from './Camera';
 export { default as CameraDetailsContainer } from './Camera/Details';
 export { default as ZoneContainer } from './Zone';
