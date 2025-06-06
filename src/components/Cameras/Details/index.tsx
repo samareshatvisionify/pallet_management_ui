@@ -61,7 +61,7 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({
       />
 
       {/* Main Content */}
-      <Row gutter={[24, 24]}>
+      <Row gutter={[12, 12]} className="md:gutter-16 lg:gutter-24">
         {/* Left Side - Live Feed */}
         <Col xs={24} lg={12}>
           <CameraLiveFeed
@@ -74,7 +74,7 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({
 
         {/* Right Side - Stats and Stations */}
         <Col xs={24} lg={12}>
-          <div className="h-full flex flex-col">
+          <div className="h-full flex flex-col space-y-3 md:space-y-4 lg:space-y-6">
             {/* Stats Cards */}
             <CameraDetailsStats
               camera={camera}
@@ -91,10 +91,12 @@ const CameraDetails: React.FC<CameraDetailsProps> = ({
       </Row>
 
       {/* Activity Charts Section */}
-      <CameraActivityCharts
-        camera={camera}
-        loading={loading}
-      />
+      <div className="mt-3 md:mt-4 lg:mt-6">
+        <CameraActivityCharts
+          camera={camera}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 };

@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Card, Row, Col, Typography, Progress } from 'antd';
+import { Card, Row, Col, Typography, Progress, Button } from 'antd';
 import { 
   CheckCircleOutlined,
   ExclamationCircleOutlined,
-  SettingOutlined
+  SettingOutlined,
+  LinkOutlined
 } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
 import { Zone } from '@/store/slices/zoneSlice';
 
 const { Text } = Typography;
@@ -20,6 +22,8 @@ const ZoneStationsGrid: React.FC<ZoneStationsGridProps> = ({
   zone,
   getEfficiencyColor
 }) => {
+  const router = useRouter();
+
   const getStationIcon = (status: string) => {
     switch (status) {
       case 'active':
@@ -31,8 +35,37 @@ const ZoneStationsGrid: React.FC<ZoneStationsGridProps> = ({
     }
   };
 
+  const handleLinkToCameraSettings = () => {
+    router.push('/settings/cameras');
+  };
+
   return (
-    <Card title={`Stations (${zone.stations.length})`} className="!mb-6">
+    <Card 
+      title={`Stations (${zone.stations.length})`} 
+      className="!mb-6"
+      extra={
+        <Button
+          icon={<LinkOutlined />}
+          onClick={handleLinkToCameraSettings}
+          title="Go to Camera Settings"
+          style={{
+            backgroundColor: '#f3f4f6',
+            borderColor: '#d1d5db',
+            color: '#374151',
+            borderRadius: '8px'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#e5e7eb';
+            e.currentTarget.style.borderColor = '#9ca3af';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#f3f4f6';
+            e.currentTarget.style.borderColor = '#d1d5db';
+          }}
+        >
+        </Button>
+      }
+    >
       <Row gutter={[16, 16]}>
         {zone.stations.map((station) => (
           <Col xs={24} sm={12} md={8} lg={6} key={station.id}>

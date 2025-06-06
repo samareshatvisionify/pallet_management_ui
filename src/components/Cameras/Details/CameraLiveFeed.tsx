@@ -24,26 +24,16 @@ const CameraLiveFeed: React.FC<CameraLiveFeedProps> = ({
   return (
     <Card 
       title={
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mx-0">
           {/* Toggle Switch for Camera Enable/Disable */}
-          <div className="flex items-center gap-3 ml-2">
+          <div className="flex items-center gap-3">
             <Switch
               checked={cameraEnabled}
               onChange={onToggleCamera}
               loading={loading}
-              checkedChildren={
-                <span className="text-xs font-medium text-white">
-                  Enabled
-                </span>
-              }
-              unCheckedChildren={
-                <span className="text-xs font-medium text-white">
-                  Disabled
-                </span>
-              }
               style={{
                 backgroundColor: cameraEnabled ? '#52c41a' : '#ff4d4f',
-                minWidth: '90px'
+                minWidth: '45px'
               }}
             />
           </div>

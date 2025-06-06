@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Card, Typography, Button, Progress, Tooltip } from 'antd';
+import { Card, Button, Progress, Tooltip } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { CalendarDayData } from '@/demoData/palletData';
@@ -23,24 +23,24 @@ const ProductionDetailsPanel: React.FC<ProductionDetailsPanelProps> = ({
     <Card className="shadow-sm border border-gray-100 h-full">
       {/* Header */}
       <div className="pb-6 border-b border-gray-100">
-        <div className="text-center">
-          <h3 className="text-xl font-semibold text-gray-900 mb-1">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-gray-500">Production Summary</p>
+          <h3 className="text-xl font-semibold text-gray-900">
             {dayjs(selectedDate.date).format('MMM D, YYYY')}
           </h3>
-          <p className="text-sm text-gray-500">Production Summary</p>
         </div>
       </div>
 
       {/* Key Metrics */}
-      <div className="py-6 space-y-6">
+      <div className="py-4 space-y-4">
         {/* Circular Progress */}
-        <div className="bg-gray-50 rounded-lg">
+        <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex flex-col items-center">
             <Tooltip title={`Production: ${selectedDate.production.toLocaleString()} | Target: ${selectedDate.target.toLocaleString()}`}>
               <Progress
                 type="circle"
                 percent={Math.min(selectedDate.efficiency, 100)}
-                size={180}
+                size={160}
                 strokeWidth={8}
                 strokeColor={
                   selectedDate.efficiency >= 100 
@@ -67,7 +67,7 @@ const ProductionDetailsPanel: React.FC<ProductionDetailsPanelProps> = ({
       </div>
 
       {/* Station Breakdown */}
-      <div className="py-6 border-t border-gray-100">
+      <div className="py-4 border-t border-gray-100">
         <div className="mb-4">
           <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
             Station Breakdown
@@ -102,7 +102,7 @@ const ProductionDetailsPanel: React.FC<ProductionDetailsPanelProps> = ({
       </div>
 
       {/* View Details Button */}
-      <div className="pt-6 border-t border-gray-100">
+      <div className="pt-4 border-t border-gray-100">
         <Button
           type="primary"
           block

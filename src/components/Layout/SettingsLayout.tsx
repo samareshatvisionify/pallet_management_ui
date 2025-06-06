@@ -3,7 +3,7 @@
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, Card } from 'antd';
-import { SettingOutlined, TeamOutlined } from '@ant-design/icons';
+import { SettingOutlined, TeamOutlined, CameraOutlined } from '@ant-design/icons';
 
 interface SettingsLayoutProps {
   children: React.ReactNode;
@@ -15,9 +15,14 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
 
   const menuItems = [
     {
-      key: '/settings',
+      key: '/settings/sites',
       icon: <SettingOutlined />,
       label: 'Site Settings',
+    },
+    {
+      key: '/settings/cameras',
+      icon: <CameraOutlined />,
+      label: 'Camera Settings',
     },
     {
       key: '/settings/users',
@@ -33,7 +38,9 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => {
   // Get current selected key based on pathname
   const getSelectedKey = () => {
     if (pathname === '/settings/users') return '/settings/users';
-    return '/settings';
+    if (pathname.startsWith('/settings/cameras')) return '/settings/cameras';
+    if (pathname.startsWith('/settings/sites')) return '/settings/sites';
+    return '/settings/sites'; // Default to sites
   };
 
   return (

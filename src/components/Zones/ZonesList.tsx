@@ -47,7 +47,7 @@ const ZonesList: React.FC<ZonesListProps> = ({
 
   return (
     <Spin spinning={loading}>
-      <Row gutter={[16, 16]}>
+      <Row gutter={[12, 12]} className="md:gutter-16 lg:gutter-24">
         {zones.map((zone) => (
           <Col xs={24} sm={12} lg={8} xl={6} key={zone.id}>
             <ZoneCard

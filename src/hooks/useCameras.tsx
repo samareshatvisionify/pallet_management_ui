@@ -74,16 +74,17 @@ export const useCameras = () => {
     return [];
   };
 
-  // Camera filtering with category support
+  // Camera filtering with zone, category and target achievement support
   const filterCameras = (
-    statusFilter?: Camera['status'], 
+    zoneFilters?: string[], 
     categoryFilters?: Camera['category'][], 
-    subcategoryFilters?: Camera['subcategory'][]
+    subcategoryFilters?: Camera['subcategory'][],
+    targetAchievementFilter?: 'all' | 'met' | 'not-met'
   ) => {
     let filtered = cameras;
 
-    if (statusFilter) {
-      filtered = filtered.filter(camera => camera.status === statusFilter);
+    if (zoneFilters && zoneFilters.length > 0) {
+      filtered = filtered.filter(camera => zoneFilters.includes(camera.zone));
     }
 
     if (categoryFilters && categoryFilters.length > 0) {
@@ -92,6 +93,14 @@ export const useCameras = () => {
 
     if (subcategoryFilters && subcategoryFilters.length > 0) {
       filtered = filtered.filter(camera => subcategoryFilters.includes(camera.subcategory));
+    }
+
+    if (targetAchievementFilter && targetAchievementFilter !== 'all') {
+      if (targetAchievementFilter === 'met') {
+        filtered = filtered.filter(camera => camera.todaysTotal >= camera.todaysTarget);
+      } else if (targetAchievementFilter === 'not-met') {
+        filtered = filtered.filter(camera => camera.todaysTotal < camera.todaysTarget);
+      }
     }
 
     return filtered;

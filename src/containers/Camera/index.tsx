@@ -35,6 +35,13 @@ const CameraContainer: React.FC = () => {
     router.push(`/cameras/${cameraId}`);
   };
 
+  const handleAddCamera = () => {
+    console.log('Add new camera');
+    // TODO: Implement add camera functionality - could navigate to a form or open a modal
+    // For now, we could navigate to camera settings or show a placeholder
+    router.push('/settings/cameras');
+  };
+
   return (
     <Cameras
       // Data props
@@ -45,10 +52,12 @@ const CameraContainer: React.FC = () => {
       // Action props
       onClearError={handleClearError}
       onCameraClick={handleCameraClick}
+      onAddCamera={handleAddCamera}
       
       // Utility props
       filterCameras={filterCameras}
       getStatusColor={getStatusColor}
+      getUniqueZones={getUniqueZones}
       getUniqueCategories={getUniqueCategories}
       getSubcategoriesForCategory={getSubcategoriesForCategory}
     />

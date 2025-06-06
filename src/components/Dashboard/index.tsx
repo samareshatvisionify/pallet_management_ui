@@ -1,11 +1,15 @@
 'use client';
 
 import React from 'react';
-import { Alert } from 'antd';
+import { Alert, Row, Col } from 'antd';
 import { DashboardStats, SystemStatus } from '@/store/slices/dashboardSlice';
 import { PerformanceData, CalendarData } from '@/demoData';
+import { democameras } from '@/demoData/cameraData';
 import PerformanceOverview from './PerformanceOverview';
 import ProductionCalendar from './ProductionCalendar/index';
+import CameraStatusCard from './CameraStatusCard';
+import EdgeDevicesCard from './EdgeDevicesCard';
+import ActivityByShiftCard from './ActivityByShiftCard';
 
 // Dashboard sub-components will be imported here as we create them
 // import DashboardHeader from './DashboardHeader';
@@ -87,12 +91,39 @@ const Dashboard: React.FC<DashboardProps> = ({
         loading={loading}
       />
 
-      {/* Production Calendar Section */}
-      <div className="mt-8">
+      {/* Production Calendar Section - Hidden on Mobile */}
+      <div className="mt-8 hidden md:block">
         <ProductionCalendar 
           data={calendarData}
           loading={loading}
         />
+      </div>
+
+      {/* Additional Dashboard Cards */}
+      <div className="mt-6 md:mt-8">
+        <Row gutter={[12, 12]} className="md:gutter-16 lg:gutter-24">
+          {/* Camera Status Card */}
+          <Col xs={24} lg={12}>
+            <CameraStatusCard 
+              cameras={democameras}
+              loading={loading}
+            />
+          </Col>
+
+          {/* Edge Devices Card */}
+          <Col xs={24} lg={12}>
+            <EdgeDevicesCard 
+              loading={loading}
+            />
+          </Col>
+
+          {/* Activity by Shift Card - Full Width, Hidden on Mobile */}
+          <Col xs={0} md={24}>
+            <ActivityByShiftCard 
+              loading={loading}
+            />
+          </Col>
+        </Row>
       </div>
     </div>
   );

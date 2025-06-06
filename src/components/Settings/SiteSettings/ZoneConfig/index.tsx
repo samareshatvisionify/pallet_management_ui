@@ -205,9 +205,6 @@ const ZoneConfig: React.FC<ZoneConfigProps> = ({ onClick }) => {
           <EnvironmentOutlined className="text-2xl text-green-500" />
           <div>
             <Title level={4} className="!mb-1">Zone Configuration</Title>
-            <Text className="text-gray-500">
-              Set up warehouse zones, boundaries, and monitoring areas
-            </Text>
           </div>
         </div>
 

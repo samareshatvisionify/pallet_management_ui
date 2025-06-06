@@ -55,9 +55,19 @@ const pageConfig = {
     subtitle: 'Configure system preferences, user settings, and application parameters.',
     showRefresh: false,
   },
+  '/settings/sites': {
+    title: 'Site Settings',
+    subtitle: 'Configure zones, boundaries, and site-specific settings for your facility.',
+    showRefresh: false,
+  },
   '/settings/cameras': {
-    title: 'Camera Selection',
-    subtitle: 'Choose a camera for adding station configurations and monitoring setup.',
+    title: 'Camera Settings',
+    subtitle: 'Configure camera settings, monitoring parameters, and operational shifts.',
+    showRefresh: false,
+  },
+  '/settings/users': {
+    title: 'User Management',
+    subtitle: 'Manage users, roles, and permissions for your organization.',
     showRefresh: false,
   },
 } as const;
@@ -129,9 +139,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     window.location.reload();
   };
 
-  // Page Header Component
+  // Page Header Component - Only shown on desktop
   const PageHeader = () => (
-    <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 bg-white p-4 md:p-6 rounded-lg shadow-sm">
+    <div className="hidden md:block mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 bg-white p-4 md:p-6 rounded-lg shadow-sm">
       <div className="min-w-0 flex-1">
         <Title level={2} className="!mb-0 !text-xl md:!text-2xl">
           {currentPageConfig.title} | {currentPageConfig.subtitle}
@@ -300,7 +310,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             background: colorBgContainer,
           }}
         >
-          <PageHeader />
           {children}
         </Content>
 

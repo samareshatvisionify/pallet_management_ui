@@ -48,9 +48,6 @@ const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
           <CameraOutlined className="text-2xl text-blue-500" />
           <div>
             <Title level={4} className="!mb-1">Camera Configuration</Title>
-            <Text className="text-gray-500">
-              Manage camera settings, resolution, and recording parameters
-            </Text>
           </div>
         </div>
         <Button

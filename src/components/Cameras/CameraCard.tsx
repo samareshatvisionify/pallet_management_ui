@@ -25,22 +25,39 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onViewClick }) => {
     }
   };
 
+  // Get current count color based on target achievement
+  const getCurrentCountColor = (current: number, target: number) => {
+    return current >= target ? '#10b981' : '#f59e0b'; // green if met/exceeded, orange if below
+  };
+
   return (
     <Card
       title={
         <div className="flex items-center justify-between">
-          <span className="text-sm md:text-base truncate">{camera.name}</span>
-          <div 
-            className="w-3 h-3 rounded-full flex-shrink-0 ml-2"
-            style={{ backgroundColor: getStatusDotColor(camera.status) }}
-            title={`Status: ${camera.status}`}
-          />
+          <div className="flex items-center gap-2">
+            <div 
+              className="w-3 h-3 rounded-full flex-shrink-0"
+              style={{ backgroundColor: getStatusDotColor(camera.status) }}
+              title={`Status: ${camera.status}`}
+            />
+            <span className="text-sm md:text-base truncate">{camera.name}</span>
+          </div>
+          <div className="text-xs flex-shrink-0">
+            <span 
+              className="font-bold text-sm"
+              style={{ color: getCurrentCountColor(camera.todaysTotal, camera.todaysTarget) }}
+            >
+              {camera.todaysTotal}
+            </span>
+            <span className="text-gray-400 mx-1">/</span>
+            <span className="text-gray-500">{camera.todaysTarget}</span>
+          </div>
         </div>
       }
       className="h-full border-0 shadow-none"
     >
       {/* Image Viewer */}
-      <div className="mb-4 px-4">
+      <div className="mb-4">
         <Image
           src={camera.imagePath}
           alt={`${camera.name} feed`}
@@ -52,43 +69,62 @@ const CameraCard: React.FC<CameraCardProps> = ({ camera, onViewClick }) => {
         />
       </div>
 
-      <div className="flex flex-col gap-2 md:gap-3 px-4 mb-4">
+      <div className="flex flex-col gap-2 mb-3 md:mb-4">
         
         <div className="flex justify-between items-center">
-          <span className="text-xs md:text-sm font-medium">Zone:</span>
-          <Tag className="text-xs md:text-sm max-w-32 truncate" title={camera.zone}>
+          <span className="text-xs font-medium">Zone:</span>
+          <Tag className="text-xs max-w-24 md:max-w-32 truncate" title={camera.zone}>
             {camera.zone}
           </Tag>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-xs md:text-sm font-medium">RTSP URL:</span>
+          <span className="text-xs font-medium">RTSP URL:</span>
           <Tag 
             color="purple" 
-            className="text-xs md:text-sm font-mono cursor-pointer"
+            className="text-xs font-mono cursor-pointer"
             title={camera.rtspUrl}
             onClick={() => navigator.clipboard.writeText(camera.rtspUrl)}
           >
-            {camera.rtspUrl.length > 20 
-              ? `${camera.rtspUrl.substring(0, 20)}...` 
-              : camera.rtspUrl
-            }
+            <span className="block sm:hidden">
+              {camera.rtspUrl.length > 12 
+                ? `${camera.rtspUrl.substring(0, 12)}...` 
+                : camera.rtspUrl
+              }
+            </span>
+            <span className="hidden sm:block">
+              {camera.rtspUrl.length > 20 
+                ? `${camera.rtspUrl.substring(0, 20)}...` 
+                : camera.rtspUrl
+              }
+            </span>
           </Tag>
         </div>
       </div>
 
-      {/* View Camera Button - Full Width at Bottom */}
-      <div className="border-t border-gray-200">
+      {/* View Camera Button - Rounded Rectangle */}
+      <div>
         <Button 
           type="default"
           icon={<PlayCircleOutlined />} 
           size="large"
-          className="w-full h-12 bg-gray-200 text-gray-800 hover:bg-gray-600 hover:text-white border-0 hover:border-0 focus:border-0 active:border-0 rounded-none"
+          className="w-full h-10 md:h-12 rounded-lg font-medium border-0 focus:outline-none focus:ring-0 focus:border-transparent"
           onClick={() => onViewClick(camera.id)}
           style={{
-            margin: 0,
-            borderRadius: 0,
-            boxShadow: 'none'
+            backgroundColor: '#4b5563',
+            color: 'white',
+            border: 'none !important',
+            outline: '0 !important',
+            boxShadow: 'none !important',
+            borderRadius: '0.5rem !important'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#424242';
+            e.currentTarget.style.borderColor = 'transparent';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#4b5563';
+            e.currentTarget.style.borderColor = 'transparent';
           }}
         >
           View Camera

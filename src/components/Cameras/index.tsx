@@ -18,10 +18,12 @@ interface CamerasComponentProps {
   // Action props
   onClearError: () => void;
   onCameraClick?: (cameraId: number) => void;
+  onAddCamera?: () => void;
   
   // Utility props
-  filterCameras: (statusFilter?: Camera['status'], categoryFilters?: Camera['category'][], subcategoryFilters?: Camera['subcategory'][]) => Camera[];
+  filterCameras: (zoneFilters?: string[], categoryFilters?: Camera['category'][], subcategoryFilters?: Camera['subcategory'][], targetAchievementFilter?: 'all' | 'met' | 'not-met') => Camera[];
   getStatusColor: (status: Camera['status']) => string;
+  getUniqueZones: () => string[];
   getUniqueCategories: () => Camera['category'][];
   getSubcategoriesForCategory: (category: Camera['category']) => Camera['subcategory'][];
 }
@@ -32,16 +34,20 @@ const Cameras: React.FC<CamerasComponentProps> = ({
   error,
   onClearError,
   onCameraClick,
+  onAddCamera,
   filterCameras,
   getStatusColor,
+  getUniqueZones,
   getUniqueCategories,
   getSubcategoriesForCategory
 }) => {
-  const [statusFilter, setStatusFilter] = useState<Camera['status'] | undefined>(undefined);
+  const [zoneFilters, setZoneFilters] = useState<string[]>([]);
   const [categoryFilters, setCategoryFilters] = useState<Camera['category'][]>([]);
   const [subcategoryFilters, setSubcategoryFilters] = useState<Camera['subcategory'][]>([]);
+  const [targetAchievementFilter, setTargetAchievementFilter] = useState<'all' | 'met' | 'not-met' | undefined>(undefined);
 
-  const filteredCameras = filterCameras(statusFilter, categoryFilters, subcategoryFilters);
+  const filteredCameras = filterCameras(zoneFilters, categoryFilters, subcategoryFilters, targetAchievementFilter);
+  const uniqueZones = getUniqueZones();
   const uniqueCategories = getUniqueCategories();
   const availableSubcategories = categoryFilters.length > 0 
     ? categoryFilters.flatMap(cat => getSubcategoriesForCategory(cat))
@@ -62,22 +68,26 @@ const Cameras: React.FC<CamerasComponentProps> = ({
     <div className="space-y-6">
       {/* Filters Section */}
       <CameraFilters
-        statusFilter={statusFilter}
+        zoneFilters={zoneFilters}
         categoryFilters={categoryFilters}
         subcategoryFilters={subcategoryFilters}
-        onStatusChange={setStatusFilter}
+        targetAchievementFilter={targetAchievementFilter}
+        onZoneChange={setZoneFilters}
         onCategoryChange={setCategoryFilters}
         onSubcategoryChange={setSubcategoryFilters}
+        onTargetAchievementChange={setTargetAchievementFilter}
+        uniqueZones={uniqueZones}
         uniqueCategories={uniqueCategories}
         availableSubcategories={availableSubcategories}
+        onAddCamera={onAddCamera}
       />
 
       {/* Main Content Area */}
       <div className="space-y-4 md:space-y-6">
         {/* Camera Grid */}
-        <Row gutter={[12, 12]} className="md:gutter-24">
+        <Row gutter={[12, 12]} className="md:gutter-16 lg:gutter-24">
           {filteredCameras.map((camera) => (
-            <Col xs={24} sm={12} lg={8} xl={6} key={camera.id}>
+            <Col xs={24} sm={12} lg={8} key={camera.id}>
               <CameraCard camera={camera} onViewClick={handleViewCamera} />
             </Col>
           ))}
@@ -89,7 +99,7 @@ const Cameras: React.FC<CamerasComponentProps> = ({
             <CameraOutlined className="text-4xl text-gray-300 mb-4" />
             <Title level={4} className="!text-lg text-gray-500">No cameras found</Title>
             <Paragraph className="text-gray-400">
-              {statusFilter || categoryFilters.length > 0 || subcategoryFilters.length > 0
+              {zoneFilters.length > 0 || categoryFilters.length > 0 || subcategoryFilters.length > 0 || targetAchievementFilter
                 ? "Try adjusting your filter criteria to find the cameras you're looking for."
                 : "No cameras match the selected filters. Try adjusting your filter criteria or clearing some filters."}
             </Paragraph>
