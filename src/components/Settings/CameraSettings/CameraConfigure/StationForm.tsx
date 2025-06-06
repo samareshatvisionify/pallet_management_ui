@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Form, Input, Select, InputNumber, Button, Space } from 'antd';
+import { Form, Input, Select, InputNumber, Button } from 'antd';
 import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -55,7 +55,7 @@ const StationForm: React.FC<StationFormProps> = ({
   };
 
   // Handle form validation failure
-  const handleFinishFailed = (errorInfo: any) => {
+  const handleFinishFailed = (errorInfo: unknown) => {
     console.log('Form validation failed:', errorInfo);
   };
 

@@ -35,6 +35,11 @@ const CameraContainer: React.FC = () => {
     router.push(`/cameras/${cameraId}`);
   };
 
+  const handleAddCamera = () => {
+    console.log('Add new camera');
+    router.push('/settings/cameras');
+  };
+
   return (
     <Cameras
       // Data props
@@ -45,10 +50,12 @@ const CameraContainer: React.FC = () => {
       // Action props
       onClearError={handleClearError}
       onCameraClick={handleCameraClick}
+      onAddCamera={handleAddCamera}
       
       // Utility props
       filterCameras={filterCameras}
       getStatusColor={getStatusColor}
+      getUniqueZones={getUniqueZones}
       getUniqueCategories={getUniqueCategories}
       getSubcategoriesForCategory={getSubcategoriesForCategory}
     />

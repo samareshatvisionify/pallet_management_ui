@@ -1,10 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Table, Button, Tag, Dropdown, Modal, Avatar, Typography, Space, Tooltip } from 'antd';
-import { EditOutlined, DeleteOutlined, MoreOutlined, ExclamationCircleOutlined, UserOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
-
-const { Text } = Typography;
+import { Table, Button, Tag, Dropdown, Modal, Avatar } from 'antd';
+import { EditOutlined, DeleteOutlined, MoreOutlined, ExclamationCircleOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
 
 export interface User {
   id: string;
@@ -46,14 +44,7 @@ const UserTable: React.FC<UserTableProps> = ({
     });
   };
 
-  const getStatusColor = (status: User['status']) => {
-    switch (status) {
-      case 'Active': return '#52c41a';
-      case 'Inactive': return '#ff4d4f';
-      case 'Pending': return '#faad14';
-      default: return '#d9d9d9';
-    }
-  };
+
 
   const getStatusConfig = (status: User['status']) => {
     switch (status) {
@@ -64,15 +55,7 @@ const UserTable: React.FC<UserTableProps> = ({
     }
   };
 
-  const getRoleColor = (role: User['role']) => {
-    switch (role) {
-      case 'Admin': return '#722ed1';
-      case 'Manager': return '#1890ff';
-      case 'Operator': return '#13c2c2';
-      case 'Viewer': return '#8c8c8c';
-      default: return '#d9d9d9';
-    }
-  };
+
 
   const getRoleConfig = (role: User['role']) => {
     switch (role) {
@@ -98,8 +81,8 @@ const UserTable: React.FC<UserTableProps> = ({
     {
       key: 'edit',
       label: (
-        <span style={{ color: '#1890ff' }}>
-          <EditOutlined style={{ marginRight: 8 }} />
+        <span className="table-action-link">
+          <EditOutlined className="mr-2" />
           Edit User
         </span>
       ),
@@ -108,8 +91,8 @@ const UserTable: React.FC<UserTableProps> = ({
     {
       key: 'delete',
       label: (
-        <span style={{ color: '#ff4d4f' }}>
-          <DeleteOutlined style={{ marginRight: 8 }} />
+        <span className="table-action-delete">
+          <DeleteOutlined className="mr-2" />
           Delete User
         </span>
       ),

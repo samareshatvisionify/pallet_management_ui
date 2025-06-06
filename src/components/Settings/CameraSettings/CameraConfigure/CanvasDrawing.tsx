@@ -113,7 +113,7 @@ const CanvasDrawing: React.FC<CanvasDrawingProps> = ({
     if (isDrawingMode && polygon && !polygon.completed && polygon.points.length > 0 && mousePosition) {
       drawPreviewLine(ctx, polygon, mousePosition);
     }
-  }, [polygon, imageLoaded, mousePosition, isDrawingMode]);
+  }, [polygon, imageLoaded, mousePosition, isDrawingMode, canvasDimensions]);
 
   // Draw preview line from last point to mouse cursor
   const drawPreviewLine = (ctx: CanvasRenderingContext2D, poly: Polygon, mousePos: Point) => {
@@ -203,7 +203,7 @@ const CanvasDrawing: React.FC<CanvasDrawingProps> = ({
     if (existingPolygon !== polygon) {
       setPolygon(existingPolygon || null);
     }
-  }, [existingPolygon]);
+  }, [existingPolygon, polygon]);
 
   // Redraw when polygon changes
   useEffect(() => {

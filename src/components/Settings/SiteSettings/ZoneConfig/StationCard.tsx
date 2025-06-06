@@ -1,18 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Card, Tag, Typography } from 'antd';
+import { Typography } from 'antd';
 import { DragOutlined } from '@ant-design/icons';
+import { Station, getStationStatusColor } from '@/demoData';
 
 const { Text } = Typography;
-
-export interface Station {
-  id: string;
-  name: string;
-  type: 'Loading' | 'Unloading' | 'Quality Control' | 'Storage' | 'Processing';
-  status: 'Active' | 'Inactive' | 'Maintenance';
-  target: number;
-}
 
 interface StationCardProps {
   station: Station;
@@ -29,25 +22,7 @@ const StationCard: React.FC<StationCardProps> = ({
   onDragStart,
   onDragEnd
 }) => {
-  const getTypeColor = (type: Station['type']) => {
-    switch (type) {
-      case 'Loading': return '#1890ff';
-      case 'Unloading': return '#52c41a';
-      case 'Quality Control': return '#faad14';
-      case 'Storage': return '#722ed1';
-      case 'Processing': return '#eb2f96';
-      default: return '#d9d9d9';
-    }
-  };
 
-  const getStatusColor = (status: Station['status']) => {
-    switch (status) {
-      case 'Active': return '#52c41a';
-      case 'Inactive': return '#8c8c8c';
-      case 'Maintenance': return '#faad14';
-      default: return '#d9d9d9';
-    }
-  };
 
   const handleDragStart = (e: React.DragEvent) => {
     if (onDragStart) {
@@ -80,7 +55,7 @@ const StationCard: React.FC<StationCardProps> = ({
           </Text>
           <div 
             className="w-2 h-2 rounded-full flex-shrink-0 mt-1"
-            style={{ backgroundColor: getStatusColor(station.status) }}
+            style={{ backgroundColor: getStationStatusColor(station.status) }}
             title={station.status}
           />
         </div>

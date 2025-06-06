@@ -10,6 +10,7 @@ export interface Camera {
   imagePath: string;
   efficiency: number;
   todaysTotal: number;
+  todaysTarget: number;
   appliedScenarios: string[];
 }
 
@@ -26,6 +27,7 @@ export const democameras: Camera[] = [
     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
     efficiency: 96,
     todaysTotal: 158,
+    todaysTarget: 150,
     appliedScenarios: ['Pallet Build', 'Conveyor Board']
   },
   { 
@@ -40,6 +42,7 @@ export const democameras: Camera[] = [
     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
     efficiency: 87,
     todaysTotal: 142,
+    todaysTarget: 160,
     appliedScenarios: ['Pallet Dismantling', 'Quality Check']
   },
   { 
@@ -54,6 +57,7 @@ export const democameras: Camera[] = [
     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
     efficiency: 0,
     todaysTotal: 0,
+    todaysTarget: 120,
     appliedScenarios: ['Board Processing']
   },
   { 
@@ -68,6 +72,7 @@ export const democameras: Camera[] = [
     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
     efficiency: 92,
     todaysTotal: 134,
+    todaysTarget: 140,
     appliedScenarios: ['Pallet Repair', 'Damage Assessment']
   },
   { 
@@ -82,6 +87,7 @@ export const democameras: Camera[] = [
     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
     efficiency: 94,
     todaysTotal: 167,
+    todaysTarget: 160,
     appliedScenarios: ['Board Quality', 'Trimsaw Operation']
   },
   { 
@@ -96,6 +102,97 @@ export const democameras: Camera[] = [
     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
     efficiency: 78,
     todaysTotal: 89,
+    todaysTarget: 110,
     appliedScenarios: ['Package Monitoring']
   },
+     { 
+     id: 7, 
+     name: 'Security Gate 1', 
+     status: 'online', 
+     zone: 'Main Entrance', 
+     recording: true, 
+     category: 'Pallets', 
+     subcategory: 'Making',
+     rtspUrl: 'rtsp://192.168.1.7:554/stream1',
+     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
+     efficiency: 91,
+     todaysTotal: 203,
+     todaysTarget: 200,
+     appliedScenarios: ['Security Monitor', 'Access Control']
+   },
+   { 
+     id: 8, 
+     name: 'Assembly Line A', 
+     status: 'online', 
+     zone: 'Production Floor A', 
+     recording: true, 
+     category: 'Boards', 
+     subcategory: 'Board',
+     rtspUrl: 'rtsp://192.168.1.8:554/stream1',
+     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
+     efficiency: 85,
+     todaysTotal: 176,
+     todaysTarget: 180,
+     appliedScenarios: ['Assembly Monitor', 'Quality Check']
+   },
+   { 
+     id: 9, 
+     name: 'Assembly Line B', 
+     status: 'offline', 
+     zone: 'Production Floor B', 
+     recording: false, 
+     category: 'Boards', 
+     subcategory: 'Board',
+     rtspUrl: 'rtsp://192.168.1.9:554/stream1',
+     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
+     efficiency: 0,
+     todaysTotal: 0,
+     todaysTarget: 180,
+     appliedScenarios: ['Assembly Monitor']
+   },
+   { 
+     id: 10, 
+     name: 'Repair Station 1', 
+     status: 'online', 
+     zone: 'Repair Area', 
+     recording: true, 
+     category: 'Pallets', 
+     subcategory: 'Repair',
+     rtspUrl: 'rtsp://192.168.1.10:554/stream1',
+     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
+     efficiency: 88,
+     todaysTotal: 145,
+     todaysTarget: 150,
+     appliedScenarios: ['Repair Monitor', 'Quality Assessment']
+   },
+   { 
+     id: 11, 
+     name: 'Trimsaw Station', 
+     status: 'online', 
+     zone: 'Processing Area', 
+     recording: true, 
+     category: 'Boards', 
+     subcategory: 'Trimsaw',
+     rtspUrl: 'rtsp://192.168.1.11:554/stream1',
+     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
+     efficiency: 93,
+     todaysTotal: 187,
+     todaysTarget: 180,
+     appliedScenarios: ['Trimsaw Operation', 'Safety Monitor']
+   },
+   { 
+     id: 12, 
+     name: 'Shipping Dock', 
+     status: 'maintenance', 
+     zone: 'Loading Dock C', 
+     recording: false, 
+     category: 'Pallets', 
+     subcategory: 'Making',
+     rtspUrl: 'rtsp://192.168.1.12:554/stream1',
+     imagePath: 'https://i.ytimg.com/vi/9wxEmqyVlB8/maxresdefault.jpg',
+     efficiency: 72,
+     todaysTotal: 98,
+     todaysTarget: 120,
+     appliedScenarios: ['Shipping Monitor']
+   },
 ]; 

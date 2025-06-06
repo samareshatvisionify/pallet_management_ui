@@ -53,7 +53,7 @@ const AddZoneCard: React.FC<AddZoneCardProps> = ({ onAdd }) => {
     }));
   };
 
-  const handleColorChange = (color: any) => {
+  const handleColorChange = (color: { toHexString: () => string }) => {
     setNewZone(prev => ({
       ...prev,
       color: color.toHexString()

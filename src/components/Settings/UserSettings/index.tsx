@@ -1,48 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Typography, Card } from 'antd';
+import { Typography } from 'antd';
 import UserFilters from './UserFilters';
 import UserActions from './UserActions';
 import UserTable, { User } from './UserTable';
+import { mockUsers } from '@/demoData';
 
 const { Text } = Typography;
-
-// Mock user data
-const mockUsers: User[] = [
-  {
-    id: '1',
-    email: 'john.admin@company.com',
-    name: 'John Smith',
-    role: 'Admin',
-    phone: '+1-234-567-8901',
-    status: 'Active',
-  },
-  {
-    id: '2',
-    email: 'sarah.manager@company.com',
-    name: 'Sarah Johnson',
-    role: 'Manager',
-    phone: '+1-234-567-8902',
-    status: 'Active',
-  },
-  {
-    id: '3',
-    email: 'mike.operator@company.com',
-    name: 'Mike Wilson',
-    role: 'Operator',
-    phone: '+1-234-567-8903',
-    status: 'Inactive',
-  },
-  {
-    id: '4',
-    email: 'emma.viewer@company.com',
-    name: 'Emma Davis',
-    role: 'Viewer',
-    phone: '+1-234-567-8904',
-    status: 'Pending',
-  },
-];
 
 const UserSettings: React.FC = () => {
   const [users, setUsers] = useState<User[]>(mockUsers);
@@ -52,7 +17,6 @@ const UserSettings: React.FC = () => {
 
   const handleEdit = (userId: string) => {
     console.log('Edit user:', userId);
-    // TODO: Implement edit functionality
   };
 
   const handleDelete = (userId: string) => {
@@ -61,7 +25,6 @@ const UserSettings: React.FC = () => {
 
   const handleAddUser = () => {
     console.log('Add new user');
-    // TODO: Implement add user functionality
   };
 
   const handleSearchChange = (value: string) => {
@@ -77,17 +40,16 @@ const UserSettings: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="mb-4">
+    <div className="user-settings-container">
+      <div className="user-settings-description">
         <Text className="text-gray-500">
           Manage users, roles, and permissions for your organization
         </Text>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        {/* Header Section */}
-        <div className="px-6 py-5 border-b border-gray-200 bg-gray-50/50">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="user-settings-card">
+        <div className="user-settings-header">
+          <div className="user-settings-filters user-settings-filters-sm">
             <UserFilters
               searchText={searchText}
               roleFilter={roleFilter}
@@ -101,8 +63,7 @@ const UserSettings: React.FC = () => {
           </div>
         </div>
 
-        {/* Users Table */}
-        <div className="p-0">
+        <div className="user-settings-table">
           <UserTable
             users={users}
             onEdit={handleEdit}

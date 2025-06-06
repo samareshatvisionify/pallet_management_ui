@@ -2,90 +2,13 @@
 
 import React from 'react';
 import { Card } from 'antd';
+import { hourlyDataMap } from '@/demoData';
 
 interface CameraHourlyActivityChartProps {
   selectedActivity: string;
 }
 
 const CameraHourlyActivityChart: React.FC<CameraHourlyActivityChartProps> = ({ selectedActivity }) => {
-  // Enhanced demo data with different patterns for each activity type
-  const hourlyDataMap = {
-    Making: [
-      { hour: '06:00', count: 22 },
-      { hour: '07:00', count: 38 },
-      { hour: '08:00', count: 30 },
-      { hour: '09:00', count: 0 },
-      { hour: '10:00', count: 15 },
-      { hour: '11:00', count: 47 },
-      { hour: '12:00', count: 0 },
-      { hour: '13:00', count: 40 },
-      { hour: '14:00', count: 0 },
-      { hour: '15:00', count: 8 },
-      { hour: '16:00', count: 0 },
-      { hour: '17:00', count: 0 },
-      { hour: '18:00', count: 10 },
-    ],
-    Dismantling: [
-      { hour: '06:00', count: 12 },
-      { hour: '07:00', count: 18 },
-      { hour: '08:00', count: 25 },
-      { hour: '09:00', count: 30 },
-      { hour: '10:00', count: 0 },
-      { hour: '11:00', count: 35 },
-      { hour: '12:00', count: 0 },
-      { hour: '13:00', count: 28 },
-      { hour: '14:00', count: 20 },
-      { hour: '15:00', count: 15 },
-      { hour: '16:00', count: 8 },
-      { hour: '17:00', count: 0 },
-      { hour: '18:00', count: 5 },
-    ],
-    Repair: [
-      { hour: '06:00', count: 5 },
-      { hour: '07:00', count: 8 },
-      { hour: '08:00', count: 12 },
-      { hour: '09:00', count: 15 },
-      { hour: '10:00', count: 18 },
-      { hour: '11:00', count: 0 },
-      { hour: '12:00', count: 0 },
-      { hour: '13:00', count: 22 },
-      { hour: '14:00', count: 16 },
-      { hour: '15:00', count: 10 },
-      { hour: '16:00', count: 6 },
-      { hour: '17:00', count: 3 },
-      { hour: '18:00', count: 0 },
-    ],
-    Board: [
-      { hour: '06:00', count: 45 },
-      { hour: '07:00', count: 52 },
-      { hour: '08:00', count: 48 },
-      { hour: '09:00', count: 35 },
-      { hour: '10:00', count: 40 },
-      { hour: '11:00', count: 0 },
-      { hour: '12:00', count: 0 },
-      { hour: '13:00', count: 55 },
-      { hour: '14:00', count: 42 },
-      { hour: '15:00', count: 38 },
-      { hour: '16:00', count: 25 },
-      { hour: '17:00', count: 15 },
-      { hour: '18:00', count: 8 },
-    ],
-    Trimsaw: [
-      { hour: '06:00', count: 18 },
-      { hour: '07:00', count: 25 },
-      { hour: '08:00', count: 32 },
-      { hour: '09:00', count: 28 },
-      { hour: '10:00', count: 35 },
-      { hour: '11:00', count: 30 },
-      { hour: '12:00', count: 0 },
-      { hour: '13:00', count: 38 },
-      { hour: '14:00', count: 40 },
-      { hour: '15:00', count: 33 },
-      { hour: '16:00', count: 20 },
-      { hour: '17:00', count: 12 },
-      { hour: '18:00', count: 6 },
-    ]
-  };
 
   const currentData = hourlyDataMap[selectedActivity as keyof typeof hourlyDataMap];
   // Use fixed maximum of 60 for consistent scale across all activities

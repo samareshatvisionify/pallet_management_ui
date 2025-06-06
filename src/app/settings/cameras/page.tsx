@@ -1,5 +1,5 @@
-import CamerasContainer from '@/containers/Settings/Cameras';
+import { SettingsContainer } from '@/containers';
 
-export default function CameraPage() {
-  return <CamerasContainer />;
+export default function CameraSettingsPage() {
+  return <SettingsContainer />;
 } 

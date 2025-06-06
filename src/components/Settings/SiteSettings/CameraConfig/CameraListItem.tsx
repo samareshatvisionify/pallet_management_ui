@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Button, Tag, Image, Space, Typography } from 'antd';
+import { Button, Tag, Image, Typography } from 'antd';
 import { EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { Camera } from '@/demoData';
 
@@ -14,15 +14,6 @@ interface CameraListItemProps {
 }
 
 const CameraListItem: React.FC<CameraListItemProps> = ({ camera, onEdit, onConfigure }) => {
-  const getStatusColor = (status: Camera['status']) => {
-    switch (status) {
-      case 'online': return '#52c41a';
-      case 'offline': return '#ff4d4f';
-      case 'maintenance': return '#faad14';
-      default: return '#d9d9d9';
-    }
-  };
-
   const getStatusConfig = (status: Camera['status']) => {
     switch (status) {
       case 'online': return { color: '#52c41a', bgColor: '#f6ffed', borderColor: '#b7eb8f' };
@@ -42,7 +33,7 @@ const CameraListItem: React.FC<CameraListItemProps> = ({ camera, onEdit, onConfi
           src={camera.imagePath}
           alt={`${camera.name} thumbnail`}
           className="rounded-t-lg"
-          width={`100%`}
+          width="100%"
           fallback="https://via.placeholder.com/300x128/gray/white?text=No+Image"
           preview={{
             mask: <div className="text-white text-xs">Preview</div>,

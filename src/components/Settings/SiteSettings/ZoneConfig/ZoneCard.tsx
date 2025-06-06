@@ -3,7 +3,8 @@
 import React from 'react';
 import { Card, Typography, Button, Space, Row, Col } from 'antd';
 import { EnvironmentOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import StationCard, { Station } from './StationCard';
+import { Station } from "@/demoData";
+import StationCard from "./StationCard";
 
 const { Title, Text } = Typography;
 

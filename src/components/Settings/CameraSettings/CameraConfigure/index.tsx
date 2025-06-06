@@ -1,13 +1,27 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Row, Col, Typography } from 'antd';
+import { Row, Col, Typography, Image } from 'antd';
 import { democameras, Camera } from '@/demoData';
-import CameraPreview from './CameraPreview';
 import StationsPanel from './StationsPanel';
 import CanvasDrawing, { Polygon } from './CanvasDrawing';
 
 const { Title } = Typography;
+
+// Simple Camera Preview Component
+const CameraPreview: React.FC<{ camera: Camera }> = ({ camera }) => (
+  <div className="relative bg-gray-100 rounded-lg overflow-hidden" style={{ height: '400px' }}>
+    <Image
+      src={camera.imagePath}
+      alt={`${camera.name} preview`}
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      fallback="https://via.placeholder.com/800x400/gray/white?text=Camera+Preview"
+    />
+    <div className="absolute top-4 left-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded">
+      {camera.name}
+    </div>
+  </div>
+);
 
 interface CameraConfigureProps {
   cameraId: string;

@@ -34,10 +34,10 @@ const initialShifts: Shift[] = [
 ];
 
 interface ShiftsConfigProps {
-  onClick?: () => void;
+  [key: string]: unknown;
 }
 
-const ShiftsConfig: React.FC<ShiftsConfigProps> = ({ onClick }) => {
+const ShiftsConfig: React.FC<ShiftsConfigProps> = () => {
   const { modal } = App.useApp();
   const [shifts, setShifts] = useState<Shift[]>(initialShifts);
   const [editingShiftId, setEditingShiftId] = useState<string | null>(null);
@@ -95,9 +95,6 @@ const ShiftsConfig: React.FC<ShiftsConfigProps> = ({ onClick }) => {
         <ClockCircleOutlined className="text-2xl text-orange-500" />
         <div className="flex-1">
           <Title level={4} className="!mb-1">Shifts Configuration</Title>
-          <Text className="text-gray-500">
-            Define work shifts, schedules, and operational hours for your facility
-          </Text>
         </div>
       </div>
 

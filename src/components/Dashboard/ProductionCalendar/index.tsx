@@ -11,12 +11,10 @@ import ProductionActivityModal from './ProductionActivityModal';
 
 interface ProductionCalendarProps {
   data: CalendarData;
-  loading?: boolean;
 }
 
 const ProductionCalendar: React.FC<ProductionCalendarProps> = ({
   data,
-  loading = false
 }) => {
   const [selectedDate, setSelectedDate] = useState<CalendarDayData | null>(() => {
     const today = dayjs().format('YYYY-MM-DD');

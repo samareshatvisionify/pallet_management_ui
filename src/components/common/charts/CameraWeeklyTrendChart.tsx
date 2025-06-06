@@ -2,25 +2,14 @@
 
 import React, { useState } from 'react';
 import { Card } from 'antd';
+import { weeklyData } from '@/demoData';
 
 interface CameraWeeklyTrendChartProps {
-  cameraName?: string;
 }
 
-const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraName }) => {
+const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = () => {
   const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
   const [tooltipData, setTooltipData] = useState<{ day: string; count: number; x: number; y: number } | null>(null);
-
-  // Weekly trend data matching the image pattern
-  const weeklyData = [
-    { day: 'Mon', count: 140, label: 'Mon' },
-    { day: 'Tue', count: 165, label: 'Tue' },
-    { day: 'Wed', count: 135, label: 'Wed' },
-    { day: 'Thu', count: 180, label: 'Thu' },
-    { day: 'Fri', count: 155, label: 'Fri' },
-    { day: 'Sat', count: 135, label: 'Sat' },
-    { day: 'Sun', count: 150, label: 'Sun' },
-  ];
 
   const maxValue = 180;
   const minValue = 0;
@@ -98,7 +87,6 @@ const CameraWeeklyTrendChart: React.FC<CameraWeeklyTrendChartProps> = ({ cameraN
 
   const handlePointHover = (index: number, event: React.MouseEvent) => {
     const point = weeklyData[index];
-    const coords = getCoordinates(index, point.count);
     const rect = event.currentTarget.getBoundingClientRect();
     
     setHoveredPoint(index);

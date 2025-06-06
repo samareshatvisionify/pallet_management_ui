@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, Typography, Button, Space, Input, Row, Col } from 'antd';
+import { Card, Typography, Button, Input, Row, Col } from 'antd';
 import { CameraOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import CameraListItem from './CameraListItem';
 import { Camera, democameras } from '@/demoData';
@@ -11,10 +11,10 @@ const { Title, Text } = Typography;
 const { Search } = Input;
 
 interface CameraConfigProps {
-  onClick?: () => void;
+  [key: string]: unknown;
 }
 
-const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
+const CameraConfig: React.FC<CameraConfigProps> = () => {
   const [searchText, setSearchText] = useState('');
   const [cameras] = useState<Camera[]>(democameras);
   const router = useRouter();
@@ -26,18 +26,15 @@ const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
 
   const handleEdit = (cameraId: number) => {
     console.log('Edit camera:', cameraId);
-    // TODO: Implement edit functionality
   };
 
   const handleConfigure = (cameraId: number) => {
     console.log('Configure camera:', cameraId);
     router.push(`/settings/cameras/${cameraId}`);
-    // TODO: Implement configure functionality
   };
 
   const handleAddCamera = () => {
     console.log('Add new camera');
-    // TODO: Implement add camera functionality
   };
 
   return (
@@ -48,9 +45,6 @@ const CameraConfig: React.FC<CameraConfigProps> = ({ onClick }) => {
           <CameraOutlined className="text-2xl text-blue-500" />
           <div>
             <Title level={4} className="!mb-1">Camera Configuration</Title>
-            <Text className="text-gray-500">
-              Manage camera settings, resolution, and recording parameters
-            </Text>
           </div>
         </div>
         <Button

@@ -1,15 +1,38 @@
 'use client';
 
 import React from 'react';
-import CameraGrid from './CameraGrid';
-import { Camera } from '@/demoData';
+import { Typography } from 'antd';
+import CameraConfig from '../SiteSettings/CameraConfig';
+import ShiftsConfig from '../SiteSettings/ShiftConfig';
 
-interface CameraSettingsProps {
-  cameras: Camera[];
-}
+const { Text } = Typography;
 
-const CameraSettings: React.FC<CameraSettingsProps> = ({ cameras }) => {
-  return <CameraGrid cameras={cameras} />;
+const CameraSettings: React.FC = () => {
+  const handleCameraConfigClick = () => {
+    console.log('Camera Config clicked');
+  };
+
+  const handleShiftsConfigClick = () => {
+    console.log('Shifts Config clicked');
+  };
+
+  return (
+    <div className="w-full">
+      <div className="mb-4">
+        <Text className="text-gray-500">
+          Configure camera settings, monitoring parameters, and operational shifts
+        </Text>
+      </div>
+
+      <div className="space-y-6">
+        {/* Camera Configuration Section */}
+        <CameraConfig onClick={handleCameraConfigClick} />
+
+        {/* Shifts Configuration Section */}
+        <ShiftsConfig onClick={handleShiftsConfigClick} />
+      </div>
+    </div>
+  );
 };
 
 export default CameraSettings; 
