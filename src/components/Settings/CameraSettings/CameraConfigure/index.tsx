@@ -38,16 +38,6 @@ const CameraConfigure: React.FC<CameraConfigureProps> = ({ cameraId }) => {
 
   return (
     <div className="p-4">
-      {/* Page Header */}
-      <div className="mb-6">
-        <Title level={3} className="text-gray-900 font-semibold mb-2">
-          Configure Camera
-        </Title>
-        <Typography.Text type="secondary" className="text-base">
-          Set up stations and configure settings for this camera
-        </Typography.Text>
-      </div>
-
       {/* Two Column Layout */}
       <Row gutter={24} className="h-full">
         {/* Camera Preview or Canvas Drawing - 2/3 width */}

@@ -149,7 +149,7 @@ const StationsPanel: React.FC<StationsPanelProps> = ({
       </div>
 
       {/* Stations Content */}
-      <div className="flex-1 max-h-96 overflow-y-auto">
+      <div className="flex-1 max-h-full overflow-y-auto">
         {/* Add/Edit Station Form */}
         {(isAdding || editingStation) && (
           <div className="mb-4">

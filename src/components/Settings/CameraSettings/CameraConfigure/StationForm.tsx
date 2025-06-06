@@ -88,11 +88,12 @@ const StationForm: React.FC<StationFormProps> = ({
             { required: true, message: 'Station name is required' },
             { min: 2, message: 'Name must be at least 2 characters' }
           ]}
-          className="mb-3"
+          className="!mb-3"
         >
           <Input 
             placeholder="Enter station name"
             className="text-xs"
+            size="middle"
           />
         </Form.Item>
 
@@ -101,11 +102,12 @@ const StationForm: React.FC<StationFormProps> = ({
           name="scenario"
           label={<span className="text-xs font-medium text-gray-700">Scenario</span>}
           rules={[{ required: true, message: 'Scenario is required' }]}
-          className="mb-3"
+          className="!mb-3"
         >
           <Select 
             placeholder="Select scenario"
             className="text-xs"
+            size="middle"
           >
             {SCENARIOS.map(scenario => (
               <Option key={scenario.value} value={scenario.value}>
@@ -123,13 +125,14 @@ const StationForm: React.FC<StationFormProps> = ({
             { required: true, message: 'Target count is required' },
             { type: 'number', min: 1, message: 'Must be at least 1' }
           ]}
-          className="mb-3"
+          className="!mb-3"
         >
           <InputNumber
             placeholder="Enter target count"
             className="w-full text-xs"
             min={1}
             max={9999}
+            size="middle"
           />
         </Form.Item>
 
@@ -141,11 +144,12 @@ const StationForm: React.FC<StationFormProps> = ({
             { required: true, message: 'Zone name is required' },
             { min: 2, message: 'Zone name must be at least 2 characters' }
           ]}
-          className="mb-4"
+          className="!mb-3"
         >
           <Input 
             placeholder="Enter zone name"
             className="text-xs"
+            size="middle"
           />
         </Form.Item>
 
@@ -156,19 +160,15 @@ const StationForm: React.FC<StationFormProps> = ({
             htmlType="submit"
             icon={<SaveOutlined />}
             loading={loading}
-            size="small"
+            size="middle"
             className="flex-1 text-xs"
-            style={{
-              background: 'linear-gradient(135deg, #1890ff 0%, #40a9ff 100%)',
-              border: 'none',
-            }}
           >
             Save Station
           </Button>
           <Button
             icon={<CloseOutlined />}
             onClick={onCancel}
-            size="small"
+            size="middle"
             className="text-xs"
           >
             Cancel
