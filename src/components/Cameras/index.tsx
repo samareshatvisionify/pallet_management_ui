@@ -3,10 +3,9 @@
 import React, { useState } from 'react';
 import { Row, Col, Typography } from 'antd';
 import { CameraOutlined } from '@ant-design/icons';
-import { Camera } from '@/demoData/cameraData';
+import { Camera } from '../../demoData/cameraData';
 import CameraFilters from './CameraFilters';
 import CameraCard from './CameraCard';
-import CameraDetails from './CameraDetails';
 
 const { Title, Paragraph } = Typography;
 
@@ -18,6 +17,7 @@ interface CamerasComponentProps {
   
   // Action props
   onClearError: () => void;
+  onCameraClick?: (cameraId: number) => void;
   
   // Utility props
   filterCameras: (statusFilter?: Camera['status'], categoryFilters?: Camera['category'][], subcategoryFilters?: Camera['subcategory'][]) => Camera[];
@@ -31,6 +31,7 @@ const Cameras: React.FC<CamerasComponentProps> = ({
   loading,
   error,
   onClearError,
+  onCameraClick,
   filterCameras,
   getStatusColor,
   getUniqueCategories,
@@ -39,7 +40,6 @@ const Cameras: React.FC<CamerasComponentProps> = ({
   const [statusFilter, setStatusFilter] = useState<Camera['status'] | undefined>(undefined);
   const [categoryFilters, setCategoryFilters] = useState<Camera['category'][]>([]);
   const [subcategoryFilters, setSubcategoryFilters] = useState<Camera['subcategory'][]>([]);
-  const [selectedCameraId, setSelectedCameraId] = useState<number | null>(null);
 
   const filteredCameras = filterCameras(statusFilter, categoryFilters, subcategoryFilters);
   const uniqueCategories = getUniqueCategories();
@@ -51,25 +51,12 @@ const Cameras: React.FC<CamerasComponentProps> = ({
     onClearError();
   }
 
-  console.log('Status colors available:', cameras.map(c => getStatusColor(c.status)));
-
   // Handle view camera click
   const handleViewCamera = (cameraId: number) => {
-    setSelectedCameraId(cameraId);
-  };
-
-  // Handle back from camera details
-  const handleBackToList = () => {
-    setSelectedCameraId(null);
-  };
-
-  // If a camera is selected, show camera details
-  if (selectedCameraId) {
-    const selectedCamera = cameras.find(c => c.id === selectedCameraId);
-    if (selectedCamera) {
-      return <CameraDetails camera={selectedCamera} onBack={handleBackToList} />;
+    if (onCameraClick) {
+      onCameraClick(cameraId);
     }
-  }
+  };
 
   return (
     <div className="space-y-6">

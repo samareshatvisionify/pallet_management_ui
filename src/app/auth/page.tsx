@@ -1,4 +1,4 @@
-import LoginContainer from '@/containers/LoginContainer';
+import LoginContainer from '@/containers/Auth';
 
 export default function AuthPage() {
   return <LoginContainer />;

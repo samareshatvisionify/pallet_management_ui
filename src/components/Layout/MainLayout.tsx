@@ -55,7 +55,36 @@ const pageConfig = {
     subtitle: 'Configure system preferences, user settings, and application parameters.',
     showRefresh: false,
   },
+  '/settings/cameras': {
+    title: 'Camera Selection',
+    subtitle: 'Choose a camera for adding station configurations and monitoring setup.',
+    showRefresh: false,
+  },
 } as const;
+
+// Function to get page config including dynamic routes
+const getPageConfig = (pathname: string) => {
+  // Check for exact matches first
+  if (pageConfig[pathname as keyof typeof pageConfig]) {
+    return pageConfig[pathname as keyof typeof pageConfig];
+  }
+  
+  // Handle dynamic routes
+  if (pathname.startsWith('/settings/cameras/') && pathname !== '/settings/cameras') {
+    return {
+      title: 'Configure Camera',
+      subtitle: 'Set up stations and configure settings for this camera',
+      showRefresh: false,
+    };
+  }
+  
+  // Default fallback
+  return {
+    title: 'VisionAI',
+    subtitle: 'Pallet Management System',
+    showRefresh: false,
+  };
+};
 
 // Demo site data - this could be moved to Redux or fetched from API
 const sites = [
@@ -81,11 +110,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   } = theme.useToken();
 
   // Get current page configuration
-  const currentPageConfig = pageConfig[pathname as keyof typeof pageConfig] || {
-    title: 'VisionAI',
-    subtitle: 'Pallet Management System',
-    showRefresh: false,
-  };
+  const currentPageConfig = getPageConfig(pathname);
 
   // Check if device is mobile
   useEffect(() => {
